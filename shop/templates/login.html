@@ -1,0 +1,125 @@
+{% extends 'navbar.html' %}
+
+{% block login %}
+
+<style>
+    /* SECTION: content table */
+
+    table, th, td {
+            border: none;
+            border-collapse: collapse;
+        }
+
+        table.center {
+            margin-left: auto; 
+            margin-right: auto;
+        }
+
+/* END SECTION: content table */
+
+/* SECTION: action button */
+
+.container_button {
+            height: 100px;
+            position: relative;
+            border: none;
+        }
+
+        .center_button {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .button_style {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button_style:hover {
+            color: black;
+            background-color: gold;
+        }
+
+/* END SECTION: action button */
+</style>
+
+<body>
+    <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> LOGIN </h2>
+    <form action="/login" method="POST" style="text-align: center;">
+                
+        {% csrf_token %}
+
+        {% if error%}
+        <div class="alert alert-danger" role="alert">
+            {{error}}
+        </div>
+        {% endif %}
+        <!-- email -->
+        <table class="center" style="width: 30%;background-color: white;">
+            <tr>
+                <th style="display: none;">Header 1</th>
+                <th style="display: none;">Header 2</th>
+            </tr>
+            <tr style="height: 75px;">
+                <div class="form-group">
+                    <td style="padding: 5px;background-color: #777;color: white;">EMAIL</td>
+                    <td style="padding: 5px;width: 425px;">
+                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" required type="email" name="email" id=""
+                    value="{{values.email}}" 
+                    class=" form-control-sm form-control" placeholder="abc@gmail.com">
+                    </td>
+                    
+                </div>
+            </tr>
+            <tr style="height: 75px;">
+                <div class="form-group">
+                    <td style="padding: 5px;background-color: #777;color: white;">PASSWORD</td>
+                    <td style="padding: 5px;width: 425px;">
+                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="password" 
+                name="password" 
+                id=""
+                 class="form-control form-control-sm" >
+                    </td>
+                    
+                </div>
+            </tr>
+            <!-- <tr style="height: 75px;">
+                <div class="form-group">
+                    
+                    <td style="padding: 5px;">Check me out</td>
+                    <td style="padding: 5px;">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    </td>
+                    
+                </div>
+            </tr> -->
+                
+            </tr>
+        </table>
+
+        <!--Checkme button-->
+        <p></p>
+        <p></p>
+        <div class="container_button">
+            <div class="center_button">
+                <button class="button_style" style="width: 500px; height: 100px; font-size: xx-large" type="submit">LOGIN</button>
+            </div>
+        </div>
+
+
+        
+    </form>
+</body>
+
+{% endblock %}

@@ -1,0 +1,150 @@
+{% extends 'navbar.html' %}
+
+{% block brandinfo %}
+
+    <style>
+/* SECTION: content table */
+
+        table, th, td {
+            border: none;
+            border-collapse: collapse;
+        }
+
+        table.center {
+            margin-left: auto; 
+            margin-right: auto;
+        }
+
+/* END SECTION: content table */
+
+/* SECTION: split columns */
+
+        /* Create two equal columns that floats next to each other */
+        .s-column {
+            float: left;
+            width: 50%;
+            padding: 5px;
+        }
+
+        /* Clear floats after the columns */
+        .s-row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .left {
+            width: 60%;
+        }
+
+        .right {
+            width: 40%;
+        }
+
+/* END SECTION: split columns */
+
+            .cell {
+                display: inline-block;
+                word-spacing: normal;
+                letter-spacing: normal;
+                white-space : normal;
+                width: 300px;
+            }
+
+            .container {
+                display: grid;
+                align-items: center; 
+                grid-template-columns: 1fr 1fr 1fr;
+                column-gap: 5px;
+               }
+               
+               img {
+                 max-width: 100%;
+                 max-height:100%;
+               }
+               
+               .text {
+                 font-size: 20px;
+               }
+
+               /* SECTION: scroll gallery */
+
+               div.scroll-container {
+                   background-color: #d7d0d0;
+                   overflow: auto;
+                   white-space: nowrap;
+                   padding: 10px;
+               }
+   
+               div.scroll-container img {
+                   width: 400px;
+                   height: 400px;
+                   padding: 10px;
+               }
+   
+               div.gallery {
+                   border: 1px solid #777;
+               }
+   
+               div.gallery:hover {
+                   border: 1px solid #555;
+               }
+   
+               div.desc {
+                   padding: 15px;
+                   text-align: center;
+               }
+               .cell {
+                   display: inline-block;
+                   word-spacing: normal;
+                   letter-spacing: normal;
+                   white-space : normal;
+               }
+   
+   /* END SECTION: scroll gallery */
+    </style>
+
+    {% for b in brand %}
+    <div class="container" style="background-color: white;">
+        <div class="img">
+            <img style="text-align: center;" src="{{b.image.url}}" alt="Logo">
+        </div>
+        <div class="text" style="background-color: white;">
+            <table class="center" style="width: 100%;">
+                <tr>
+                    <th style="display: none;">Header 1</th>
+                    <th style="display: none;">Header 2</th>
+                </tr>
+                <tr style="height: 75px;">
+                    <td style="padding: 5px;padding-left: 20px;background-color: #777;color: white; width: 200px;">NAME</td>
+                    <td style="padding: 5px;padding-left: 20px;">{{b.name}}</td>
+                </tr>
+                <tr style="height: 75px;">
+                    <td style="padding: 5px;padding-left: 20px;background-color: #777;color: white; width: 200px;">WEBSITE</td>
+                    <td style="padding: 5px;padding-left: 20px;">
+                        <a href="https://{{b.website}}">{{b.website}}</a>
+                    </td>
+                </tr>
+                <tr style="height: 250px;">
+                    <td style="padding: 5px;padding-left: 20px; background-color: #777;color: white; width: 200px;">DESCRIPTION</td>
+                    <td style="padding: 5px;padding-left: 20px;">{{b.desintext}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <h1 style="background-color: #4CAF50; color: white;text-align: center;font-size: xxx-large">{{b.name}}'S MOST POPULAR CARS</h1>
+    {% endfor %}
+    <div class="scroll-container">
+        {% for carMP in car %}
+        <a href="/carinfo/{{carMP.id}}">
+            <div class="cell">
+                <img src="{{carMP.front.url}}" alt="Cinque Terre">
+                <p style="text-align: center;text-transform: uppercase;">{{carMP.brand.name}} {{carMP.model}} {{carMP.year}}</p>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    
+    
+{% endblock %}

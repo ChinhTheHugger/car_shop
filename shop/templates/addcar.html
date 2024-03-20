@@ -1,0 +1,12 @@
+{% extends 'navbar.html' %}
+
+{% block addcar %}
+    <body>
+        <h2 style="text-align:center"> Add new car </h2>
+        <form method="POST" style="text-align: center;">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-success">
+        </form>
+    </body>
+{% endblock %}

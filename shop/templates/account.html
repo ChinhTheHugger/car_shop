@@ -1,0 +1,104 @@
+{% extends 'navbar.html' %}
+
+{% block account %}
+<style>
+    /* SECTION: search table */
+
+    table, th, td {
+            border: none;
+            border-collapse: collapse;
+        }
+
+        table.center {
+            margin-left: auto; 
+            margin-right: auto;
+        }
+        .tableFixHead {
+            margin-left: auto; 
+            margin-right: auto;
+            overflow-y: auto; /* make the table scrollable if height is more than 200 px  */
+            height: 930px; /* gives an initial height of 200px to the table */
+        }
+        .tableFixHead thead th {
+            position: sticky; /* make the table heads sticky */
+            top: 0px; /* table head will be placed from the top of the table and sticks to it */
+        }
+/* END SECTION: search table */
+</style>
+
+<h1 style="text-align: center; background-color: #333;color: white;">ACCOUNT INFO</h1>
+
+{% for cus in customerinfo %}
+<table class="center" style="width: 30%;background-color: white;">
+    <tr>
+        <th style="display: none;">Header 1</th>
+        <th style="display: none;">Header 2</th>
+    </tr>
+    <tr style="height: 75px;">
+            <td style="padding: 5px;padding-left: 10px;background-color: #777;color: white;">FIRST NAME</td>
+            <td style="padding: 5px;padding-left: 20px;width: 425px;">
+                {{cus.first_name}}
+            </td>
+    </tr>
+    <tr style="height: 75px;">
+        <td style="padding: 5px;padding-left: 10px;background-color: #777;color: white;">LAST NAME</td>
+        <td style="padding: 5px;padding-left: 20px;width: 425px;">
+            {{cus.last_name}}
+        </td>
+</tr>
+<tr style="height: 75px;">
+    <td style="padding: 5px;padding-left: 10px;background-color: #777;color: white;">PHONE</td>
+    <td style="padding: 5px;padding-left: 20px;width: 425px;">
+        {{cus.phone}}
+    </td>
+</tr>
+<tr style="height: 75px;">
+    <td style="padding: 5px;padding-left: 10px; background-color: #777;color: white;">EMAIL</td>
+    <td style="padding: 5px;padding-left: 20px;width: 425px;">
+        {{cus.email}}
+    </td>
+</tr>
+</table>
+
+<h1 style="text-align: center; background-color: #4caf50;color: white;">CONTRACTS</h1>
+
+<div class="tableFixHead" style="width: 75%;text-align: center;">
+    <table class="center" style="width: 100%;background-color: white;">
+        <thead>
+            <tr style="height: 75px;">
+                <th style="padding: 5px;background-color: #777;color: white;width: 5%;">NUM.</th>
+                <th style="padding: 5px;background-color: #777;color: white;width: 10%;">IMG.</th>
+                <th style="padding: 5px;background-color: #777;color: white;width: 30%;">CAR</th>
+                <th style="padding: 5px;background-color: #777;color: white;width: 5%;">QUANTITY</th>
+                <th style="padding: 5px;background-color: #777;color: white;width: 10%;">PRICE</th>
+                <th style="padding: 5px;background-color: #777;color: white;width: 15%;">START DATE</th>
+                <th style="padding: 5px;background-color: #777;color: white;width: 15%;">END DATE</th>
+                <th style="padding: 5px;background-color: #777;color: white;width: 10%;">STATUS</th>
+            </tr>
+        </thead>
+        {% for con in contracts %}
+        <tr style="height: 75px;">
+            <td style="padding: 5px;text-align: center;">{{forloop.counter}}</td>
+            <td style="padding: 5px;text-align: center;">
+                <a href="/carinfo/{{con.car.id}}">
+                    <img src="{{con.car.front.url}}" style="width: 200px;height: 200px;">
+                </a>
+            </td>
+            <td style="padding: 5px;padding-left: 20px;text-transform: uppercase;">{{con.bname}} {{con.cmodel}} {{con.cyear}}</td>
+            <td style="padding: 5px;text-align: center;">{{con.quantity}}</td>
+            <td style="padding: 5px;text-align: center;">Gil {{con.price}}</td>
+            <td style="padding: 5px;text-align: center;">{{con.date}}</td>
+            <td style="padding: 5px;text-align: center;">{{con.end_date}}</td>
+            {% if con.is_past_due %}
+            <td style="padding: 5px;background-color: red; color: white;text-align: center;">ACTIVE</td>
+            {% else %}
+            <td style="padding: 5px;background-color: #333; color: white;text-align: center;">FINISHED</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+
+/* SECTION: nav bar */
+
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background-color: #555;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                font-size: x-large;
+            }
+            li {
+                float: left;
+            }
+            li a, .dropbtn {
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+            li a:hover, .dropdown:hover .dropbtn {
+                background-color: #111;
+            }
+            .active {
+                background-color: #4CAF50;
+            }
+
+/* END SECTION: nav bar */
+
+/* SECTION: dropdown button */
+
+            li.dropdown {
+                display: inline-block;
+            }
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #F9F9F9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+                z-index: 1;
+            }
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                text-align: left;
+            }
+            .dropdown-content a:hover {
+                background-color: #4CAF50;
+            }
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+/* END SECTION: dropdown button */
+
+/* SECTION: bg image */
+
+body {
+                background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpaperforu.com%2Fwp-content%2Fuploads%2F2020%2F12%2Fcar-wallpaper-20122113415539.jpg&f=1&nofb=1&ipt=8ff38727fd9c3ab3a9f6cc3ca6d00c9214351a7168fdedc0d53c82634728a3eb&ipo=images");
+                background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+            }
+
+/* END SECTION: bg image */
+
+        </style>
+    </head>
+    <body>
+        <a href="/homepage">
+            <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fclipart-library.com%2Fimg%2F2050755.jpg&f=1&nofb=1&ipt=0d7adf383429f9590f03c88cc704bbfe868c5fa94abffc7e7ebc4d8674a7749f&ipo=images" alt="Car Logo" style="width: 10%;height: 10%;">
+        </a>
+
+        <div class="bg-image"></div>
+
+        <ul>
+            <li>
+                <a href="/homepage">HOME</a>
+            </li>
+            <li>
+                <a href="/category/0">CATEGORY</a>
+            </li>
+            <li>
+                <a href="/search">SEARCH</a>
+            </li>
+            <!-- <li style="float: right;">
+                <a href="/cart">CART
+                    <span class="badge badge-success">{{request.session.cart.keys|length}}</span>
+                    
+                </a>
+            </li> -->
+            {% if request.session.customer %}
+            <li style="float: right;">
+                <a href="/account">ACCOUNT</a>
+            </li>
+            <li style="float: right;">
+                <a href="/logout">LOGOUT</a>
+            </li>
+            {% else %}
+            <li style="float: right;">
+                <a href="/login">LOGIN</a>
+            </li>
+            <li style="float: right;">
+                <a href="/signup">SIGNUP</a>
+            </li>
+            {% endif %}
+        </ul>
+
+        {% block login %}
+        {% endblock %}
+
+        {% block signup %}
+        {% endblock %}
+
+        {% block search %}
+        {% endblock %}
+
+        {% block category %}
+        {% endblock %}
+
+        {% block carinfo %}
+        {% endblock %}
+
+        <!-- {% block addcar %}
+        {% endblock %} -->
+
+        {% block brandinfo %}
+        {% endblock %}
+
+        <!-- {% block addbrand %}
+        {% endblock %} -->
+
+        <!-- {% block supplierinfo %}
+        {% endblock %} -->
+
+        <!-- {% block addsupplier %}
+        {% endblock %} -->
+
+        {% block account %}
+        {% endblock %}
+
+        {% block cart %}
+        {% endblock %}
+
+        {% block contract %}
+        {% endblock %}
+
+    </body>
+</html>
