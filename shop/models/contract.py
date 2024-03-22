@@ -2,9 +2,9 @@ from django.db import models
 import datetime
 from datetime import date
 
-from models.car import Car
-from models.customer import Customer
-from models.request import Request
+from .car import Car
+from .customer import Customer
+from .request import Request
 
 class Contract(models.Model):
     request = models.IntegerField(default=1)

@@ -2,8 +2,8 @@ from django.db import models
 import datetime
 from datetime import date
 
-from models.car import Car
-from models.customer import Customer
+from .car import Car
+from .customer import Customer
 
 class Request(models.Model):
     customer = models.IntegerField(default=1)

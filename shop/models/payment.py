@@ -2,8 +2,8 @@ from django.db import models
 import datetime
 from datetime import date
 
-from models.contract import Contract
-from models.customer import Customer
+from .contract import Contract
+from .customer import Customer
 
 class Payment(models.Model):
     contract = models.IntegerField(default=1)

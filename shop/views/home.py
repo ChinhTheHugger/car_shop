@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from models.car import Car
-from models.category import Category
-from models.brand import Brand
+from shop.models.car import Car
+from shop.models.category import Category
+from shop.models.brand import Brand
 
 def homepage(request):
     
