@@ -26,6 +26,15 @@ class Car(models.Model):
     def homepage_popular_car():
         return Car.objects.all().order_by('?')[:10]
     
+    def get_cars_similar_category(category_name):
+        return Car.objects.filter(category=category_name).order_by('?')[:10]
+    
+    def get_cars_similar_brand(brand_name):
+        return Car.objects.filter(brand=brand_name).order_by('?')[:10]
+    
+    def get_car_by_parameters(brand_search,model_search,year_search):
+        return Car.objects.filter(brand=brand_search,model=model_search,year=year_search)
+    
     def __str__(self):
         return self.brand + " " + self.model + " " + str(self.year)
     

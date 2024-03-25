@@ -107,7 +107,7 @@
     {% for b in brand %}
     <div class="container" style="background-color: white;">
         <div class="img">
-            <img style="text-align: center;" src="{{b.image.url}}" alt="Logo">
+            <img style="text-align: center;" src="{{b.brandlogo.url}}" alt="Logo">
         </div>
         <div class="text" style="background-color: white;">
             <table class="center" style="width: 100%;">
@@ -117,7 +117,7 @@
                 </tr>
                 <tr style="height: 75px;">
                     <td style="padding: 5px;padding-left: 20px;background-color: #777;color: white; width: 200px;">NAME</td>
-                    <td style="padding: 5px;padding-left: 20px;">{{b.name}}</td>
+                    <td style="padding: 5px;padding-left: 20px;">{{b.brandname}}</td>
                 </tr>
                 <tr style="height: 75px;">
                     <td style="padding: 5px;padding-left: 20px;background-color: #777;color: white; width: 200px;">WEBSITE</td>
@@ -137,7 +137,7 @@
     {% endfor %}
     <div class="scroll-container">
         {% for carMP in car %}
-        <a href="/carinfo/{{carMP.id}}">
+        <a href="/carinfo/{{carMP.brand}}_{{carMP.model}}_{{carMP.year}}">
             <div class="cell">
                 <img src="{{carMP.front.url}}" alt="Cinque Terre">
                 <p style="text-align: center;text-transform: uppercase;">{{carMP.brand.name}} {{carMP.model}} {{carMP.year}}</p>

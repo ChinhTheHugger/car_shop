@@ -276,7 +276,7 @@
                 </div>
             </a> -->
             <div class="mySlides">
-                <form action="/carinfo/{{carTT.id}}" method="post">
+                <form action="/carinfo/{{carTT.brand}}_{{carTT.model}}_{{carTT.year}}" method="post">
                     {% csrf_token %}
                     <input hidden type="text" name='car' value='{{carTT.id}}'>
                     <input type="image" src="{{carTT.front.url}}" style="height: 500px;">
@@ -323,7 +323,7 @@
         
         <div class="scroll-container">
             {% for carMP in carMostPopular %}
-            <a href="/carinfo/{{carMP.id}}">
+            <a href="/carinfo/{{carMP.brand}}_{{carMP.model}}_{{carMP.year}}">
                 <div class="cell">
                     <img src="{{carMP.front.url}}" alt="Cinque Terre">
                     <p style="text-align: center;text-transform: uppercase;">{{carMP.brand}} {{carMP.model}} {{carMP.year}}</p>
@@ -337,8 +337,8 @@
         <div class="scroll-container">
             {% for brandMP in brandMostPopular %}
             <div class="cell">
-                <a href="/brandinfo/{{brandMP.id}}">
-                    <img src="{{brandMP.image.url}}" alt="Cinque Terre">
+                <a href="/brandinfo/{{brandMP.brandname}}">
+                    <img src="{{brandMP.brandlogo.url}}" alt="Cinque Terre">
                     <p style="text-align: center;text-transform: uppercase;">{{brandMP.name}}</p>
                 </a>
             </div>
@@ -350,8 +350,8 @@
         <div class="scroll-container">
             {% for carC in carCategory %}
             <div class="cell">
-                <a href="/category/{{carC.id}}">
-                    <img src="{{carC.image.url}}" alt="Cinque Terre">
+                <a href="/category/{{carC.categoryname}}">
+                    <img src="{{carC.categoryimage.url}}" alt="Cinque Terre">
                     <p style="text-align: center;text-transform: uppercase;">{{carC.name}}</p>
                 </a>
             </div>
