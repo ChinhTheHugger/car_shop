@@ -175,17 +175,19 @@
 
     <form action="/search" method="post">
         {% csrf_token %}
-        <table class="center" style="width: 30%;background-color: white;">
+        <table class="center" style="width: 100%;background-color: white;">
             <tr>
                 <th style="display: none;">Header 1</th>
                 <th style="display: none;">Header 2</th>
+                <th style="display: none;">Header 3</th>
+                <th style="display: none;">Header 4</th>
             </tr>
             <tr style="height: 75px;">
                 <div class="form-group">
-                    <td style="padding: 5px;background-color: #777;color: white;">KEYWORD</td>
-                    <td style="padding: 5px;width: 425px;">
-                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="model"
-             id="" value="All" class="form-control form-control-sm" 
+                    <td style="padding: 20px;background-color: #777;color: white;width: 15%;">KEYWORD</td>
+                    <td style="padding: 5px;" colspan="3">
+                        <input style="width: 100%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="keyword"
+             id="" value="" class="form-control form-control-sm" 
              placeholder="">
                     </td>
                     
@@ -193,12 +195,12 @@
             </tr>
             <tr style="height: 75px;">
                 <div class="form-group">
-                    <td style="padding: 5px;background-color: #777;color: white;">BRAND</td>
-                    <td style="padding: 5px;width: 425px;">
+                    <td style="padding: 20px;background-color: #777;color: white;width: 15%">BRAND</td>
+                    <td style="padding: 5px;width: 35%;">
                         <div class="custom-select">
                             
-                        <select name="brand" style="text-align: center;width: 425px;">
-                            <option value="0">Select brand</option>
+                        <select name="brand" style="text-align: center;width: 35%;">
+                            <option value="all">Select brand</option>
                             {% for b in brand_opt %}
                             <option value="{{b.brandname}}">{{b.brandname}}</option>
                             {% endfor %}
@@ -211,36 +213,14 @@
                     </td>
                     
                 </div>
-            </tr>
-
-            <tr style="height: 75px;">
                 <div class="form-group">
-                    <td style="padding: 5px;background-color: #777;color: white;">MODEL</td>
-                    <td style="padding: 5px;width: 425px;">
-                      <div class="custom-select">
-                            
-                        <select name="brand" style="text-align: center;width: 425px;">
-                            <option value="0">Select model</option>
-                            {% for cm in car_opt %}
-                            <option value="{{cm.model}}">{{cm.model}}</option>
-                            {% endfor %}
-                        </select>
-                        
-                        </div>
-                    </td>
-                    
-                </div>
-            </tr>
-
-            <tr style="height: 75px;">
-              <div class="form-group">
-                  <td style="padding: 5px;background-color: #777;color: white;">MODEL</td>
-                  <td style="padding: 5px;width: 425px;">
+                  <td style="padding: 20px;background-color: #777;color: white;width: 15%">MODEL</td>
+                  <td style="padding: 5px;width: 35%;">
                     <div class="custom-select">
                           
-                      <select name="brand" style="text-align: center;width: 425px;">
-                          <option value="0">Select model</option>
-                          {% for cm in car_opt %}
+                      <select name="model" style="text-align: center;width: 35%;">
+                          <option value="all">Select model</option>
+                          {% for cm in car_model_opt %}
                           <option value="{{cm.model}}">{{cm.model}}</option>
                           {% endfor %}
                       </select>
@@ -248,35 +228,16 @@
                       </div>
                   </td>
                   
-              </div>
-            </tr>
-
-            <tr style="height: 75px;">
-                <div class="form-group">
-                    <td style="padding: 5px;background-color: #777;color: white;">YEAR</td>
-                    <td style="padding: 5px;width: 425px;">
-                      <div class="custom-select">
-                            
-                        <select name="brand" style="text-align: center;width: 425px;">
-                            <option value="0">Select year</option>
-                            {% for cy in car_opt %}
-                            <option value="{{cy.year}}">{{cy.year}}</option>
-                            {% endfor %}
-                        </select>
-                        
-                        </div>
-                    </td>
-                    
                 </div>
             </tr>
             
             <tr style="height: 75px;">
                 <div class="form-group">
-                    <td style="padding: 5px;background-color: #777;color: white;">CATEGORY</td>
-                    <td style="padding: 5px;width: 425px;">
+                    <td style="padding: 20px;background-color: #777;color: white;width: 15%">CATEGORY</td>
+                    <td style="padding: 5px;width: 35%;">
                         <div class="custom-select">
-                        <select name="category" style="text-align: center;width: 425px;">
-                            <option value="0">Select category</option>
+                        <select name="category" style="text-align: center;width: 35%;">
+                            <option value="all">Select category</option>
                             {% for ca in category_opt %}
                             <option value="{{ca.categoryname}}">{{ca.categoryname}}</option>
                             {% endfor %}
@@ -290,12 +251,26 @@
                     </td>
                     
                 </div>
+                <div class="form-group">
+                  <td style="padding: 20px;background-color: #777;color: white;width: 15%">YEAR</td>
+                  <td style="padding: 5px;width: 35%;">
+                    <div class="custom-select">
+                          
+                      <select name="year" style="text-align: center;width: 35%">
+                          <option value="all">Select year</option>
+                          {% for cy in car_year_opt %}
+                          <option value="{{cy.year}}">{{cy.year}}</option>
+                          {% endfor %}
+                      </select>
+                      
+                      </div>
+                  </td>
+                  
+                </div>
             </tr>
             
             
-        </table>        
-        <p></p>
-        <p></p>
+        </table>
         <div class="container_button">
             <div class="center_button">
                 <button class="button_style" style="width: 500px; height: 100px; font-size: xx-large" type="submit">SEARCH</button>
