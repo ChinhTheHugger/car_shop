@@ -279,17 +279,21 @@
     </form>
 
     <h1></h1>
-    {% for c in carsearch %}
-    <div class="responsive">
-        <div class="gallery">
-            <a href="/carinfo/{{c.brand}}_{{c.model}}_{{c.year}}">
-                <img src="{{c.front.url}}" alt="Cinque Terre" style="width: 100%;height: 400px;">
-            </a>
-            <div class="desc" style="background-color: #555; color: white;">{{c.brand}} {{c.model}} {{c.year}}</div>
-        </div>
-        <p></p>
-    </div>
-    {% endfor %}
+    {% if carsearch %}
+      {% for c in carsearch %}
+      <div class="responsive">
+          <div class="gallery">
+              <a href="/carinfo/{{c.brand}}_{{c.model}}_{{c.year}}">
+                  <img src="{{c.front.url}}" alt="Cinque Terre" style="width: 100%;height: 400px;">
+              </a>
+              <div class="desc" style="background-color: #555; color: white;">{{c.brand}} {{c.model}} {{c.year}}</div>
+          </div>
+          <p></p>
+      </div>
+      {% endfor %}
+    {% else %}
+      <h1 style="color:red"></h1>
+    {% endif %}
 
     <script>
         var x, i, j, l, ll, selElmnt, a, b, c;

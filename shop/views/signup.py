@@ -51,7 +51,7 @@ class Signup (View):
         if (not customer.customerusername):
             error_message = "Please Enter your Userame !!"
         elif len (customer.customerusername) < 3:
-            error_message = 'First Name must be 3 char long or more'
+            error_message = 'Username must be 3 char long or more'
         if (not customer.firstname):
             error_message = "Please Enter your First Name !!"
         elif len (customer.firstname) < 3:

@@ -8,9 +8,9 @@ from .request import Request
 
 class Contract(models.Model):
     request = models.IntegerField(default=1)
-    customer = models.IntegerField(default=1)
-    manager = models.IntegerField(default=1)
-    car = models.IntegerField(default=1)
+    customer = models.CharField(max_length=50) # use customerusername
+    manager = models.CharField(max_length=50) # use managerusername
+    car = models.CharField(max_length=50) # use Car.__str__
     quantity = models.IntegerField(default=1)
     purpose = models.CharField(max_length=50)
     startdate = models.DateField(default=datetime.datetime.today)
@@ -30,12 +30,12 @@ class Contract(models.Model):
         self.save()
         
     @staticmethod
-    def get_contract_by_customer(contract_id):
-        return Contract.objects.filter(id=contract_id)
+    def get_contract_by_customer(customer_username):
+        return Contract.objects.filter(customer=customer_username)
     
     def __str__(self):
-        customer = Customer.objects.filter(id=self.customer)
-        return customer.firstname + " " + customer.lastname + ", from " + str(self.startdate) + " to " + str(self.enddate)
+        customer = Customer.get_customer_by_username(customer)
+        return customer.__str__ + ", from " + str(self.startdate) + " to " + str(self.enddate)
     
     class Meta:
         db_table = 'contract'

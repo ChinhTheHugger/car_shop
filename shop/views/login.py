@@ -12,12 +12,12 @@ class Login(View):
         return render (request, 'login.html')
 
     def post(self, request):
-        email = request.POST.get ('email')
+        username = request.POST.get ('username')
         password = request.POST.get ('password')
-        customer = Customer.get_customer_by_email(email)
+        customer = Customer.get_customer_by_username(username)
         error_message = None
         if customer:
-            flag = check_password (password, customer.password)
+            flag = check_password (password,customer.password)
             if flag:
                 request.session['customer'] = customer.id
 
@@ -31,7 +31,7 @@ class Login(View):
         else:
             error_message = 'Invalid !!'
 
-        print (email, password)
+        print (username, password)
         return render (request, 'login.html', {'error': error_message})
 
 def logout(request):

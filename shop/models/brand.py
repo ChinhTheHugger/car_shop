@@ -8,7 +8,7 @@ class Brand(models.Model):
 
     @staticmethod
     def get_all_brands():
-        return Brand.objects.all()
+        return Brand.objects.all().order_by('brandname')
     
     def homepage_popular_brand():
         return Brand.objects.all().order_by('?')[:10]

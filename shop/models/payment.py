@@ -6,9 +6,9 @@ from .contract import Contract
 from .customer import Customer
 
 class Payment(models.Model):
-    contract = models.IntegerField(default=1)
-    customer = models.IntegerField(default=1)
-    manager = models.IntegerField(default=1)
+    contract = models.CharField(max_length=50) # use Contract.__str__
+    customer = models.CharField(max_length=50) # use customerusername
+    manager = models.CharField(max_length=50) # use managerusername
     basecost = models.IntegerField(default=0)
     additionalcost = models.IntegerField(default=0)
     totalcost = models.IntegerField(default=0)
@@ -20,20 +20,20 @@ class Payment(models.Model):
     account = models.IntegerField(default=1)
     
     @staticmethod
-    def get_payments_by_customer(customer_id):
-        return Payment.objects.filter(customer=customer_id)
+    def get_payments_by_customer(customer_username):
+        return Payment.objects.filter(customer=customer_username)
     
     @staticmethod
-    def get_payments_by_manager(manager_id):
-        return Payment.objects.filter(manager=manager_id)
+    def get_payments_by_manager(manager_username):
+        return Payment.objects.filter(manager=manager_username)
     
     @staticmethod
-    def get_payments_by_contract(contract_id):
-        return Payment.objects.filter(contract=contract_id)
+    def get_payments_by_contract(contract_str):
+        return Payment.objects.filter(contract=contract_str)
     
     def __str__(self):
-        customer = Customer.objects.filter(id=self.customer)
-        return customer.firstname + " " + customer.lastname + ", payment for contract ID " + self.contract
+        customer = Customer.get_customer_by_username(customer)
+        return customer.__str__ + ", payment for contract: " + self.contract
     
     class Meta:
         db_table = 'payment'

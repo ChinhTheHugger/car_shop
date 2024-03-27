@@ -6,7 +6,7 @@ class Category(models.Model):
 
     @staticmethod
     def get_all_categories():
-        return Category.objects.all()
+        return Category.objects.all().order_by('categoryname')
     
     def homepage_popular_category():
         return Category.objects.all().order_by('?')[:10]

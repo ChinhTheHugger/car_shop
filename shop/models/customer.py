@@ -23,6 +23,9 @@ class Customer(models.Model):
     @staticmethod
     def get_customer_by_id(customer_id):
         return Customer.objects.filter(id=customer_id)
+    
+    def get_customer_by_username(customer_username):
+        return Customer.objects.filter(customerusername=customer_username)
 
 
     def isExists(self):
