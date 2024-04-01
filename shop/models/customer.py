@@ -25,7 +25,10 @@ class Customer(models.Model):
         return Customer.objects.filter(id=customer_id)
     
     def get_customer_by_username(customer_username):
-        return Customer.objects.filter(customerusername=customer_username)
+        try:
+            return Customer.objects.filter(customerusername=customer_username)
+        except:
+            return False
 
 
     def isExistEmail(self):
