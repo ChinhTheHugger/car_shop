@@ -28,8 +28,14 @@ class Customer(models.Model):
         return Customer.objects.filter(customerusername=customer_username)
 
 
-    def isExists(self):
+    def isExistEmail(self):
         if Customer.objects.filter(email = self.email):
+            return True
+
+        return False
+    
+    def isExistUsername(self):
+        if Customer.objects.filter(customerusername = self.customerusername):
             return True
 
         return False
