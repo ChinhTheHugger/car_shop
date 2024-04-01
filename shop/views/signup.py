@@ -26,7 +26,7 @@ class Signup (View):
         }
         error_message = None
 
-        customer = Customer (customerusername=username,
+        customer = Customer (username=username,
                              firstname=first_name,
                              lastname=last_name,
                              phone=phone,
@@ -48,9 +48,9 @@ class Signup (View):
 
     def validateCustomer(self, customer):
         error_message = None
-        if (not customer.customerusername):
+        if (not customer.username):
             error_message = "Please Enter your Userame !!"
-        elif len (customer.customerusername) < 3:
+        elif len (customer.username) < 3:
             error_message = 'Username must be 3 char long or more'
         if (not customer.firstname):
             error_message = "Please Enter your First Name !!"

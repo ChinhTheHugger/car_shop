@@ -1,7 +1,7 @@
 from django.db import models
 
 class Manager(models.Model):
-    managerusername = models.CharField(max_length=50)
+    username = models.CharField(max_length=50)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField (max_length=50)
     phone = models.CharField(max_length=10)

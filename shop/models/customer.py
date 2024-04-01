@@ -1,7 +1,7 @@
 from django.db import models
 
 class Customer(models.Model):
-    customerusername = models.CharField(max_length=50)
+    username = models.CharField(max_length=50)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField (max_length=50)
     phone = models.CharField(max_length=10)
@@ -26,7 +26,7 @@ class Customer(models.Model):
     
     def get_customer_by_username(customer_username):
         try:
-            return Customer.objects.filter(customerusername=customer_username)
+            return Customer.objects.filter(username=customer_username)
         except:
             return False
 
@@ -38,10 +38,14 @@ class Customer(models.Model):
         return False
     
     def isExistUsername(self):
-        if Customer.objects.filter(customerusername = self.customerusername):
+        if Customer.objects.filter(username = self.username):
             return True
 
         return False
+    
+    def check_pwd(customer_username):
+        result = Customer.objects.filter(username = customer_username)
+        return result
     
     def __str__(self):
         return self.firstname +" "+ self.lastname

@@ -61,7 +61,7 @@
         {% csrf_token %}
 
         {% if error%}
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger" role="alert" style="color:red; font-size: large">
             {{error}}
         </div>
         {% endif %}
