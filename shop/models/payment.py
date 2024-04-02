@@ -3,12 +3,12 @@ import datetime
 from datetime import date
 
 from .contract import Contract
-from .customer import Customer
+from .account import Account
 
 class Payment(models.Model):
     contract = models.CharField(max_length=50) # use Contract.__str__
-    customer = models.CharField(max_length=50) # use customerusername
-    manager = models.CharField(max_length=50) # use managerusername
+    customer = models.CharField(max_length=50) # use customer username
+    manager = models.CharField(max_length=50) # use manager username
     basecost = models.IntegerField(default=0)
     additionalcost = models.IntegerField(default=0)
     totalcost = models.IntegerField(default=0)
@@ -32,7 +32,7 @@ class Payment(models.Model):
         return Payment.objects.filter(contract=contract_str)
     
     def __str__(self):
-        customer = Customer.get_customer_by_username(customer)
+        customer = Account.get_account_by_username(customer)
         return customer.__str__ + ", payment for contract: " + self.contract
     
     class Meta:

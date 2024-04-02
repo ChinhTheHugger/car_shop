@@ -3,7 +3,7 @@ import datetime
 from datetime import date
 
 from .car import Car
-from .customer import Customer
+from .account import Account
 
 class Request(models.Model):
     customer = models.CharField(max_length=50) # use customerusername
@@ -23,7 +23,7 @@ class Request(models.Model):
         return Request.objects.filter(customer=customer_username)
     
     def __str__(self):
-        customer = Customer.get_customer_by_username(customer)
+        customer = Account.get_account_by_username(customer)
         return customer.__str__ + ", renting request made on" + str(self.date)
     
     class Meta:

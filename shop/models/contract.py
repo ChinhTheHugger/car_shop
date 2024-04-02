@@ -3,13 +3,13 @@ import datetime
 from datetime import date
 
 from .car import Car
-from .customer import Customer
+from .account import Account
 from .request import Request
 
 class Contract(models.Model):
     request = models.IntegerField(default=1)
-    customer = models.CharField(max_length=50) # use customerusername
-    manager = models.CharField(max_length=50) # use managerusername
+    customer = models.CharField(max_length=50) # use customer username
+    manager = models.CharField(max_length=50) # use manager username
     car = models.CharField(max_length=50) # use Car.__str__
     quantity = models.IntegerField(default=1)
     purpose = models.CharField(max_length=50)
@@ -34,7 +34,7 @@ class Contract(models.Model):
         return Contract.objects.filter(customer=customer_username)
     
     def __str__(self):
-        customer = Customer.get_customer_by_username(customer)
+        customer = Account.get_account_by_username(customer)
         return customer.__str__ + ", from " + str(self.startdate) + " to " + str(self.enddate)
     
     class Meta:

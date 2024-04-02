@@ -1,6 +1,6 @@
 from django.shortcuts import render , redirect , HttpResponseRedirect
 from django.contrib.auth.hashers import  check_password
-from shop.models.customer import Customer
+from shop.models.account import Account
 from django.views import View
 
 
@@ -14,14 +14,13 @@ class Login(View):
     def post(self, request):
         username = request.POST.get ('username')
         password = request.POST.get ('password')
-        customer = Customer.get_customer_by_username(username)
-        print(customer)
+        customer = Account.get_account_by_username(username)
         error_message = None
         for cus in customer:
             if cus:
                 flag = check_password (password,cus.password)
                 if flag:
-                    request.session['customer'] = cus.username
+                    request.session['account'] = cus.username
 
                     if Login.return_url:
                         return HttpResponseRedirect (Login.return_url)

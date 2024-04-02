@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
-from shop.models.customer import Customer
+from shop.models.account import Account
 from django.views import View
 
 
@@ -26,16 +26,17 @@ class Signup (View):
         }
         error_message = None
 
-        customer = Customer (username=username,
+        customer = Account (username=username,
                              firstname=first_name,
                              lastname=last_name,
                              phone=phone,
                              email=email,
-                             password=password)
-        error_message = self.validateCustomer (customer)
+                             password=password,
+                             type='customer')
+        error_message = self.validateAccount (customer)
 
         if not error_message:
-            print (first_name, last_name, phone, email, password)
+            # print (first_name, last_name, phone, email, password)
             customer.password = make_password (customer.password)
             customer.register ()
             return redirect ('homepage')
@@ -46,7 +47,7 @@ class Signup (View):
             }
             return render (request, 'signup.html', data)
 
-    def validateCustomer(self, customer):
+    def validateAccount(self, customer):
         error_message = None
         if (not customer.username):
             error_message = "Please Enter your Userame !!"

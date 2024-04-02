@@ -362,7 +362,7 @@ div.scroll-container {
                     <td style="padding-left: 50px;width: 550px;">{{c.instock}}</td>
                 </tr>
             </table>
-                {% if request.session.customer %}
+                {% if request.session.account %}
                 <div class="container_button">
                     <div class="center_button">
                         <form action="/rentcar" method="POST" class="btn-block">
