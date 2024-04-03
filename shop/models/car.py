@@ -15,7 +15,7 @@ class Car(models.Model):
 
     @staticmethod
     def get_car_by_id(car_id):
-        return Car.objects.filter(id=car_id)
+        return Car.objects.get(id=car_id)
     
     @staticmethod
     def get_all_cars():

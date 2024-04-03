@@ -359,7 +359,7 @@ div.scroll-container {
                 </tr>
                 <tr style="height: 50px;">
                     <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;background-color: #777;color: white;">IN STOCK</td>
-                    <td style="padding-left: 50px;width: 550px;" id="instock">{{c.instock}}</td>
+                    <td style="padding-left: 50px;width: 550px;" id="instock" value={{c.instock}}>{{c.instock}}</td>
                 </tr>
             </table>
                 {% if request.session.account %}
@@ -409,7 +409,7 @@ div.scroll-container {
     </div>
 
     <script type="text/javascript">
-        if (document.getElementById('instock') == 0) {
+        if (document.getElementById('instock') != 0) {
             document.getElementById('rent_button').innerHTML = `<form action="/addtocart/{{c.brand}}_{{c.model}}_{{c.year}}" method="POST" class="btn-block">{% csrf_token %}<input hidden type="text" name='car' value='{{c.id}}'><button class="button_style" style="width: 600px; height: 100px; font-size: xx-large" type="submit">RENT CAR</button></form>`;
         }
         else {

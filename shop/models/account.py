@@ -17,35 +17,35 @@ class Account(models.Model):
     @staticmethod
     def get_account_by_email(email):
         try:
-            return Account.objects.filter(email= email)
+            return Account.objects.get(email= email)
         except:
             return False
     
     @staticmethod
     def get_account_by_id(acc_id):
-        return Account.objects.filter(id=acc_id)
+        return Account.objects.get(id=acc_id)
     
     def get_account_by_username(acc_username):
         try:
-            return Account.objects.filter(username=acc_username)
+            return Account.objects.get(username=acc_username)
         except:
             return False
 
 
     def isExistEmail(self):
-        if Account.objects.filter(email = self.email):
+        if Account.objects.get(email = self.email):
             return True
 
         return False
     
     def isExistUsername(self):
-        if Account.objects.filter(username = self.username):
+        if Account.objects.get(username = self.username):
             return True
 
         return False
     
     def check_pwd(acc_username):
-        result = Account.objects.filter(username = acc_username)
+        result = Account.objects.get(username = acc_username)
         return result
     
     def __str__(self):

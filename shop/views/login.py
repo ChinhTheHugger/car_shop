@@ -14,23 +14,22 @@ class Login(View):
     def post(self, request):
         username = request.POST.get ('username')
         password = request.POST.get ('password')
-        customer = Account.get_account_by_username(username)
+        cus = Account.get_account_by_username(username)
         error_message = None
-        for cus in customer:
-            if cus:
-                flag = check_password (password,cus.password)
-                if flag:
-                    request.session['account'] = cus.username
+        if cus:
+            flag = check_password (password,cus.password)
+            if flag:
+                request.session['account'] = cus.username
 
-                    if Login.return_url:
-                        return HttpResponseRedirect (Login.return_url)
-                    else:
-                        Login.return_url = None
-                        return redirect ('homepage')
+                if Login.return_url:
+                    return HttpResponseRedirect (Login.return_url)
                 else:
-                    error_message = 'Wrong password !!'
+                    Login.return_url = None
+                    return redirect ('homepage')
             else:
-                error_message = 'No such username !!'
+                error_message = 'Wrong password !!'
+        else:
+            error_message = 'No such username !!'
 
         print (username, password)
         return render (request, 'login.html', {'error': error_message})

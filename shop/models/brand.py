@@ -14,7 +14,7 @@ class Brand(models.Model):
         return Brand.objects.all().order_by('?')[:10]
     
     def get_brand_by_name(name):
-        return Brand.objects.filter(brandname=name)
+        return Brand.objects.get(brandname=name)
 
     def __str__(self):
         return self.brandname
