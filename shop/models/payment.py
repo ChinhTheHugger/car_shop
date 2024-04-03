@@ -16,8 +16,8 @@ class Payment(models.Model):
     change = models.IntegerField(default=0)
     paymentmethod = models.IntegerField(default=1)
     # for online transaction
-    bank = models.IntegerField(default=1)
-    account = models.IntegerField(default=1)
+    bank = models.CharField(max_length=50,default="None")
+    account = models.CharField(max_length=50,default="None")
     
     @staticmethod
     def get_payments_by_customer(customer_username):
@@ -30,6 +30,27 @@ class Payment(models.Model):
     @staticmethod
     def get_payments_by_contract(contract_str):
         return Payment.objects.filter(contract=contract_str)
+    
+    def update_customer_username(old_username,new_username):
+        payments_to_update = Payment.objects.filter(customer=old_username)
+        for i in range(payments_to_update.count()):
+            payments_to_update[i].customer=new_username
+        Payment.objects.bulk_update(payments_to_update,["customer"])
+        return
+    
+    def update_manager_username(old_username,new_username):
+        payments_to_update = Payment.objects.filter(manager=old_username)
+        for i in range(payments_to_update.count()):
+            payments_to_update[i].manager=new_username
+        Payment.objects.bulk_update(payments_to_update,["manager"])
+        return
+    
+    def update_contract_name(old_name,new_name):
+        payments_to_update = Payment.objects.filter(contract=old_name)
+        for i in range(payments_to_update.count()):
+            payments_to_update[i].contract=new_name
+        Payment.objects.bulk_update(payments_to_update,["contract"])
+        return
     
     def __str__(self):
         customer = Account.get_account_by_username(customer)

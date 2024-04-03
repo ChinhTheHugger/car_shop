@@ -8,6 +8,7 @@ from .views.category import category
 from .views.search import search
 from .views.login import Login, logout
 from .views.signup import Signup
+from .views.cart import add_to_cart
 
 urlpatterns = [
     path('', homepage, name='homepage'),
@@ -21,7 +22,17 @@ urlpatterns = [
     
     path('search', search, name='search'),
     
+    # account
     path('signup', Signup.as_view(), name='signup'),
+    
     path('login', Login.as_view(), name='login'),
+    
     path('logout', logout , name='logout'),
+    
+    # cart
+    # path('cart', view_cart, name='view-cart'),
+    
+    # path('/addtocart/<slug:brand>_<slug:model>_<slug:year>', add_to_cart, name='add-to-cart'),
+    
+    
 ]

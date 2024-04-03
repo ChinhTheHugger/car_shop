@@ -5,21 +5,18 @@ from datetime import date
 from .car import Car
 from .account import Account
 
-class Request(models.Model):
+class Request(models.Model): # similar to "cart"
     customer = models.CharField(max_length=50) # use customerusername
     car = models.CharField(max_length=50) # use Car.__str__
     quantity = models.IntegerField(default=1)
-    purpose = models.CharField(max_length=50)
     date = models.DateField(default=datetime.datetime.today)
-    startdate = models.DateField(default=datetime.datetime.today)
-    enddate = models.DateField(default=datetime.datetime.today)
     status = models.CharField(max_length=50)
     
     def placeOrder(self):
         self.save()
 
     @staticmethod
-    def get_contracts_by_customer(customer_username):
+    def get_requests_by_customer(customer_username):
         return Request.objects.filter(customer=customer_username)
     
     def __str__(self):

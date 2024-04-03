@@ -6,7 +6,7 @@ from .car import Car
 from .account import Account
 from .request import Request
 
-class Contract(models.Model):
+class Contract(models.Model): # similar to "order"
     request = models.IntegerField(default=1)
     customer = models.CharField(max_length=50) # use customer username
     manager = models.CharField(max_length=50) # use manager username
@@ -32,6 +32,26 @@ class Contract(models.Model):
     @staticmethod
     def get_contract_by_customer(customer_username):
         return Contract.objects.filter(customer=customer_username)
+    
+    def get_active_contract_number(car_name,date):
+        return Contract.objects.filter(car=car_name,enddate__gt=date).count()
+    
+    def is_past_due(self):
+        return date.today() <= self.enddate
+    
+    def update_customer_username(old_username,new_username):
+        contracts_to_update = Contract.objects.filter(customer=old_username)
+        for i in range(contracts_to_update.count()):
+            contracts_to_update[i].customer=new_username
+        Contract.objects.bulk_update(contracts_to_update,["customer"])
+        return
+    
+    def update_manager_username(old_username,new_username):
+        contracts_to_update = Contract.objects.filter(manager=old_username)
+        for i in range(contracts_to_update.count()):
+            contracts_to_update[i].manager=new_username
+        Contract.objects.bulk_update(contracts_to_update,["manager"])
+        return
     
     def __str__(self):
         customer = Account.get_account_by_username(customer)
