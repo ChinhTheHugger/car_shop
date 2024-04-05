@@ -10,7 +10,7 @@ class Contract(models.Model): # similar to "order"
     request = models.IntegerField(default=1)
     customer = models.CharField(max_length=50) # use customer username
     manager = models.CharField(max_length=50) # use manager username
-    car = models.CharField(max_length=50) # use Car.__str__
+    car = models.CharField(max_length=255) # use Car.__str__
     quantity = models.IntegerField(default=1)
     purpose = models.CharField(max_length=50)
     startdate = models.DateField(default=datetime.datetime.today)

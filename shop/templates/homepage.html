@@ -1,6 +1,7 @@
-<!DOCTYPE html>
-<html>
-    <head>
+{% extends 'navbar.html' %}
+
+{% block content %}
+
         <style>
 
 /* SECTION: nav bar */
@@ -229,42 +230,7 @@
         </style>
     </head>
     <body>
-        <a href="/homepage">
-            <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fclipart-library.com%2Fimg%2F2050755.jpg&f=1&nofb=1&ipt=0d7adf383429f9590f03c88cc704bbfe868c5fa94abffc7e7ebc4d8674a7749f&ipo=images" alt="Car Logo" style="width: 10%;height: 10%;">
-        </a>
-        <ul>
-            <li>
-                <a class="active" href="/homepage">HOME</a>
-            </li>
-            <li>
-                <a href="/category/0">CATEGORY</a>
-            </li>
-            <li>
-                <a href="/search">SEARCH</a>
-            </li>
-            <!-- <li style="float: right;">
-                <a href="/cart">CART
-                    <span class="badge badge-success">{{request.session.cart.keys|length}}</span>
-                    
-                </a>
-            </li> -->
-            {% if request.session.account %}
-            <li style="float: right;">
-                <a href="/account">ACCOUNT</a>
-            </li>
-            <li style="float: right;">
-                <a href="/logout">LOGOUT</a>
-            </li>
-            {% else %}
-            <li style="float: right;">
-                <a href="/login">LOGIN</a>
-            </li>
-            <li style="float: right;">
-                <a href="/signup">SIGNUP</a>
-            </li>
-            {% endif %}
-        </ul>
-
+        
         <h1 style="text-align: center; background-color: #333;color: white;font-size: xxx-large">RECOMMENDATION</h1>
         
         <div class="container">
@@ -358,5 +324,4 @@
             {% endfor %}
         </div>
 
-    </body>
-</html>
+{% endblock %}

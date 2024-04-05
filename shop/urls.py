@@ -8,7 +8,8 @@ from .views.category import category
 from .views.search import search
 from .views.login import Login, logout
 from .views.signup import Signup
-from .views.cart import add_to_cart,view_cart
+from .views.cart import view_cart
+from .views.makerequest import add_to_cart
 
 urlpatterns = [
     path('', homepage, name='homepage'),
@@ -32,7 +33,7 @@ urlpatterns = [
     # cart
     path('cart', view_cart, name='view-cart'),
     
-    path('/addtocart/<slug:brand>_<slug:model>_<slug:year>', add_to_cart, name='add-to-cart'),
+    path('addtocart/<slug:brand>_<slug:model>_<slug:year>', add_to_cart, name='add-to-cart'),
     
     
 ]

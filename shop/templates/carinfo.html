@@ -1,6 +1,6 @@
 {% extends 'navbar.html' %}
 
-{% block carinfo %}
+{% block content %}
 
     <style>
 
@@ -335,17 +335,23 @@ div.scroll-container {
                 </tr>
                 <tr style="height: 50px;">
                     <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px; background-color: #777;color: white;">MODEL</td>
-                    <td style="padding-left: 50px;width: 550px;">{{c.model}}</td>
+                    <td style="padding-left: 50px;width: 550px;">
+                        <div id="cmodel" value={{c.model}}>{{c.model}}</div>
+                    </td>
                 </tr>
                 <tr style="height: 50px;">
                     <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;background-color: #777;color: white;">BRAND</td>
                     <td style="padding-left: 50px;width: 550px;">
-                        <a href="/brandinfo/{{c.brand}}">{{c.brand}}</a>
+                        <a href="/brandinfo/{{c.brand}}">
+                            <div id="cbrand" value={{c.brand}}>{{c.brand}}</div>
+                        </a>
                     </td>
                 </tr>
                 <tr style="height: 50px;">
                     <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;background-color: #777;color: white;">YEAR</td>
-                    <td style="padding-left: 50px;width: 550px;">{{c.year}}</td>
+                    <td style="padding-left: 50px;width: 550px;">
+                        <div id="cyear" value={{c.year}}>{{c.year}}</div>
+                    </td>
                 </tr>
                 <tr style="height: 50px;">
                     <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;background-color: #777;color: white;">CATEGORY</td>
@@ -409,11 +415,20 @@ div.scroll-container {
     </div>
 
     <script type="text/javascript">
-        if (document.getElementById('instock') != 0) {
-            document.getElementById('rent_button').innerHTML = `<form action="/addtocart/{{c.brand}}_{{c.model}}_{{c.year}}" method="POST" class="btn-block">{% csrf_token %}<input hidden type="text" name='car' value='{{c.id}}'><button class="button_style" style="width: 600px; height: 100px; font-size: xx-large" type="submit">RENT CAR</button></form>`;
+        if (document.getElementById('instock').value != 0) {
+            brand = document.getElementById('cbrand').innerHTML;
+            model = document.getElementById('cmodel').innerHTML;
+            year = document.getElementById('cyear').innerHTML;
+            document.getElementById('rent_button').innerHTML = `<a href="/addtocart/${brand}_${model}_${year}">
+                                                                    <button class="button_style" style="width: 600px; height: 100px; font-size: xx-large" type="submit">
+                                                                        RENT CAR
+                                                                    </button>
+                                                                </a>`;
         }
         else {
-            document.getElementById('rent_button').innerHTML = `<button class="button_style" style="width: 600px; height: 100px; font-size: xx-large" type="submit">OUT OF STOCK</button>`;
+            document.getElementById('rent_button').innerHTML = `<button class="button_style" style="width: 600px; height: 100px; font-size: xx-large" type="submit">
+                                                                    OUT OF STOCK
+                                                                </button>`;
         }
     </script>
     
