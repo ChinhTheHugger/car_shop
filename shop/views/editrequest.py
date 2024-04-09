@@ -6,12 +6,16 @@ from shop.models.account import Account
 
 from django.views import View
 
-class UpdateRequest(View):
+class UpdateDeleteRequest(View):
     def post(self, request):
         quantity = request.POST.get('quantity')
         car_name = request.POST.get('car_name')
+        button_action = request.POST.get('action_button')
         customerid = request.session.get('account')
-        customerinfo = Account.get_account_by_username(customerid)
-        print(str(car_name)+" "+str(customerinfo.username)+" "+str(quantity))
-        Request.update_quantity(str(car_name),customerinfo.username,quantity)
+        # customerinfo = Account.get_account_by_username(customerid)
+        # print(str(car_name)+" "+str(customerinfo.username)+" "+str(quantity))
+        if button_action == "update":
+            Request.update_quantity(str(car_name),customerid,quantity)
+        if button_action == "delete":
+            Request.remove_request(str(car_name),customerid)
         return redirect('view-cart')
