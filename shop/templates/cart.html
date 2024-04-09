@@ -1,6 +1,6 @@
 {% extends 'navbar.html' %}
 
-{% block cart %}
+{% block content %}
 
 <style>
     /* SECTION: content table */
@@ -20,7 +20,6 @@
 /* SECTION: action button */
 
 .container_button {
-            height: 100px;
             position: relative;
             border: none;
         }
@@ -46,9 +45,27 @@
             cursor: pointer;
         }
 
+        .button_style_delete {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
         .button_style:hover {
             color: black;
             background-color: gold;
+        }
+
+        .button_style_delete:hover {
+            color: black;
+            background-color: red;
         }
 
 /* END SECTION: action button */
@@ -56,29 +73,46 @@
 
 <body>
     <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> CART </h2>
-    <table class="center" style="width: 30%;background-color: white;">
+    <table class="center" style="width: 80%;background-color: white;">
         <tr style="height: 75px;">
-            <th style="padding: 5px;background-color: #777;color: white;">NUM.</th>
-            <th style="padding: 5px;background-color: #777;color: white;">IMAGE</th>
-            <th style="padding: 5px;background-color: #777;color: white;">PRODUCT NAME</th>
-            <th style="padding: 5px;background-color: #777;color: white;">PRICE</th>
-            <th style="padding: 5px;background-color: #777;color: white;">QUANTITY</th>
-            <th style="padding: 5px;background-color: #777;color: white;">TOTAL</th>
+            <th style="padding: 5px;background-color: #777;color: white;width: 5%">NUM.</th>
+            <th style="padding: 5px;background-color: #777;color: white;width: 20%">IMAGE</th>
+            <th style="padding: 5px;background-color: #777;color: white;width: 20%">PRODUCT NAME</th>
+            <th style="padding: 5px;background-color: #777;color: white;width: 17%">PRICE</th>
+            <th style="padding: 5px;background-color: #777;color: white;width: 11%">QUANTITY</th>
+            <th style="padding: 5px;background-color: #777;color: white;width: 17%">TOTAL</th>
+            <th style="padding: 5px;background-color: #777;color: white;width: 5%">UPDATE QUANTITY</th>
+            <th style="padding: 5px;background-color: #777;color: white;width: 5%">DELETE REQUEST</th>
         </tr>
-        {% for car in cars %}
-        <tr style="height: 75px;">
-            <td style="padding: 5px;">{{forloop.counter}}</td>
-            <td style="padding: 5px;">{{car.front.url}}</td>
-            <td style="padding: 5px;">{{car.brand.name}} {{car.model}} {{car.year}}</td>
-            <td style="padding: 5px;">{{car.price|currency}}</td>
-            <td style="padding: 5px;">{{car|cart_quantity:request.session.cart}}</td>
-            <td style="padding: 5px;">{{car|price_total:request.session.cart|currency}}</td>
-        </tr>
+        {% for car in cart_items %}
+        <form action="/editrequest" method="POST">
+
+            {% csrf_token %}
+
+            <tr style="height: 75px;">
+                <td style="padding: 5px;text-align: center">{{forloop.counter}}</td>
+                <td style="padding: 5px;"></td>
+                <td style="padding: 5px;">
+                    <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="car_name" value="{{car.car}}" readonly>
+                </td>
+                <td style="padding: 5px;text-align: center"></td>
+                <td style="padding: 5px;text-align: center">
+                    <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="quantity" value="{{car.quantity}}">
+                </td>
+                <td style="padding: 5px;text-align: center"></td>
+                <td style="padding: 5px;text-align: center">
+                    <button class="button_style" style="width: 95%; height: 95%; font-size: xx-large" type="submit">UPDATE</button>
+                </td>
+                <td style="padding: 5px;text-align: center">
+                    <button class="button_style_delete" style="width: 95%; height: 95%; font-size: xx-large;" type="submit">DELETE</button>
+                </td>
+            </tr>
+        </form>
         {% endfor %}
         <tr style="height: 75px;">
             <th colspan="4" style="padding: 5px;"></th>
             <th colspan="" style="padding: 5px;">TOTAL</th>
-            <th style="padding: 5px;">{{cars|total_cart_price:request.session.cart|currency}}</th>
+            <th style="padding: 5px;"></th>
         </tr>
     </table>
 </body>

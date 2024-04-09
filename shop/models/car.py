@@ -60,6 +60,9 @@ class Car(models.Model):
     def get_car_info(brand_in,model_in,year_in):
         return Car.objects.filter(brand=brand_in,model=model_in,year=year_in)
     
+    def get_car_list_for_cart():
+        return
+    
     def __str__(self):
         return self.brand + " " + self.model + " " + str(self.year)
     

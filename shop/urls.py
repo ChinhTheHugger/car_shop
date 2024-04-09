@@ -10,6 +10,7 @@ from .views.login import Login, logout
 from .views.signup import Signup
 from .views.cart import view_cart
 from .views.makerequest import add_to_cart
+from .views.editrequest import UpdateRequest
 
 urlpatterns = [
     path('', homepage, name='homepage'),
@@ -34,6 +35,8 @@ urlpatterns = [
     path('cart', view_cart, name='view-cart'),
     
     path('addtocart/<slug:brand>_<slug:model>_<slug:year>', add_to_cart, name='add-to-cart'),
+    
+    path('editrequest', UpdateRequest.as_view(), name='edit-request'),
     
     
 ]
