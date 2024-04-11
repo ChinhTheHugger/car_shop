@@ -8,7 +8,7 @@ from itertools import chain
 
 def view_cart(request):
     customerusername = request.session.get('account')
-    cart_items = Request.get_requests_by_customer(customerusername)
+    cart_items = Request.cart_display(customerusername)
     context = {'cart_items': cart_items}
     return render(request,'cart.html',context)
     

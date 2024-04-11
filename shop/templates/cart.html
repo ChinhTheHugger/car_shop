@@ -91,15 +91,17 @@
 
             <tr style="height: 75px;">
                 <td style="padding: 5px;text-align: center">{{forloop.counter}}</td>
-                <td style="padding: 5px;"></td>
+                <td style="padding: 5px;">
+                    <img src="{{car.frontimg.url}}" alt="Cinque Terre" style="width: 95%; height: 95">
+                </td>
                 <td style="padding: 5px;">
                     <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="car_name" value="{{car.car}}" readonly>
                 </td>
-                <td style="padding: 5px;text-align: center"></td>
+                <td style="padding: 5px;text-align: center">Gil {{car.carprice}}/car/day</td>
                 <td style="padding: 5px;text-align: center">
                     <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="quantity" value="{{car.quantity}}">
                 </td>
-                <td style="padding: 5px;text-align: center"></td>
+                <td style="padding: 5px;text-align: center">Gil {{car.totalprice}}/day</td>
                 <td style="padding: 5px;text-align: center">
                     <button class="button_style" style="width: 95%; height: 95%; font-size: xx-large" type="submit" name="action_button" value="update">UPDATE</button>
                 </td>
@@ -109,11 +111,6 @@
             </tr>
         </form>
         {% endfor %}
-        <tr style="height: 75px;">
-            <th colspan="4" style="padding: 5px;"></th>
-            <th colspan="" style="padding: 5px;">TOTAL</th>
-            <th style="padding: 5px;"></th>
-        </tr>
     </table>
 </body>
     
