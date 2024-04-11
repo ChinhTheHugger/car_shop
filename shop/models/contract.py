@@ -53,6 +53,13 @@ class Contract(models.Model): # similar to "order"
         Contract.objects.bulk_update(contracts_to_update,["manager"])
         return
     
+    def update_car_name(old_name,new_name):
+        contracts_to_update = Contract.objects.filter(car=old_name)
+        for i in range(contracts_to_update.count()):
+            contracts_to_update[i].car=new_name
+        Contract.objects.bulk_update(contracts_to_update,["car"])
+        return
+    
     def __str__(self):
         customer = Account.get_account_by_username(customer)
         return customer.__str__ + ", from " + str(self.startdate) + " to " + str(self.enddate)

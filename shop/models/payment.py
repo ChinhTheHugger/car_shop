@@ -11,6 +11,7 @@ class Payment(models.Model):
     manager = models.CharField(max_length=50) # use manager username
     basecost = models.IntegerField(default=0)
     additionalcost = models.IntegerField(default=0)
+    additionalcostreason = models.CharField(max_length=50,default="None")
     totalcost = models.IntegerField(default=0)
     paymentamount = models.IntegerField(default=0)
     change = models.IntegerField(default=0)

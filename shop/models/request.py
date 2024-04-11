@@ -36,6 +36,20 @@ class Request(models.Model): # similar to "cart"
             new_request.placeOrder()
         return
     
+    def update_customer_username(old_username,new_username):
+        requests_to_update = Request.objects.filter(customer=old_username)
+        for i in range(requests_to_update.count()):
+            requests_to_update[i].customer=new_username
+        Request.objects.bulk_update(requests_to_update,["customer"])
+        return
+    
+    def update_car_name(old_name,new_name):
+        requests_to_update = Request.objects.filter(car=old_name)
+        for i in range(requests_to_update.count()):
+            requests_to_update[i].car=new_name
+        Request.objects.bulk_update(requests_to_update,["car"])
+        return
+    
     def update_quantity(car_name,customer_username,quantity):
         request = Request.objects.get(customer=customer_username,car=car_name,status='False')
         request.quantity = quantity
@@ -55,8 +69,8 @@ class Request(models.Model): # similar to "cart"
         for item in cart_items:
             car_kw = str(item.car).split()
             carinfo = Car.get_car_info_for_cart(car_kw[0],car_kw[1],car_kw[2])
-            item.frontimg = carinfo.front
-            item.carprice = carinfo.price
+            item.frontimg = carinfo.get_front_img()
+            item.carprice = carinfo.get_price()
             item.totalprice = item.quantity * carinfo.price
             item.save()
         return cart_items

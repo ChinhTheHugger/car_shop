@@ -63,6 +63,21 @@ class Car(models.Model):
     def get_car_info_for_cart(brand_in,model_in,year_in):
         return Car.objects.get(brand=brand_in,model=model_in,year=year_in)
     
+    def get_brand(self):
+        return self.brand
+    
+    def get_model(self):
+        return self.model
+    
+    def get_year(self):
+        return self.year
+    
+    def get_front_img(self):
+        return self.front
+    
+    def get_price(self):
+        return self.price
+    
     def __str__(self):
         return self.brand + " " + self.model + " " + str(self.year)
     
