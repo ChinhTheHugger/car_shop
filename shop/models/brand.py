@@ -1,10 +1,11 @@
 from django.db import models
+from django.core.validators import FileExtensionValidator
 
 class Brand(models.Model):
     brandname= models.CharField(max_length=50)
     website= models.CharField(max_length=50)
     desintext= models.CharField(max_length=250, default='', blank=True, null= True)
-    brandlogo= models.ImageField(upload_to='uploads/brands/')
+    brandlogo= models.ImageField(upload_to='uploads/brands/',validators=[FileExtensionValidator(['apng','png','gif','svg','ico','cur','jpg','jpeg','jfif','pjpeg','pjp','webp'])])
 
     @staticmethod
     def get_all_brands():

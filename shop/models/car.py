@@ -1,15 +1,16 @@
 from django.db import models
 from django.db.models import Q
+from django.core.validators import FileExtensionValidator
 
 class Car(models.Model):
     brand= models.CharField(max_length=50,null=True)
     model= models.CharField(max_length=50,null=True)
     year= models.IntegerField(default=0)
     category= models.CharField(max_length=50,null=True)
-    desintext= models.CharField(max_length=250, default='', blank=True, null= True)
-    front= models.ImageField(upload_to='uploads/fronts/')
-    back= models.ImageField(upload_to='uploads/backs/')
-    interior= models.ImageField(upload_to='uploads/interiors/')
+    desintext= models.TextField(default='No description')
+    front= models.ImageField(upload_to='uploads/fronts/',validators=[FileExtensionValidator(['apng','png','gif','svg','ico','cur','jpg','jpeg','jfif','pjpeg','pjp','webp'])])
+    back= models.ImageField(upload_to='uploads/backs/',validators=[FileExtensionValidator(['apng','png','gif','svg','ico','cur','jpg','jpeg','jfif','pjpeg','pjp','webp'])])
+    interior= models.ImageField(upload_to='uploads/interiors/',validators=[FileExtensionValidator(['apng','png','gif','svg','ico','cur','jpg','jpeg','jfif','pjpeg','pjp','webp'])])
     instock= models.IntegerField(default=0)
     price= models.IntegerField(default=0)
 

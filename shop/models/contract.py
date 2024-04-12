@@ -1,6 +1,7 @@
 from django.db import models
 import datetime
 from datetime import date
+from django.core.validators import FileExtensionValidator
 
 from .car import Car
 from .account import Account
@@ -15,14 +16,14 @@ class Contract(models.Model): # similar to "order"
     purpose = models.CharField(max_length=50)
     startdate = models.DateField(default=datetime.datetime.today)
     enddate = models.DateField(default=datetime.datetime.today)
-    residence = models.ImageField(upload_to='uploads/contracts/residences/')
-    idcard = models.ImageField(upload_to='uploads/contracts/idcards/')
-    driverlicense = models.ImageField(upload_to='uploads/contracts/driverlicences/')
+    residence = models.ImageField(upload_to='uploads/contracts/residences/',validators=[FileExtensionValidator(['apng','png','gif','svg','ico','cur','jpg','jpeg','jfif','pjpeg','pjp','webp'])])
+    idcard = models.ImageField(upload_to='uploads/contracts/idcards/',validators=[FileExtensionValidator(['apng','png','gif','svg','ico','cur','jpg','jpeg','jfif','pjpeg','pjp','webp'])])
+    driverlicense = models.ImageField(upload_to='uploads/contracts/driverlicences/',validators=[FileExtensionValidator(['apng','png','gif','svg','ico','cur','jpg','jpeg','jfif','pjpeg','pjp','webp'])])
     carodometerbefore = models.IntegerField(default=1)
     carsystemstatusbefore = models.TextField(default='Functional')
-    carfrontbefore = models.ImageField(upload_to='uploads/contracts/frontstatusbefore/')
-    carbackbefore = models.ImageField(upload_to='uploads/contracts/backstatusbefore/')
-    carinteriorbefore = models.ImageField(upload_to='uploads/contracts/interiorstatusbefore/')
+    carfrontbefore = models.ImageField(upload_to='uploads/contracts/frontstatusbefore/',validators=[FileExtensionValidator(['apng','png','gif','svg','ico','cur','jpg','jpeg','jfif','pjpeg','pjp','webp'])])
+    carbackbefore = models.ImageField(upload_to='uploads/contracts/backstatusbefore/',validators=[FileExtensionValidator(['apng','png','gif','svg','ico','cur','jpg','jpeg','jfif','pjpeg','pjp','webp'])])
+    carinteriorbefore = models.ImageField(upload_to='uploads/contracts/interiorstatusbefore/',validators=[FileExtensionValidator(['apng','png','gif','svg','ico','cur','jpg','jpeg','jfif','pjpeg','pjp','webp'])])
     cost = models.IntegerField(default=0)
     
     #to save the data

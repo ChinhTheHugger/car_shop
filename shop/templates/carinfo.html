@@ -557,7 +557,7 @@ div.scroll-container {
                         {% if request.session.account %}
                         <div class="container_button">
                             <div class="center_button">
-                                <a href="/editcar/${brand}_${model}_${year}">
+                                <a href="/editcar/{{c.brand}}_{{c.model}}_{{c.year}}">
                                     <button class="button_style" style="width: 600px; height: 100px; font-size: xx-large" type="submit">EDIT CAR</button>
                                 </a>
                             </div>
