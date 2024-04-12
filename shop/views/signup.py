@@ -26,19 +26,19 @@ class Signup (View):
         }
         error_message = None
 
-        customer = Account (username=username,
+        account = Account (username=username,
                              firstname=first_name,
                              lastname=last_name,
                              phone=phone,
                              email=email,
                              password=password,
                              type='customer')
-        error_message = self.validateAccount (customer)
+        error_message = self.validateAccount (account)
 
         if not error_message:
             # print (first_name, last_name, phone, email, password)
-            customer.password = make_password (customer.password)
-            customer.register ()
+            account.password = make_password (account.password)
+            account.register ()
             return redirect ('homepage')
         else:
             data = {
@@ -47,31 +47,31 @@ class Signup (View):
             }
             return render (request, 'signup.html', data)
 
-    def validateAccount(self, customer):
+    def validateAccount(self, account):
         error_message = None
-        if (not customer.username):
+        if (not account.username):
             error_message = "Please Enter your Userame !!"
-        elif len (customer.username) < 3:
+        elif len (account.username) < 3:
             error_message = 'Username must be 3 char long or more'
-        if (not customer.firstname):
+        if (not account.firstname):
             error_message = "Please Enter your First Name !!"
-        elif len (customer.firstname) < 3:
+        elif len (account.firstname) < 3:
             error_message = 'First Name must be 3 char long or more'
-        elif not customer.lastname:
+        elif not account.lastname:
             error_message = 'Please Enter your Last Name'
-        elif len (customer.lastname) < 3:
+        elif len (account.lastname) < 3:
             error_message = 'Last Name must be 3 char long or more'
-        elif not customer.phone:
+        elif not account.phone:
             error_message = 'Enter your Phone Number'
-        elif len (customer.phone) < 10:
+        elif len (account.phone) < 10:
             error_message = 'Phone Number must be 10 char Long'
-        elif len (customer.password) < 5:
+        elif len (account.password) < 5:
             error_message = 'Password must be 5 char long'
-        elif len (customer.email) < 5:
+        elif len (account.email) < 5:
             error_message = 'Email must be 5 char long'
-        elif customer.isExistEmail():
+        elif account.isExistEmail():
             error_message = 'Email Address Already Registered..'
-        elif customer.isExistUsername():
+        elif account.isExistUsername():
             error_message = 'Username Already Registered..'
         # saving
 

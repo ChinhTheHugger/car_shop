@@ -252,184 +252,356 @@ div.scroll-container {
 
     </style>
     
-    {% for c in carinfo %}
-    <h1 style="text-align: center; background-color: #333;color: white;">{{c.brand.name}} {{c.model}} {{c.year}}</h1>
-        
-    <div class="container">
-        <div class="mySlides">
-            <div class="numbertext">1/3</div>
-            <img src="{{c.front.url}}" style="width: 100%;">
-        </div>
-        <div class="mySlides">
-            <div class="numbertext">2/3</div>
-            <img src="{{c.back.url}}" style="width: 100%;">
-        </div>
-        <div class="mySlides">
-            <div class="numbertext">3/3</div>
-            <img src="{{c.interior.url}}" style="width: 100%;">
-        </div>
-        
-        <a class="prev" onclick="plusSlides(-1)">❮</a>
-        <a class="next" onclick="plusSlides(1)">❯</a>
+    {% for acc in account %}
+        {% if acc.check_account_type %}
+        {% comment %} check_account_type returns "True" for customer layout {% endcomment %}
+            {% for c in carinfo %}
+            <h1 style="text-align: center; background-color: #333;color: white;">{{c.brand.name}} {{c.model}} {{c.year}}</h1>
+                
+            <div class="container">
+                <div class="mySlides">
+                    <div class="numbertext">1/3</div>
+                    <img src="{{c.front.url}}" style="width: 100%;">
+                </div>
+                <div class="mySlides">
+                    <div class="numbertext">2/3</div>
+                    <img src="{{c.back.url}}" style="width: 100%;">
+                </div>
+                <div class="mySlides">
+                    <div class="numbertext">3/3</div>
+                    <img src="{{c.interior.url}}" style="width: 100%;">
+                </div>
+                
+                <a class="prev" onclick="plusSlides(-1)">❮</a>
+                <a class="next" onclick="plusSlides(1)">❯</a>
 
-        <div class="caption-container">
-            <p id="caption"></p>
-        </div>
+                <div class="caption-container">
+                    <p id="caption"></p>
+                </div>
 
-        <div class="row">
-            <div class="column" style="background-color: white;">
-                <img class="demo cursor" style="width: 500px; height: 400px;overflow: hidden;" src="{{c.front.url}}" onclick="currentSlide(1)" alt="Front Exterior">
-            </div>
-            <div class="column" style="background-color: white;">
-                <img class="demo cursor" style="width: 500px; height: 400px;overflow: hidden;" src="{{c.back.url}}" onclick="currentSlide(2)" alt="Back Exterior">
-            </div>
-            <div class="column" style="background-color: white;">
-                <img class="demo cursor" style="width: 500px; height: 400px;overflow: hidden;" src="{{c.interior.url}}" onclick="currentSlide(3)" alt="Interior">
-            </div>
-        </div>
-    </div>
-
-    <script>
-        let slideIndex = 1;
-            showSlides(slideIndex);
-        
-        function plusSlides(n) {
-            showSlides(slideIndex += n);
-        }
-        
-        function currentSlide(n) {
-            showSlides(slideIndex = n);
-        }
-        
-        function showSlides(n) {
-            let i;
-            let slides = document.getElementsByClassName("mySlides");
-            let dots = document.getElementsByClassName("demo");
-            let captionText = document.getElementById("caption");
-            if (n > slides.length) {slideIndex = 1}
-            if (n < 1) {slideIndex = slides.length}
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            for (i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
-            slides[slideIndex-1].style.display = "block";
-            dots[slideIndex-1].className += " active";
-            captionText.innerHTML = dots[slideIndex-1].alt;
-        }
-    </script>
-
-    <h1></h1>
-
-    <div class="s-row" style="background-color: white;">
-        <div class="s-column left">
-            <h3 style="padding: 15px;padding-left: 50px; font-size: x-large;">DESCRIPTION</h3>
-            <p style="padding: 15px;padding-left: 50px;">{{c.desintext}}</p>
-        </div>
-        <div class="s-column right">
-            <table class="center" style="width: 100%;">
-                <tr>
-                    <th style="display: none;">Header 1</th>
-                    <th style="display: none;">Header 2</th>
-                </tr>
-                <tr style="height: 50px;">
-                    <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px; background-color: #777;color: white;">MODEL</td>
-                    <td style="padding-left: 50px;width: 550px;">
-                        <div id="cmodel" value={{c.model}}>{{c.model}}</div>
-                    </td>
-                </tr>
-                <tr style="height: 50px;">
-                    <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;background-color: #777;color: white;">BRAND</td>
-                    <td style="padding-left: 50px;width: 550px;">
-                        <a href="/brandinfo/{{c.brand}}">
-                            <div id="cbrand" value={{c.brand}}>{{c.brand}}</div>
-                        </a>
-                    </td>
-                </tr>
-                <tr style="height: 50px;">
-                    <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;background-color: #777;color: white;">YEAR</td>
-                    <td style="padding-left: 50px;width: 550px;">
-                        <div id="cyear" value={{c.year}}>{{c.year}}</div>
-                    </td>
-                </tr>
-                <tr style="height: 50px;">
-                    <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;background-color: #777;color: white;">CATEGORY</td>
-                    <td style="padding-left: 50px;width: 550px;">
-                        <a href="/category/{{c.category}}">{{c.category}}</a>
-                    </td>
-                </tr>
-                <tr style="height: 50px;">
-                    <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;;background-color: #777;color: white;">PRICE</td>
-                    <td style="padding-left: 50px;width: 550px;">Gil {{c.price}} / car / day</td>
-                </tr>
-                <tr style="height: 50px;">
-                    <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;background-color: #777;color: white;">IN STOCK</td>
-                    <td style="padding-left: 50px;width: 550px;" id="instock" value={{c.instock}}>{{c.instock}}</td>
-                </tr>
-            </table>
-                {% if request.session.account %}
-                <div class="container_button">
-                    <div class="center_button" id="rent_button">
-                        
+                <div class="row">
+                    <div class="column" style="background-color: white;">
+                        <img class="demo cursor" style="width: 500px; height: 400px;overflow: hidden;" src="{{c.front.url}}" onclick="currentSlide(1)" alt="Front Exterior">
+                    </div>
+                    <div class="column" style="background-color: white;">
+                        <img class="demo cursor" style="width: 500px; height: 400px;overflow: hidden;" src="{{c.back.url}}" onclick="currentSlide(2)" alt="Back Exterior">
+                    </div>
+                    <div class="column" style="background-color: white;">
+                        <img class="demo cursor" style="width: 500px; height: 400px;overflow: hidden;" src="{{c.interior.url}}" onclick="currentSlide(3)" alt="Interior">
                     </div>
                 </div>
-                {% else %}
-                <div class="container_button">
-                    <div class="center_button">
-                        <form action="/login " method="POST" class="btn-block">
-                            {% csrf_token %}
-                            <button class="button_style" style="width: 600px; height: 100px; font-size: xx-large" type="submit">RENT CAR</button>
-                        </form>
-                        
+            </div>
+
+            <script>
+                let slideIndex = 1;
+                    showSlides(slideIndex);
+                
+                function plusSlides(n) {
+                    showSlides(slideIndex += n);
+                }
+                
+                function currentSlide(n) {
+                    showSlides(slideIndex = n);
+                }
+                
+                function showSlides(n) {
+                    let i;
+                    let slides = document.getElementsByClassName("mySlides");
+                    let dots = document.getElementsByClassName("demo");
+                    let captionText = document.getElementById("caption");
+                    if (n > slides.length) {slideIndex = 1}
+                    if (n < 1) {slideIndex = slides.length}
+                    for (i = 0; i < slides.length; i++) {
+                        slides[i].style.display = "none";
+                    }
+                    for (i = 0; i < dots.length; i++) {
+                        dots[i].className = dots[i].className.replace(" active", "");
+                    }
+                    slides[slideIndex-1].style.display = "block";
+                    dots[slideIndex-1].className += " active";
+                    captionText.innerHTML = dots[slideIndex-1].alt;
+                }
+            </script>
+
+            <h1></h1>
+
+            <div class="s-row" style="background-color: white;">
+                <div class="s-column left">
+                    <h3 style="padding: 15px;padding-left: 50px; font-size: x-large;">DESCRIPTION</h3>
+                    <p style="padding: 15px;padding-left: 50px;">{{c.desintext}}</p>
+                </div>
+                <div class="s-column right">
+                    <table class="center" style="width: 100%;">
+                        <tr>
+                            <th style="display: none;">Header 1</th>
+                            <th style="display: none;">Header 2</th>
+                        </tr>
+                        <tr style="height: 50px;">
+                            <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px; background-color: #777;color: white;">MODEL</td>
+                            <td style="padding-left: 50px;width: 550px;">
+                                <div id="cmodel" value={{c.model}}>{{c.model}}</div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px;">
+                            <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;background-color: #777;color: white;">BRAND</td>
+                            <td style="padding-left: 50px;width: 550px;">
+                                <a href="/brandinfo/{{c.brand}}">
+                                    <div id="cbrand" value={{c.brand}}>{{c.brand}}</div>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px;">
+                            <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;background-color: #777;color: white;">YEAR</td>
+                            <td style="padding-left: 50px;width: 550px;">
+                                <div id="cyear" value={{c.year}}>{{c.year}}</div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px;">
+                            <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;background-color: #777;color: white;">CATEGORY</td>
+                            <td style="padding-left: 50px;width: 550px;">
+                                <a href="/category/{{c.category}}">{{c.category}}</a>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px;">
+                            <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;;background-color: #777;color: white;">PRICE</td>
+                            <td style="padding-left: 50px;width: 550px;">Gil {{c.price}} / car / day</td>
+                        </tr>
+                        <tr style="height: 50px;">
+                            <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;background-color: #777;color: white;">IN STOCK</td>
+                            <td style="padding-left: 50px;width: 550px;" id="instock" value={{c.instock}}>{{c.instock}}</td>
+                        </tr>
+                    </table>
+                        {% if request.session.account %}
+                        <div class="container_button">
+                            <div class="center_button" id="rent_button">
+                                
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="container_button">
+                            <div class="center_button">
+                                <form action="/login " method="POST" class="btn-block">
+                                    {% csrf_token %}
+                                    <button class="button_style" style="width: 600px; height: 100px; font-size: xx-large" type="submit">RENT CAR</button>
+                                </form>
+                                
+                            </div>
+                        </div>
+                        {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            <p></p>
+            <h1 style="background-color: #4CAF50; color: white;font-size: xxx-large">SIMILAR BRAND</h1>
+            <div class="scroll-container">
+                {% for carb in carbrand %}
+                <a href="/carinfo/{{carb.brand}}_{{carb.model}}_{{carb.year}}">
+                    <div class="cell">
+                        <img src="{{carb.front.url}}" alt="Cinque Terre">
+                        <p style="text-align: center;text-transform: uppercase;">{{carb.brand}} {{carb.model}} {{carb.year}}</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+
+            <p></p>
+            <h1 style="background-color: #4CAF50; color: white;font-size: xxx-large">SIMILAR CATEGORY</h1>
+            <div class="scroll-container">
+                {% for carc in carcategory %}
+                <a href="/carinfo/{{carc.brand}}_{{carc.model}}_{{carc.year}}">
+                    <div class="cell">
+                        <img src="{{carc.front.url}}" alt="Cinque Terre">
+                        <p style="text-align: center;text-transform: uppercase;">{{carc.brand}} {{carc.model}} {{carc.year}}</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+
+            <script type="text/javascript">
+                if (document.getElementById('instock').value != 0) {
+                    brand = document.getElementById('cbrand').innerHTML;
+                    model = document.getElementById('cmodel').innerHTML;
+                    year = document.getElementById('cyear').innerHTML;
+                    document.getElementById('rent_button').innerHTML = `<a href="/addtocart/${brand}_${model}_${year}">
+                                                                            <button class="button_style" style="width: 600px; height: 100px; font-size: xx-large" type="submit">
+                                                                                RENT CAR
+                                                                            </button>
+                                                                        </a>`;
+                }
+                else {
+                    document.getElementById('rent_button').innerHTML = `<button class="button_style" style="width: 600px; height: 100px; font-size: xx-large" type="submit">
+                                                                            OUT OF STOCK
+                                                                        </button>`;
+                }
+            </script>
+        {% else %}
+        {% comment %} check_account_type returns "False" for manager layout {% endcomment %}
+            {% for c in carinfo %}
+            <h1 style="text-align: center; background-color: #333;color: white;">{{c.brand.name}} {{c.model}} {{c.year}}</h1>
+                
+            <div class="container">
+                <div class="mySlides">
+                    <div class="numbertext">1/3</div>
+                    <img src="{{c.front.url}}" style="width: 100%;">
+                </div>
+                <div class="mySlides">
+                    <div class="numbertext">2/3</div>
+                    <img src="{{c.back.url}}" style="width: 100%;">
+                </div>
+                <div class="mySlides">
+                    <div class="numbertext">3/3</div>
+                    <img src="{{c.interior.url}}" style="width: 100%;">
+                </div>
+                
+                <a class="prev" onclick="plusSlides(-1)">❮</a>
+                <a class="next" onclick="plusSlides(1)">❯</a>
+
+                <div class="caption-container">
+                    <p id="caption"></p>
+                </div>
+
+                <div class="row">
+                    <div class="column" style="background-color: white;">
+                        <img class="demo cursor" style="width: 500px; height: 400px;overflow: hidden;" src="{{c.front.url}}" onclick="currentSlide(1)" alt="Front Exterior">
+                    </div>
+                    <div class="column" style="background-color: white;">
+                        <img class="demo cursor" style="width: 500px; height: 400px;overflow: hidden;" src="{{c.back.url}}" onclick="currentSlide(2)" alt="Back Exterior">
+                    </div>
+                    <div class="column" style="background-color: white;">
+                        <img class="demo cursor" style="width: 500px; height: 400px;overflow: hidden;" src="{{c.interior.url}}" onclick="currentSlide(3)" alt="Interior">
                     </div>
                 </div>
-                {% endif %}
-        </div>
-    </div>
+            </div>
+
+            <script>
+                let slideIndex = 1;
+                    showSlides(slideIndex);
+                
+                function plusSlides(n) {
+                    showSlides(slideIndex += n);
+                }
+                
+                function currentSlide(n) {
+                    showSlides(slideIndex = n);
+                }
+                
+                function showSlides(n) {
+                    let i;
+                    let slides = document.getElementsByClassName("mySlides");
+                    let dots = document.getElementsByClassName("demo");
+                    let captionText = document.getElementById("caption");
+                    if (n > slides.length) {slideIndex = 1}
+                    if (n < 1) {slideIndex = slides.length}
+                    for (i = 0; i < slides.length; i++) {
+                        slides[i].style.display = "none";
+                    }
+                    for (i = 0; i < dots.length; i++) {
+                        dots[i].className = dots[i].className.replace(" active", "");
+                    }
+                    slides[slideIndex-1].style.display = "block";
+                    dots[slideIndex-1].className += " active";
+                    captionText.innerHTML = dots[slideIndex-1].alt;
+                }
+            </script>
+
+            <h1></h1>
+
+            <div class="s-row" style="background-color: white;">
+                <div class="s-column left">
+                    <h3 style="padding: 15px;padding-left: 50px; font-size: x-large;">DESCRIPTION</h3>
+                    <p style="padding: 15px;padding-left: 50px;">{{c.desintext}}</p>
+                </div>
+                <div class="s-column right">
+                    <table class="center" style="width: 100%;">
+                        <tr>
+                            <th style="display: none;">Header 1</th>
+                            <th style="display: none;">Header 2</th>
+                        </tr>
+                        <tr style="height: 50px;">
+                            <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px; background-color: #777;color: white;">MODEL</td>
+                            <td style="padding-left: 50px;width: 550px;">
+                                <div id="cmodel" value={{c.model}}>{{c.model}}</div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px;">
+                            <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;background-color: #777;color: white;">BRAND</td>
+                            <td style="padding-left: 50px;width: 550px;">
+                                <a href="/brandinfo/{{c.brand}}">
+                                    <div id="cbrand" value={{c.brand}}>{{c.brand}}</div>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px;">
+                            <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;background-color: #777;color: white;">YEAR</td>
+                            <td style="padding-left: 50px;width: 550px;">
+                                <div id="cyear" value={{c.year}}>{{c.year}}</div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px;">
+                            <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;background-color: #777;color: white;">CATEGORY</td>
+                            <td style="padding-left: 50px;width: 550px;">
+                                <a href="/category/{{c.category}}">{{c.category}}</a>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px;">
+                            <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;;background-color: #777;color: white;">PRICE</td>
+                            <td style="padding-left: 50px;width: 550px;">
+                                <img scr="https://static.wikia.nocookie.net/finalfantasy/images/1/1e/Gil_from_Final_Fantasy_XIV_icon.png/revision/latest?cb=20210429070746"> {{c.price}} / car / day
+                            </td>
+                        </tr>
+                        <tr style="height: 50px;">
+                            <td style="padding-left: 50px;padding-top: 20px;padding-bottom: 20px;background-color: #777;color: white;">IN STOCK</td>
+                            <td style="padding-left: 50px;width: 550px;" id="instock" value={{c.instock}}>{{c.instock}}</td>
+                        </tr>
+                    </table>
+                        {% if request.session.account %}
+                        <div class="container_button">
+                            <div class="center_button">
+                                <a href="/editcar/${brand}_${model}_${year}">
+                                    <button class="button_style" style="width: 600px; height: 100px; font-size: xx-large" type="submit">EDIT CAR</button>
+                                </a>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="container_button">
+                            <div class="center_button">
+                                <form action="/login " method="POST" class="btn-block">
+                                    {% csrf_token %}
+                                    <button class="button_style" style="width: 600px; height: 100px; font-size: xx-large" type="submit">RENT CAR</button>
+                                </form>
+                                
+                            </div>
+                        </div>
+                        {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            <p></p>
+            <h1 style="background-color: #4CAF50; color: white;font-size: xxx-large">SIMILAR BRAND</h1>
+            <div class="scroll-container">
+                {% for carb in carbrand %}
+                <a href="/carinfo/{{carb.brand}}_{{carb.model}}_{{carb.year}}">
+                    <div class="cell">
+                        <img src="{{carb.front.url}}" alt="Cinque Terre">
+                        <p style="text-align: center;text-transform: uppercase;">{{carb.brand}} {{carb.model}} {{carb.year}}</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+
+            <p></p>
+            <h1 style="background-color: #4CAF50; color: white;font-size: xxx-large">SIMILAR CATEGORY</h1>
+            <div class="scroll-container">
+                {% for carc in carcategory %}
+                <a href="/carinfo/{{carc.brand}}_{{carc.model}}_{{carc.year}}">
+                    <div class="cell">
+                        <img src="{{carc.front.url}}" alt="Cinque Terre">
+                        <p style="text-align: center;text-transform: uppercase;">{{carc.brand}} {{carc.model}} {{carc.year}}</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        {% endif %}
     {% endfor %}
-    <p></p>
-    <h1 style="background-color: #4CAF50; color: white;font-size: xxx-large">SIMILAR BRAND</h1>
-    <div class="scroll-container">
-        {% for carb in carbrand %}
-        <a href="/carinfo/{{carb.brand}}_{{carb.model}}_{{carb.year}}">
-            <div class="cell">
-                <img src="{{carb.front.url}}" alt="Cinque Terre">
-                <p style="text-align: center;text-transform: uppercase;">{{carb.brand}} {{carb.model}} {{carb.year}}</p>
-            </div>
-        </a>
-        {% endfor %}
-    </div>
-
-    <p></p>
-    <h1 style="background-color: #4CAF50; color: white;font-size: xxx-large">SIMILAR CATEGORY</h1>
-    <div class="scroll-container">
-        {% for carc in carcategory %}
-        <a href="/carinfo/{{carc.brand}}_{{carc.model}}_{{carc.year}}">
-            <div class="cell">
-                <img src="{{carc.front.url}}" alt="Cinque Terre">
-                <p style="text-align: center;text-transform: uppercase;">{{carc.brand}} {{carc.model}} {{carc.year}}</p>
-            </div>
-        </a>
-        {% endfor %}
-    </div>
-
-    <script type="text/javascript">
-        if (document.getElementById('instock').value != 0) {
-            brand = document.getElementById('cbrand').innerHTML;
-            model = document.getElementById('cmodel').innerHTML;
-            year = document.getElementById('cyear').innerHTML;
-            document.getElementById('rent_button').innerHTML = `<a href="/addtocart/${brand}_${model}_${year}">
-                                                                    <button class="button_style" style="width: 600px; height: 100px; font-size: xx-large" type="submit">
-                                                                        RENT CAR
-                                                                    </button>
-                                                                </a>`;
-        }
-        else {
-            document.getElementById('rent_button').innerHTML = `<button class="button_style" style="width: 600px; height: 100px; font-size: xx-large" type="submit">
-                                                                    OUT OF STOCK
-                                                                </button>`;
-        }
-    </script>
     
 {% endblock %}

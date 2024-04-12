@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 class Account(models.Model):
     username = models.CharField(max_length=50)
@@ -25,28 +26,47 @@ class Account(models.Model):
     def get_account_by_id(acc_id):
         return Account.objects.get(id=acc_id)
     
+    def get_username(self):
+        return self.username
+    
     def get_account_by_username(acc_username):
         try:
             return Account.objects.get(username=acc_username)
         except:
             return False
+        
+    def get_account_by_username_for_iterate(acc_username):
+         return Account.objects.filter(username=acc_username)
 
+    def get_account_by_keywords(keywords):
+        result = Account.objects.all()
+        for keyword in keywords:
+            result.filter(Q(username__icontains=keyword)|Q(firstname__icontains=keyword)|Q(lastname__icontains=keyword)|Q(email__icontains=keyword))
+        return result
 
     def isExistEmail(self):
-        if Account.objects.get(email = self.email):
+        acc_list = Account.objects.filter(email = self.email)
+        if acc_list.count() != 0:
             return True
-
-        return False
+        else:
+            return False
     
     def isExistUsername(self):
-        if Account.objects.get(username = self.username):
+        acc_list = Account.objects.filter(username = self.username)
+        if acc_list.count() != 0:
             return True
-
-        return False
+        else:
+            return False
     
     def check_pwd(acc_username):
         result = Account.objects.get(username = acc_username)
         return result
+    
+    def check_account_type(self):
+        if self.type == "customer":
+            return True
+        
+        return False
     
     def __str__(self):
         return self.firstname +" "+ self.lastname +" ("+ self.type +")"

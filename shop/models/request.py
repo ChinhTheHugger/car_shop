@@ -21,9 +21,12 @@ class Request(models.Model): # similar to "cart"
     def get_requests_by_customer(customer_username):
         return Request.objects.filter(customer=customer_username).annotate(mycolumn=Value('xxx', output_field=CharField()))
     
+    def get_all_requests(self):
+        return Request.objects.all()
+    
     def __str__(self):
-        customer = Account.get_account_by_username(customer)
-        return customer.__str__ + ", renting request made on" + str(self.date)
+        customer = Account.get_account_by_username(self.customer)
+        return customer.__str__() + ", renting request made on " + str(self.date)
     
     def update_or_create(car_name,customer_username):
         check_request = Request.objects.filter(customer=customer_username,car=car_name,status='False')
@@ -61,7 +64,45 @@ class Request(models.Model): # similar to "cart"
         request.delete()
         return
     
-    def cart_display(customer_username):
+    def search_requests_by_keywords(keywords): # car search for manager
+        customerlist = Account.get_account_by_keywords(keywords)
+        list = []
+        for cus in customerlist:
+            list.append(cus.get_username())
+        cart_items =  Request.objects.filter(customer__in=list).order_by('date')
+        cart_items.annotate(frontimg=Value('', output_field=ImageField(upload_to='uploads/fronts/')))
+        cart_items.annotate(carprice=Value('', output_field=IntegerField()))
+        cart_items.annotate(totalprice=Value('', output_field=IntegerField()))
+        cart_items.annotate(customername=Value('', output_field=CharField()))
+        for item in cart_items:
+            car_kw = str(item.car).split()
+            carinfo = Car.get_car_info_for_cart(car_kw[0],car_kw[1],car_kw[2])
+            item.frontimg = carinfo.get_front_img()
+            item.carprice = carinfo.get_price()
+            item.totalprice = item.quantity * carinfo.price
+            customerinfo = Account.get_account_by_username(item.customer)
+            item.customername = customerinfo.__str__()
+            item.save()
+        return cart_items
+    
+    def get_all_requests_for_cart_display(): # cart display for manager
+        cart_items =  Request.objects.all().order_by('date')
+        cart_items.annotate(frontimg=Value('', output_field=ImageField(upload_to='uploads/fronts/')))
+        cart_items.annotate(carprice=Value('', output_field=IntegerField()))
+        cart_items.annotate(totalprice=Value('', output_field=IntegerField()))
+        cart_items.annotate(customername=Value('', output_field=CharField()))
+        for item in cart_items:
+            car_kw = str(item.car).split()
+            carinfo = Car.get_car_info_for_cart(car_kw[0],car_kw[1],car_kw[2])
+            item.frontimg = carinfo.get_front_img()
+            item.carprice = carinfo.get_price()
+            item.totalprice = item.quantity * carinfo.price
+            customerinfo = Account.get_account_by_username(item.customer)
+            item.customername = customerinfo.__str__()
+            item.save()
+        return cart_items
+    
+    def cart_display(customer_username): # car display for customer
         cart_items =  Request.objects.filter(customer=customer_username)
         cart_items.annotate(frontimg=Value('', output_field=ImageField(upload_to='uploads/fronts/')))
         cart_items.annotate(carprice=Value('', output_field=IntegerField()))
