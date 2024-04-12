@@ -26,7 +26,7 @@ class Request(models.Model): # similar to "cart"
     
     def __str__(self):
         customer = Account.get_account_by_username(self.customer)
-        return customer.__str__() + ", renting request made on " + str(self.date)
+        return customer.__str__() + ", renting request for " + self.car + ", made on " + str(self.date)
     
     def update_or_create(car_name,customer_username):
         check_request = Request.objects.filter(customer=customer_username,car=car_name,status='False')
