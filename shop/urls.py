@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,re_path
 
 from .views.home import homepage
 from .views.carinfo import get_car
@@ -24,7 +24,7 @@ urlpatterns = [
     
     path('editcar/<slug:brand>_<slug:model>_<slug:year>', get_car_info_for_edit, name='edit-car'),
     
-    path(r'editcar/(?P<brnd>\d+)_(?P<mdl>\d+)_(?P<yr>\d+)/$', get_car_info_for_edit, name='edit-car-parameters'),
+    re_path(r'^editcar/(?P<brnd>\d+)_(?P<mdl>\d+)_(?P<yr>\d+)/$', get_car_info_for_edit, name='edit-car-parameters'),
     
     path('carconfirmchanges', UpdateDeleteCar.as_view(), name='update-delete-car'),
     

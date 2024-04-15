@@ -51,11 +51,192 @@
         }
 
 /* END SECTION: action button */
+
+    /* Create two unequal columns that floats next to each other */
+    .column {
+        float: left;
+        padding: 10px;
+    }
+
+    .left {
+        width: 75%;
+    }
+
+    .right {
+        width: 25%;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 </style>
 
 <body>
     <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> EDIT CAR </h2>
-    <form action="/updatedeletecar" method="POST" style="text-align: center;">
+    <form action="/updatedeletecar" method="POST" style="text-align: center;" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if error%}
+        <div class="alert alert-danger" role="alert" style="background-color: red;color: #333;font-size: xx-large;">
+            {{error}}
+        </div>
+        <p></p>
+        {% endif %}
+
+        <div class="row">
+            <div class="column left">
+                <table class="center" style="width: 75%;background-color: white;">
+                    <tr style="height: 75px; background-color: #4caf50;color: white">
+                        <th style="text-align: center"></th>
+                        <th style="text-align: center">CURRENT</th>
+                        <th style="text-align: center">NEW</th>
+                    </tr>
+                    {% for car in carinfo %}
+                    <tr style="height: 75px;">
+                        <div class="form-group">
+                            <td style="padding: 5px;background-color: #777;color: white; width: 20%">BRAND</td>
+                            <td style="padding: 5px;width: 40%;">
+                                <div name="brand-original" value={{car.brand}}>{{car.brand}}</div>
+                            </td>
+                            <td style="padding: 5px;width: 40%;">
+                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="brand"
+                     id="" value="{{values.brand_input}}" class="form-control form-control-sm" 
+                     placeholder="">
+                            </td>
+                            
+                        </div>
+                    </tr>
+                    <tr style="height: 75px;">
+                        <div class="form-group">
+                            <td style="padding: 5px;background-color: #777;color: white; width: 20%">MODEL</td>
+                            <td style="padding: 5px;width: 40%;">
+                                <div name="model-original" value={{car.model}}>{{car.model}}</div>
+                            </td>
+                            <td style="padding: 5px;width: 40%;">
+                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="model"
+                     id="" value="{{values.model_input}}" class="form-control form-control-sm" 
+                     placeholder="">
+                            </td>
+                            
+                        </div>
+                    </tr>
+                    <tr style="height: 75px;">
+                        <div class="form-group">
+                            <td style="padding: 5px;background-color: #777;color: white; width: 20%">YEAR</td>
+                            <td style="padding: 5px;width: 40%;">
+                                <div name="year-original" value={{car.year}}>{{car.year}}</div>
+                            </td>
+                            <td style="padding: 5px;width: 40%;">
+                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="year"
+                     id="" value="{{values.year_input}}" class="form-control form-control-sm" 
+                     placeholder="">
+                            </td>
+                            
+                        </div>
+                    </tr>
+                    <tr style="height: 75px;">
+                        <div class="form-group">
+                            <td style="padding: 5px;background-color: #777;color: white; width: 20%">CATEGORY</td>
+                            <td style="padding: 5px;width: 40%;">{{car.category}}</td>
+                            <td style="padding: 5px;width: 40%;">
+                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="category"
+                     id="" value="{{values.category_input}}" class="form-control form-control-sm" 
+                     placeholder="">
+                            </td>
+                            
+                        </div>
+                    </tr>
+                    <tr style="height: 75px;">
+                        <div class="form-group">
+                            <td style="padding: 5px;background-color: #777;color: white; width: 20%">DESCRIPTION</td>
+                            <td style="padding: 5px;width: 40%;">{{car.desintext}}</td>
+                            <td style="padding: 5px;width: 40%;">
+                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="desintext"
+                     id="" value="{{values.desintext_input}}" class="form-control form-control-sm" 
+                     placeholder="">
+                            </td>
+                            
+                        </div>
+                    </tr>
+                    <tr style="height: 75px;">
+                        <div class="form-group">
+                            <td style="padding: 5px;background-color: #777;color: white; width: 20%">IN STOCK</td>
+                            <td style="padding: 5px;width: 40%;">{{car.instock}}</td>
+                            <td style="padding: 5px;width: 40%;">
+                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="instock"
+                     id="" value="{{values.instock_input}}" class="form-control form-control-sm" 
+                     placeholder="">
+                            </td>
+                            
+                        </div>
+                    </tr>
+                    <tr style="height: 75px;">
+                        <div class="form-group">
+                            <td style="padding: 5px;background-color: #777;color: white; width: 20%">PRICE</td>
+                            <td style="padding: 5px;width: 40%;">{{car.price}}</td>
+                            <td style="padding: 5px;width: 40%;">
+                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="price"
+                     id="" value="{{values.price_input}}" class="form-control form-control-sm" 
+                     placeholder="">
+                            </td>
+                            
+                        </div>
+                    </tr>
+                    {% endfor %}
+                </table>
+        
+                {% for car in carinfo %}
+                <table class="center" style="width: 75%;background-color: white;">
+                    <tr style="height: 75px;">
+                        <div class="form-group">
+                            <td style="padding: 5px;background-color: #777;color: white; width: 20%">FRONT</td>
+                            <td style="padding: 5px;width: 40%;">
+                                <img src="{{car.front.url}}" alt="Cinque Terre" style="height: 200px">
+                            </td>
+                            <td style="padding: 5px;width: 40%;">
+                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" name="price"
+                     id="" class="form-control form-control-sm" 
+                     placeholder="">
+                            </td>
+                            
+                        </div>
+                    </tr>
+                    <tr style="height: 75px;">
+                        <div class="form-group">
+                            <td style="padding: 5px;background-color: #777;color: white; width: 20%">BACK</td>
+                            <td style="padding: 5px;width: 40%;">
+                                <img src="{{car.back.url}}" alt="Cinque Terre" style="height: 200px">
+                            </td>
+                            <td style="padding: 5px;width: 40%;">
+                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" name="price"
+                     id="" class="form-control form-control-sm" 
+                     placeholder="">
+                            </td>
+                            
+                        </div>
+                    </tr>
+                    <tr style="height: 75px;">
+                        <div class="form-group">
+                            <td style="padding: 5px;background-color: #777;color: white; width: 20%">INTERIOR</td>
+                            <td style="padding: 5px;width: 40%;">
+                                <img src="{{car.interior.url}}" alt="Cinque Terre" style="height: 200px">
+                            </td>
+                            <td style="padding: 5px;width: 40%;">
+                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" name="price"
+                     id="" class="form-control form-control-sm" 
+                     placeholder="">
+                            </td>
+                            
+                        </div>
+                    </tr>
+                </table>
+                {% endfor %}
+            </div>
+            <div class="column right"></div>
+        </div>
     </form>
 </body>
 {% endblock %}

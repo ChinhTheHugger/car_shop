@@ -1,6 +1,8 @@
 from django.db import models
 from django.db.models import Q
 from django.core.validators import FileExtensionValidator
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 class Car(models.Model):
     brand= models.CharField(max_length=50,null=True)
@@ -63,6 +65,49 @@ class Car(models.Model):
     
     def get_car_info_for_cart(brand_in,model_in,year_in):
         return Car.objects.get(brand=brand_in,model=model_in,year=year_in)
+    
+    def set_up_edited_car(brnd,mdl,yr,ctgr,des,frnt,bck,intr,stock,prc):
+        return Car(brand=brnd,model=mdl,year=yr,category=ctgr,desintext=des,front=frnt,back=bck,interior=intr,instock=stock,price=prc)
+    
+    def update_car(brnd,mdl,yr,ctgr,des,frnt,bck,intr,stock,prc,old_brand,old_model,old_year):
+        edited_car = Car.get_car_info(old_brand,old_model,old_year)
+        for car in edited_car:
+            car.brand = brnd
+            car.model = mdl
+            car.year = yr
+            car.category = ctgr
+            car.desintext = des
+            car.instock = stock
+            car.price = prc
+            
+            car.front.open('wb')
+            new_front = open(frnt,'rb')
+            car.front.write(new_front.read())
+            new_front.close()
+            car.front.close()
+            
+            car.back.open('wb')
+            new_back = open(frnt,'rb')
+            car.back.write(new_back.read())
+            new_back.close()
+            car.back.close()
+            
+            car.interior.open('wb')
+            new_interior = open(frnt,'rb')
+            car.interior.write(new_interior.read())
+            new_interior.close()
+            car.interior.close()
+            
+            car.save()
+        
+        return
+    
+    def isExist(self):
+        car = Car.objects.filter(brand=self.brand,model=self.model,year=self.year)
+        if car:
+            return True
+        
+        return False
     
     def get_brand(self):
         return self.brand
