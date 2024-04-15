@@ -109,6 +109,11 @@ class Car(models.Model):
         
         return False
     
+    def remove_car(brand_in,model_in,year_in):
+        car = Car.objects.get(brand=brand_in,model=model_in,year=year_in)
+        car.delete()
+        return
+    
     def get_brand(self):
         return self.brand
     

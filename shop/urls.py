@@ -26,7 +26,7 @@ urlpatterns = [
     
     re_path(r'^editcar/(?P<brnd>\d+)_(?P<mdl>\d+)_(?P<yr>\d+)/$', get_car_info_for_edit, name='edit-car-parameters'),
     
-    path('carconfirmchanges', UpdateDeleteCar.as_view(), name='update-delete-car'),
+    path('updatedeletecar', UpdateDeleteCar.as_view(), name='update-delete-car'),
     
     # brand
     path('brandinfo/<slug:name>', get_brand, name='get-brand'),

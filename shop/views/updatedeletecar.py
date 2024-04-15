@@ -3,6 +3,8 @@ from django.contrib.auth.hashers import make_password
 from shop.models.car import Car
 from shop.models.account import Account
 from django.views import View
+import codecs
+from django.utils.encoding import force_bytes
 
 class UpdateDeleteCar(View):
     def post(self, request):
@@ -18,13 +20,18 @@ class UpdateDeleteCar(View):
         instock_new = request.POST.get('instock')
         price_new = request.POST.get('price')
         
-        front_new = request.FILE('front')
-        back_new = request.FILE('front')
-        interior_new = request.FILE('front')
+        front_new = request.FILES.get('front')
+        back_new = request.FILES.get('back')
+        interior_new = request.FILES.get('interior')
+        
+        button_action = request.POST.get('action_button')
 
         brand_new = str(brand_new).upper()
         model_new = str(model_new).upper()
         category_new = str(category_new).upper()
+        front_new = force_bytes(front_new)
+        back_new = force_bytes()
+        interior_new = interior_new.file.read()
         error_message = None
         values = {
             'brand_input': brand_new,
@@ -35,19 +42,26 @@ class UpdateDeleteCar(View):
             'instock_input': instock_new,
             'price_input': price_new,
         }
+        print(front_new)
+        original_car = Car.get_car_info_for_cart(brand_original,model_original,year_original)
         edited_car = Car.set_up_edited_car(brand_new,model_new,year_new,category_new,desintext_new,front_new,back_new,interior_new,instock_new,price_new)
         
+        self.setupCar(original_car,edited_car)
         error_message = self.validateCar(edited_car)
         
-        if not error_message:
-            Car.update_car(brand_new,model_new,year_new,category_new,desintext_new,front_new,back_new,interior_new,instock_new,price_new,brand_original,model_original,year_original)
-            return redirect('edit-car-parameters',brnd=brand_new,mdl=model_new,yr=year_new)
-        else:
-            data = {
-                'error': error_message,
-                'values': values
-            }
-            return render(request,'editcar.html',data)
+        if button_action == "update":
+            if not error_message:
+                Car.update_car(brand_new,model_new,year_new,category_new,desintext_new,front_new,back_new,interior_new,instock_new,price_new,brand_original,model_original,year_original)
+                return redirect('edit-car-parameters',brnd=brand_new,mdl=model_new,yr=year_new)
+            else:
+                data = {
+                    'error': error_message,
+                    'values': values
+                }
+                return render(request,'editcar.html',data)
+        if button_action == "delete":
+            Car.remove_car(brand_original,model_original,year_original)
+            return redirect('homepage')
             
     
     # def validateCar(self,edited_car):
@@ -89,3 +103,27 @@ class UpdateDeleteCar(View):
             error_message = "Invalid file type for car's interior view!!"
         
         return error_message
+    
+    def setupCar(self,original_car,edited_car):
+        if edited_car.brand == None:
+            edited_car.brand = original_car.brand
+        if edited_car.model == None:
+            edited_car.model = original_car.model
+        if edited_car.year == None:
+            edited_car.year = original_car.year
+        if edited_car.category == None:
+            edited_car.category = original_car.category
+        if edited_car.desintext == None:
+            edited_car.desintext = original_car.desintext
+        if edited_car.instock == None:
+            edited_car.instock = original_car.instock
+        if edited_car.price == None:
+            edited_car.price = original_car.price
+        if edited_car.front == None:
+            edited_car.front = original_car.front
+        if edited_car.back == None:
+            edited_car.back = original_car.back
+        if edited_car.interior == None:
+            edited_car.interior = original_car.interior
+            
+        return

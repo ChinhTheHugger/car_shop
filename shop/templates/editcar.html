@@ -88,7 +88,7 @@
 
         <div class="row">
             <div class="column left">
-                <table class="center" style="width: 75%;background-color: white;">
+                <table class="center" style="width: 100%;background-color: white;">
                     <tr style="height: 75px; background-color: #4caf50;color: white">
                         <th style="text-align: center"></th>
                         <th style="text-align: center">CURRENT</th>
@@ -99,7 +99,9 @@
                         <div class="form-group">
                             <td style="padding: 5px;background-color: #777;color: white; width: 20%">BRAND</td>
                             <td style="padding: 5px;width: 40%;">
-                                <div name="brand-original" value={{car.brand}}>{{car.brand}}</div>
+                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="brand-original"
+                     id="" value="{{car.brand}}" class="form-control form-control-sm" 
+                     placeholder="" readonly>
                             </td>
                             <td style="padding: 5px;width: 40%;">
                                 <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="brand"
@@ -113,7 +115,9 @@
                         <div class="form-group">
                             <td style="padding: 5px;background-color: #777;color: white; width: 20%">MODEL</td>
                             <td style="padding: 5px;width: 40%;">
-                                <div name="model-original" value={{car.model}}>{{car.model}}</div>
+                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="model-original"
+                     id="" value="{{car.model}}" class="form-control form-control-sm" 
+                     placeholder="" readonly>
                             </td>
                             <td style="padding: 5px;width: 40%;">
                                 <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="model"
@@ -127,10 +131,12 @@
                         <div class="form-group">
                             <td style="padding: 5px;background-color: #777;color: white; width: 20%">YEAR</td>
                             <td style="padding: 5px;width: 40%;">
-                                <div name="year-original" value={{car.year}}>{{car.year}}</div>
+                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="year-original"
+                     id="" value="{{car.year}}" class="form-control form-control-sm" 
+                     placeholder="" readonly>
                             </td>
                             <td style="padding: 5px;width: 40%;">
-                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="year"
+                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="number" name="year"
                      id="" value="{{values.year_input}}" class="form-control form-control-sm" 
                      placeholder="">
                             </td>
@@ -189,7 +195,7 @@
                 </table>
         
                 {% for car in carinfo %}
-                <table class="center" style="width: 75%;background-color: white;">
+                <table class="center" style="width: 100%;background-color: white;">
                     <tr style="height: 75px;">
                         <div class="form-group">
                             <td style="padding: 5px;background-color: #777;color: white; width: 20%">FRONT</td>
@@ -197,7 +203,7 @@
                                 <img src="{{car.front.url}}" alt="Cinque Terre" style="height: 200px">
                             </td>
                             <td style="padding: 5px;width: 40%;">
-                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" name="price"
+                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" name="front"
                      id="" class="form-control form-control-sm" 
                      placeholder="">
                             </td>
@@ -211,7 +217,7 @@
                                 <img src="{{car.back.url}}" alt="Cinque Terre" style="height: 200px">
                             </td>
                             <td style="padding: 5px;width: 40%;">
-                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" name="price"
+                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" name="back"
                      id="" class="form-control form-control-sm" 
                      placeholder="">
                             </td>
@@ -225,7 +231,7 @@
                                 <img src="{{car.interior.url}}" alt="Cinque Terre" style="height: 200px">
                             </td>
                             <td style="padding: 5px;width: 40%;">
-                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" name="price"
+                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" name="interior"
                      id="" class="form-control form-control-sm" 
                      placeholder="">
                             </td>
@@ -235,7 +241,22 @@
                 </table>
                 {% endfor %}
             </div>
-            <div class="column right"></div>
+            <div class="column right">
+                <button class="button_style" style=" height: 95%; font-size: xx-large" type="submit" name="action_button" value="update">UPDATE</button>
+                <button class="button_style" style=" height: 95%; font-size: xx-large" type="submit" name="action_button" value="delete">DELETE</button>
+
+                <script>
+                    function myFunction() {
+                        var txt;
+                        if (confirm("Do you wish to delete this car?")) {
+                            document.getElementById("myBtn").type = "submit"
+                        } else {
+                            document.getElementById("myBtn").type = "button"
+                        }
+                        document.getElementById("demo").innerHTML = txt;
+                    }
+                </script>
+            </div>
         </div>
     </form>
 </body>
