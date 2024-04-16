@@ -20,9 +20,9 @@ class UpdateDeleteCar(View):
         instock_new = request.POST.get('instock')
         price_new = request.POST.get('price')
         
-        front_new = request.FILES.get('front')
-        back_new = request.FILES.get('back')
-        interior_new = request.FILES.get('interior')
+        front_new = request.FILES.get('front', False)
+        back_new = request.FILES.get('back', False)
+        interior_new = request.FILES.get('interior', False)
         
         button_action = request.POST.get('action_button')
 
@@ -30,8 +30,8 @@ class UpdateDeleteCar(View):
         model_new = str(model_new).upper()
         category_new = str(category_new).upper()
         front_new = force_bytes(front_new)
-        back_new = force_bytes()
-        interior_new = interior_new.file.read()
+        back_new = force_bytes(back_new)
+        interior_new = force_bytes(interior_new)
         error_message = None
         values = {
             'brand_input': brand_new,
@@ -52,13 +52,13 @@ class UpdateDeleteCar(View):
         if button_action == "update":
             if not error_message:
                 Car.update_car(brand_new,model_new,year_new,category_new,desintext_new,front_new,back_new,interior_new,instock_new,price_new,brand_original,model_original,year_original)
-                return redirect('edit-car-parameters',brnd=brand_new,mdl=model_new,yr=year_new)
+                return redirect('edit-car',brand=brand_new,model=model_new,year=year_new)
             else:
                 data = {
                     'error': error_message,
                     'values': values
                 }
-                return render(request,'editcar.html',data)
+                return redirect('edit-car',brand=brand_new,model=model_new,year=year_new)
         if button_action == "delete":
             Car.remove_car(brand_original,model_original,year_original)
             return redirect('homepage')
@@ -93,8 +93,6 @@ class UpdateDeleteCar(View):
     
     def validateCar(self,edited_car):
         error_message = None
-        if edited_car.isExist():
-            error_message = "Car already exists!! (matching brand, model and manufacture year)"
         if (not edited_car.front):
             error_message = "Invalid file type for car's front view!!"
         if (not edited_car.back):
