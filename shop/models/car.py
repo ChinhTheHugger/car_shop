@@ -51,13 +51,9 @@ class Car(models.Model):
         return result
     
     def get_car_model_distinct():
-        # distinct = Car.objects.values('model').distinct().order_by('model')
-        # return Car.objects.filter(model__in=[item['model'] for item in distinct]).order_by('model')
         return Car.objects.values('model').distinct().order_by('model')
     
     def get_car_year_distinct():
-        # distinct = Car.objects.values('year').distinct().order_by('year')
-        # return Car.objects.filter(year__in=[item['year'] for item in distinct]).order_by('year')
         return Car.objects.values('year').distinct().order_by('year')
     
     def get_car_info(brand_in,model_in,year_in):
@@ -86,11 +82,11 @@ class Car(models.Model):
                 car.instock = stock
             if prc != "":
                 car.price = prc
-            if frnt != "":
+            if frnt != "no new image uploaded":
                 car.front = frnt
-            if bck != "":
+            if bck != "no new image uploaded":
                 car.back = bck
-            if intr != "":
+            if intr != "no new image uploaded":
                 car.interior = intr
             
             car.save()
