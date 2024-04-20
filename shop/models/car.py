@@ -72,31 +72,26 @@ class Car(models.Model):
     def update_car(brnd,mdl,yr,ctgr,des,frnt,bck,intr,stock,prc,old_brand,old_model,old_year):
         edited_car = Car.get_car_info(old_brand,old_model,old_year)
         for car in edited_car:
-            car.brand = brnd
-            car.model = mdl
-            car.year = yr
-            car.category = ctgr
-            car.desintext = des
-            car.instock = stock
-            car.price = prc
-            
-            car.front.open('wb')
-            new_front = open(frnt,'rb')
-            car.front.write(new_front.read())
-            new_front.close()
-            car.front.close()
-            
-            car.back.open('wb')
-            new_back = open(frnt,'rb')
-            car.back.write(new_back.read())
-            new_back.close()
-            car.back.close()
-            
-            car.interior.open('wb')
-            new_interior = open(frnt,'rb')
-            car.interior.write(new_interior.read())
-            new_interior.close()
-            car.interior.close()
+            if brnd != "":
+                car.brand = brnd
+            if mdl != "":
+                car.model = mdl
+            if yr != "":
+                car.year = yr
+            if ctgr != "":
+                car.category = ctgr
+            if des != "":
+                car.desintext = des
+            if stock != "":
+                car.instock = stock
+            if prc != "":
+                car.price = prc
+            if frnt != "":
+                car.front = frnt
+            if bck != "":
+                car.back = bck
+            if intr != "":
+                car.interior = intr
             
             car.save()
         
@@ -123,8 +118,23 @@ class Car(models.Model):
     def get_year(self):
         return self.year
     
+    def get_category(self):
+        return self.category
+    
+    def get_desintext(self):
+        return self.desintext
+    
     def get_front_img(self):
         return self.front
+    
+    def get_back_img(self):
+        return self.back
+    
+    def get_interior_img(self):
+        return self.interior
+    
+    def get_stock(self):
+        return self.instock
     
     def get_price(self):
         return self.price

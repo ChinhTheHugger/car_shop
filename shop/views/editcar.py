@@ -10,13 +10,25 @@ def get_car_info_for_edit(request,brand,model,year):
     carinfo = Car.get_car_info(brand,model,year)
     for car in carinfo:
         values = {
-            'brand_input': car.brand,
-            'model_input': car.model,
-            'year_input': car.year,
-            'category_input': car.category,
-            'desintext_input': car.desintext,
-            'instock_input': car.instock,
-            'price_input': car.price,
+            'brand': car.get_brand,
+            'model': car.get_model,
+            'year': car.get_year,
+            'category': car.get_category,
+            'desintext': car.get_desintext,
+            'instock': car.get_stock,
+            'price': car.get_price,
+            'front': car.get_front_img,
+            'back': car.get_back_img,
+            'interior': car.get_interior_img
         }
-    context = {'carinfo': carinfo, 'account': customerinfo, 'values': values}
+    values_new = {
+            'brand': "",
+            'model': "",
+            'year': "",
+            'category': "",
+            'desintext': "",
+            'instock': "",
+            'price': ""
+        }
+    context = {'carinfo': carinfo, 'account': customerinfo, 'values': values, 'values_new': values_new}
     return render(request,'editcar.html',context)

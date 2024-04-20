@@ -104,10 +104,9 @@
    /* END SECTION: scroll gallery */
     </style>
 
-    {% for b in brand %}
     <div class="container" style="background-color: white;">
         <div class="img">
-            <img style="text-align: center;" src="{{b.brandlogo.url}}" alt="Logo">
+            <img style="text-align: center;" src="{{brand.brandlogo.url}}" alt="Logo">
         </div>
         <div class="text" style="background-color: white;">
             <table class="center" style="width: 100%;">
@@ -117,24 +116,23 @@
                 </tr>
                 <tr style="height: 75px;">
                     <td style="padding: 5px;padding-left: 20px;background-color: #777;color: white; width: 200px;">NAME</td>
-                    <td style="padding: 5px;padding-left: 20px;">{{b.brandname}}</td>
+                    <td style="padding: 5px;padding-left: 20px;">{{brand.brandname}}</td>
                 </tr>
                 <tr style="height: 75px;">
                     <td style="padding: 5px;padding-left: 20px;background-color: #777;color: white; width: 200px;">WEBSITE</td>
                     <td style="padding: 5px;padding-left: 20px;">
-                        <a href="https://{{b.website}}">{{b.website}}</a>
+                        <a href="https://{{brand.website}}">{{brand.website}}</a>
                     </td>
                 </tr>
                 <tr style="height: 250px;">
                     <td style="padding: 5px;padding-left: 20px; background-color: #777;color: white; width: 200px;">DESCRIPTION</td>
-                    <td style="padding: 5px;padding-left: 20px;">{{b.desintext}}</td>
+                    <td style="padding: 5px;padding-left: 20px;">{{brand.desintext}}</td>
                 </tr>
             </table>
         </div>
     </div>
 
-    <h1 style="background-color: #4CAF50; color: white;text-align: center;font-size: xxx-large">{{b.name}}'S MOST POPULAR CARS</h1>
-    {% endfor %}
+    <h1 style="background-color: #4CAF50; color: white;text-align: center;font-size: xxx-large">{{brand.brandname}}'S MOST POPULAR CARS</h1>
     <div class="scroll-container">
         {% for carMP in car %}
         <a href="/carinfo/{{carMP.brand}}_{{carMP.model}}_{{carMP.year}}">

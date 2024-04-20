@@ -5,9 +5,14 @@ from shop.models.account import Account
 from django.views import View
 import codecs
 from django.utils.encoding import force_bytes
+from django.core.files.storage import FileSystemStorage
+from upload_validator import FileTypeValidator
 
 class UpdateDeleteCar(View):
     def post(self, request):
+        customerusername = request.session.get('account')
+        customerinfo = Account.get_account_by_username_for_iterate(customerusername)
+    
         brand_original = request.POST.get('brand-original')
         model_original = request.POST.get('model-original')
         year_original = request.POST.get('year-original')
@@ -26,39 +31,85 @@ class UpdateDeleteCar(View):
         
         button_action = request.POST.get('action_button')
 
-        brand_new = str(brand_new).upper()
-        model_new = str(model_new).upper()
-        category_new = str(category_new).upper()
-        front_new = force_bytes(front_new)
-        back_new = force_bytes(back_new)
-        interior_new = force_bytes(interior_new)
-        error_message = None
-        values = {
-            'brand_input': brand_new,
-            'model_input': model_new,
-            'year_input': year_new,
-            'category_input': category_new,
-            'desintext_input': desintext_new,
-            'instock_input': instock_new,
-            'price_input': price_new,
-        }
-        print(front_new)
         original_car = Car.get_car_info_for_cart(brand_original,model_original,year_original)
-        edited_car = Car.set_up_edited_car(brand_new,model_new,year_new,category_new,desintext_new,front_new,back_new,interior_new,instock_new,price_new)
         
-        self.setupCar(original_car,edited_car)
-        error_message = self.validateCar(edited_car)
+        if brand_new:
+            brand_new = str(brand_new).upper()
+        else:
+            brand_new = brand_original
+            
+        if model_new:
+            model_new = str(model_new).upper()
+        else:
+            model_new = model_original
+            
+        if year_new:
+            category_new = str(category_new).upper()
+        else:
+            year_new = year_original
+        
+        if front_new:
+            save_new_front =  FileSystemStorage(location='upload/fronts/').save(front_new.name,front_new)
+            new_front_url = FileSystemStorage(location='uploads/fronts/').url(save_new_front)
+        else:
+            new_front_url = ""
+        
+        if back_new:
+            save_new_back =  FileSystemStorage(location='upload/backs/').save(back_new.name,back_new)
+            new_back_url = FileSystemStorage(location='uploads/backs/').url(save_new_back)
+        else:
+            new_back_url = ""
+        
+        if interior_new:
+            save_new_interior =  FileSystemStorage(location='upload/interiors/').save(interior_new.name,interior_new)
+            new_interior_url = FileSystemStorage(location='uploads/interiors/').url(save_new_interior)
+        else:
+            new_interior_url = ""
+        
+        error_message = None
+        
+        carinfo = Car.get_car_info(brand_original,model_original,year_original)
+        for car in carinfo:
+            values = {
+                'brand': car.get_brand,
+                'model': car.get_model,
+                'year': car.get_year,
+                'category': car.get_category,
+                'desintext': car.get_desintext,
+                'instock': car.get_stock,
+                'price': car.get_price,
+                'front': car.get_front_img,
+                'back': car.get_back_img,
+                'interior': car.get_interior_img
+            }
+        
+        
+        original_car = Car.get_car_info_for_cart(brand_original,model_original,year_original)
+        edited_car = Car.set_up_edited_car(brand_new,model_new,year_new,category_new,desintext_new,new_front_url,new_back_url,new_interior_url,instock_new,price_new)
+        
+        error_message = self.validateCar(edited_car,brand_original,model_original,year_original)
         
         if button_action == "update":
             if not error_message:
                 Car.update_car(brand_new,model_new,year_new,category_new,desintext_new,front_new,back_new,interior_new,instock_new,price_new,brand_original,model_original,year_original)
                 return redirect('edit-car',brand=brand_new,model=model_new,year=year_new)
             else:
+                values_new = {
+                    'brand': brand_new,
+                    'model':model_new,
+                    'year': year_new,
+                    'category': category_new,
+                    'desintext': desintext_new,
+                    'instock': instock_new,
+                    'price': price_new
+                }
                 data = {
                     'error': error_message,
-                    'values': values
+                    'values': values,
+                    'values_new': values_new,
+                    'account': customerinfo
                 }
-                return redirect('edit-car',brand=brand_new,model=model_new,year=year_new)
+                return render(request,'editcar.html',data)
         if button_action == "delete":
             Car.remove_car(brand_original,model_original,year_original)
             return redirect('homepage')
@@ -91,37 +142,10 @@ class UpdateDeleteCar(View):
         
     #     return error_message
     
-    def validateCar(self,edited_car):
+    def validateCar(self,edited_car,brnd,mdl,yr):
+        validator = FileTypeValidator(allowed_types=['images/*'])
         error_message = None
-        if (not edited_car.front):
-            error_message = "Invalid file type for car's front view!!"
-        if (not edited_car.back):
-            error_message = "Invalid file type for car's rear view!!"
-        if (not edited_car.interior):
-            error_message = "Invalid file type for car's interior view!!"
+        if edited_car.isExist() and edited_car.brand != brnd and edited_car.model != mdl and edited_car.year != yr:
+            error_message = "The brand, model, year combination already belongs to another car!!"
         
         return error_message
-    
-    def setupCar(self,original_car,edited_car):
-        if edited_car.brand == None:
-            edited_car.brand = original_car.brand
-        if edited_car.model == None:
-            edited_car.model = original_car.model
-        if edited_car.year == None:
-            edited_car.year = original_car.year
-        if edited_car.category == None:
-            edited_car.category = original_car.category
-        if edited_car.desintext == None:
-            edited_car.desintext = original_car.desintext
-        if edited_car.instock == None:
-            edited_car.instock = original_car.instock
-        if edited_car.price == None:
-            edited_car.price = original_car.price
-        if edited_car.front == None:
-            edited_car.front = original_car.front
-        if edited_car.back == None:
-            edited_car.back = original_car.back
-        if edited_car.interior == None:
-            edited_car.interior = original_car.interior
-            
-        return
