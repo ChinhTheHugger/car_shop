@@ -49,19 +49,19 @@ class UpdateDeleteCar(View):
             year_new = year_original
         
         if front_new != False:
-            save_new_front =  FileSystemStorage(location='upload/fronts/').save(front_new.name,front_new)
+            save_new_front =  FileSystemStorage(location='uploads/fronts/').save(front_new.name,front_new)
             new_front_url = FileSystemStorage(location='uploads/fronts/').url(save_new_front)
         else:
             new_front_url = "no new image uploaded"
         
         if back_new != False:
-            save_new_back =  FileSystemStorage(location='upload/backs/').save(back_new.name,back_new)
+            save_new_back =  FileSystemStorage(location='uploads/backs/').save(back_new.name,back_new)
             new_back_url = FileSystemStorage(location='uploads/backs/').url(save_new_back)
         else:
             new_back_url = "no new image uploaded"
         
         if interior_new != False:
-            save_new_interior =  FileSystemStorage(location='upload/interiors/').save(interior_new.name,interior_new)
+            save_new_interior =  FileSystemStorage(location='uploads/interiors/').save(interior_new.name,interior_new)
             new_interior_url = FileSystemStorage(location='uploads/interiors/').url(save_new_interior)
         else:
             new_interior_url = "no new image uploaded"
