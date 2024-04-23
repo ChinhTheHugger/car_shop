@@ -7,6 +7,7 @@ import codecs
 from django.utils.encoding import force_bytes
 from django.core.files.storage import FileSystemStorage
 from upload_validator import FileTypeValidator
+from django.core.files.uploadedfile import TemporaryUploadedFile
 
 class UpdateDeleteCar(View):
     def post(self, request):
@@ -49,22 +50,22 @@ class UpdateDeleteCar(View):
             year_new = year_original
         
         if front_new != False:
-            save_new_front =  FileSystemStorage(location='uploads/fronts/').save(front_new.name,front_new)
-            new_front_url = FileSystemStorage(location='uploads/fronts/').url(save_new_front)
+            save_new_front =  FileSystemStorage(location='uploads/fronts/',base_url='uploads/fronts/').save(front_new.name,front_new)
+            new_front_url = FileSystemStorage(location='uploads/fronts/',base_url='uploads/fronts/').url(save_new_front)
         else:
-            new_front_url = "no new image uploaded"
+            new_front_url = ""
         
         if back_new != False:
-            save_new_back =  FileSystemStorage(location='uploads/backs/').save(back_new.name,back_new)
-            new_back_url = FileSystemStorage(location='uploads/backs/').url(save_new_back)
+            save_new_back =  FileSystemStorage(location='uploads/backs/',base_url='uploads/backs/').save(back_new.name,back_new)
+            new_back_url = FileSystemStorage(location='uploads/backs/',base_url='uploads/backs/').url(save_new_back)
         else:
-            new_back_url = "no new image uploaded"
+            new_back_url = ""
         
         if interior_new != False:
-            save_new_interior =  FileSystemStorage(location='uploads/interiors/').save(interior_new.name,interior_new)
-            new_interior_url = FileSystemStorage(location='uploads/interiors/').url(save_new_interior)
+            save_new_interior =  FileSystemStorage(location='uploads/interiors/',base_url='uploads/interiors/').save(interior_new.name,interior_new)
+            new_interior_url = FileSystemStorage(location='uploads/interiors/',base_url='uploads/interiors/').url(save_new_interior)
         else:
-            new_interior_url = "no new image uploaded"
+            new_interior_url = ""
         
         error_message = None
         
@@ -83,15 +84,13 @@ class UpdateDeleteCar(View):
                 'interior': car.get_interior_img
             }
         
-        
-        original_car = Car.get_car_info_for_cart(brand_original,model_original,year_original)
         edited_car = Car.set_up_edited_car(brand_new,model_new,year_new,category_new,desintext_new,new_front_url,new_back_url,new_interior_url,instock_new,price_new)
         
         error_message = self.validateCar(edited_car,brand_original,model_original,year_original)
         
         if button_action == "update":
             if not error_message:
-                Car.update_car(brand_new,model_new,year_new,category_new,desintext_new,front_new,back_new,interior_new,instock_new,price_new,brand_original,model_original,year_original)
+                Car.update_car(brand_new,model_new,year_new,category_new,desintext_new,new_front_url,new_back_url,new_interior_url,instock_new,price_new)
                 return redirect('edit-car',brand=brand_new,model=model_new,year=year_new)
             else:
                 values_new = {

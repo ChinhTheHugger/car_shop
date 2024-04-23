@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.core.validators import FileExtensionValidator
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+from django.core.files.storage import FileSystemStorage
 
 class Car(models.Model):
     brand= models.CharField(max_length=50,null=True)
@@ -65,31 +66,32 @@ class Car(models.Model):
     def set_up_edited_car(brnd,mdl,yr,ctgr,des,frnt,bck,intr,stock,prc):
         return Car(brand=brnd,model=mdl,year=yr,category=ctgr,desintext=des,front=frnt,back=bck,interior=intr,instock=stock,price=prc)
     
-    def update_car(brnd,mdl,yr,ctgr,des,frnt,bck,intr,stock,prc,old_brand,old_model,old_year):
-        edited_car = Car.get_car_info(old_brand,old_model,old_year)
-        for car in edited_car:
-            if brnd != "":
-                car.brand = brnd
-            if mdl != "":
-                car.model = mdl
-            if yr != "":
-                car.year = yr
-            if ctgr != "":
-                car.category = ctgr
-            if des != "":
-                car.desintext = des
-            if stock != "":
-                car.instock = stock
-            if prc != "":
-                car.price = prc
-            if frnt != "no new image uploaded":
-                car.front = frnt
-            if bck != "no new image uploaded":
-                car.back = bck
-            if intr != "no new image uploaded":
-                car.interior = intr
-            
-            car.save()
+    def update_car(brnd,mdl,yr,ctgr,des,frnt,bck,intr,stock,prc):
+        car = Car.objects.get(brand=brnd,model=mdl,year=yr)
+        if brnd != "":
+            car.brand = brnd
+        if mdl != "":
+            car.model = mdl
+        if yr != "":
+            car.year = yr
+        if ctgr != "":
+            car.category = ctgr
+        if des != "":
+            car.desintext = des
+        if stock != "":
+            car.instock = stock
+        if prc != "":
+            car.price = prc
+        if frnt != "":
+            car.front = frnt
+        if bck != "":
+            car.back = bck
+        if intr != "":
+            car.interior = intr
+        print(car.front)
+        print(car.back)
+        print(car.interior)
+        car.save()
         
         return
     
