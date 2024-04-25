@@ -34,11 +34,11 @@
         }
 
         .left {
-            width: 60%;
+            width: 40%;
         }
 
         .right {
-            width: 40%;
+            width: 60%;
         }
 
 /* END SECTION: split columns */
@@ -102,21 +102,69 @@
                }
    
    /* END SECTION: scroll gallery */
+
+   /* SECTION: action button */
+
+        .container_button {
+            height: 100px;
+            position: relative;
+            border: none;
+        }
+
+        .center_button {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .button_style {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button_style:hover {
+            color: black;
+            background-color: gold;
+        }
+
+/* END SECTION: action button */
     </style>
 
     <div class="container" style="background-color: white;">
         <div class="img">
-            <img style="text-align: center;" src="{{brand.brandlogo.url}}" alt="Logo">
+            <img style="text-align: center; width: 350px; height: 350px" src="{{brand.brandlogo.url}}" alt="Logo">
         </div>
         <div class="text" style="background-color: white;">
-            <table class="center" style="width: 100%;">
+            <table class="center" style="width: 200%;">
                 <tr>
                     <th style="display: none;">Header 1</th>
                     <th style="display: none;">Header 2</th>
+                    <th style="display: none;">Header 3</th>
                 </tr>
                 <tr style="height: 75px;">
                     <td style="padding: 5px;padding-left: 20px;background-color: #777;color: white; width: 200px;">NAME</td>
                     <td style="padding: 5px;padding-left: 20px;">{{brand.brandname}}</td>
+                    {% for acc in account %}
+                        {% if acc.check_account_type %}
+                        <td style="padding: 5px;padding-left: 20px;background-color: #777;color: white; width: 200px;display: none">NOT EDIT BRAND</td>
+                        {% else %}
+                        <td style="padding: 5px;padding-left: 20px;background-color: #777;color: white; width: 300px;">
+                            <a href="/editbrand/{{brand.brandname}}">
+                                <button class="button_style" style="width: 95%; height: 95%; font-size: xx-large" type="submit">EDIT BRAND</button>
+                            </a>
+                        </td>
+                        {% endif %}
+                    {% endfor %}
                 </tr>
                 <tr style="height: 75px;">
                     <td style="padding: 5px;padding-left: 20px;background-color: #777;color: white; width: 200px;">WEBSITE</td>

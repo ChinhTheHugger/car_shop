@@ -8,6 +8,7 @@ from django.utils.encoding import force_bytes
 from django.core.files.storage import FileSystemStorage
 from upload_validator import FileTypeValidator
 from django.core.files.uploadedfile import TemporaryUploadedFile
+import mimetypes
 
 class UpdateDeleteCar(View):
     def post(self, request):
@@ -31,8 +32,6 @@ class UpdateDeleteCar(View):
         interior_new = request.FILES.get('interior', False)
         
         button_action = request.POST.get('action_button')
-
-        original_car = Car.get_car_info_for_cart(brand_original,model_original,year_original)
         
         if brand_new:
             brand_new = str(brand_new).upper()
@@ -90,7 +89,8 @@ class UpdateDeleteCar(View):
         
         if button_action == "update":
             if not error_message:
-                Car.update_car(brand_new,model_new,year_new,category_new,desintext_new,new_front_url,new_back_url,new_interior_url,instock_new,price_new)
+                original_car = Car.get_car(brand_original,model_original,year_original)
+                original_car.update_car(brand_new,model_new,year_new,category_new,desintext_new,new_front_url,new_back_url,new_interior_url,instock_new,price_new)
                 return redirect('edit-car',brand=brand_new,model=model_new,year=year_new)
             else:
                 values_new = {
@@ -112,39 +112,22 @@ class UpdateDeleteCar(View):
         if button_action == "delete":
             Car.remove_car(brand_original,model_original,year_original)
             return redirect('homepage')
-            
     
-    # def validateCar(self,edited_car):
-    #     error_message = None
-    #     if (not edited_car.brand):
-    #         error_message = "Brand name can't be blank!!"
-    #     if (not edited_car.model):
-    #         error_message = "Model name can't be blank!!"
-    #     if (not edited_car.year):
-    #         error_message = "Manufacture year can't be blank!!"
-    #     if edited_car.isExist():
-    #         error_message = "Car already exists!! (matching brand, model and manufacture year)"
-    #     if (not edited_car.category):
-    #         error_message = "Category can't be blank!!"
-    #     if (not edited_car.desintext):
-    #         error_message = "Car should have a description!!"
-    #     if (not edited_car.instock):
-    #         error_message = "Number of cars in stock can't be blank!!"
-    #     if (not edited_car.price):
-    #         error_message = "Car renting price can't be blank!!"
-    #     if (not edited_car.front):
-    #         error_message = "Invalid file type for car's front view!!"
-    #     if (not edited_car.back):
-    #         error_message = "Invalid file type for car's rear view!!"
-    #     if (not edited_car.interior):
-    #         error_message = "Invalid file type for car's interior view!!"
-        
-    #     return error_message
-    
-    def validateCar(self,edited_car,brnd,mdl,yr):
-        validator = FileTypeValidator(allowed_types=['images/*'])
+    def validateCar(self,edited_car,brnd,mdl,yr): 
         error_message = None
         if edited_car.isExist() and edited_car.brand != brnd and edited_car.model != mdl and edited_car.year != yr:
             error_message = "The brand, model, year combination already belongs to another car!!"
+        if edited_car.front:
+            type_front, decoding = mimetypes.guess_type(str(edited_car.front))
+            if 'image' not in type_front:
+                error_message = "The input file for front view is invalid!!"
+        if edited_car.back:
+            type_back, decoding = mimetypes.guess_type(str(edited_car.back))
+            if 'image' not in type_back:
+                error_message = "The input file for back view is invalid!!"
+        if edited_car.interior:
+            type_interior, decoding = mimetypes.guess_type(str(edited_car.interior))
+            if 'image' not in type_interior:
+                error_message = "The input file for interior view is invalid!!"
         
         return error_message

@@ -158,7 +158,7 @@
                                     <td style="padding: 5px;width: 40%;">
                                         <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="number" name="year"
                             id="" value="{{values_new.year}}" class="form-control form-control-sm" 
-                            placeholder="">
+                            placeholder="" min="1886">
                                     </td>
                                     
                                 </div>
@@ -179,12 +179,12 @@
                                 <div class="form-group">
                                     <td style="padding: 5px;background-color: #777;color: white; width: 20%">DESCRIPTION</td>
                                     <td style="padding: 5px;width: 40%;">
-                                        <textarea style="width: 95%;height: 150px;background-color: white;border: none;text-align: left; overflow: hidden; resize: vertical; font-size: x-large" name="desintext"
+                                        <textarea style="width: 95%;height: 150px;background-color: white;border: none;text-align: left; overflow: hidden; resize: vertical; font-size: x-large" name="desintext-original"
                             id="" value="" rows="10" wrap="soft" class="form-control form-control-sm" 
                             placeholder="{{values.desintext}}" readonly></textarea>
                                     </td>
                                     <td style="padding: 5px;width: 40%;">
-                                        <textarea style="width: 95%;height: 150px;background-color: white;border: none;text-align: left; overflow: hidden; resize: vertical" name="desintext"
+                                        <textarea style="width: 95%;height: 150px;background-color: white;border: none;text-align: left; overflow: hidden; resize: vertical; font-size: x-large" name="desintext"
                             id="" value="{{values_new.desintext}}" rows="10" wrap="soft" class="form-control form-control-sm" 
                             placeholder=""></textarea>
                                     </td>
@@ -198,7 +198,7 @@
                                     <td style="padding: 5px;width: 40%;">
                                         <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="instock"
                             id="" value="{{values_new.instock}}" class="form-control form-control-sm" 
-                            placeholder="">
+                            placeholder="" min="1">
                                     </td>
                                     
                                 </div>
@@ -210,7 +210,7 @@
                                     <td style="padding: 5px;width: 40%;">
                                         <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="price"
                             id="" value="{{values_new.price}}" class="form-control form-control-sm" 
-                            placeholder="">
+                            placeholder="" min="1">
                                     </td>
                                     
                                 </div>

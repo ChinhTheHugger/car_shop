@@ -60,37 +60,52 @@ class Car(models.Model):
     def get_car_info(brand_in,model_in,year_in):
         return Car.objects.filter(brand=brand_in,model=model_in,year=year_in)
     
+    def get_car(brand_in,model_in,year_in):
+        return Car.objects.get(brand=brand_in,model=model_in,year=year_in)
+    
     def get_car_info_for_cart(brand_in,model_in,year_in):
         return Car.objects.get(brand=brand_in,model=model_in,year=year_in)
     
     def set_up_edited_car(brnd,mdl,yr,ctgr,des,frnt,bck,intr,stock,prc):
         return Car(brand=brnd,model=mdl,year=yr,category=ctgr,desintext=des,front=frnt,back=bck,interior=intr,instock=stock,price=prc)
     
-    def update_car(brnd,mdl,yr,ctgr,des,frnt,bck,intr,stock,prc):
-        car = Car.objects.get(brand=brnd,model=mdl,year=yr)
+    def update_car(self,brnd,mdl,yr,ctgr,des,frnt,bck,intr,stock,prc):
         if brnd != "":
-            car.brand = brnd
+            self.brand = brnd
         if mdl != "":
-            car.model = mdl
+            self.model = mdl
         if yr != "":
-            car.year = yr
+            self.year = yr
         if ctgr != "":
-            car.category = ctgr
+            self.category = ctgr
         if des != "":
-            car.desintext = des
+            self.desintext = des
         if stock != "":
-            car.instock = stock
+            self.instock = stock
         if prc != "":
-            car.price = prc
+            self.price = prc
         if frnt != "":
-            car.front = frnt
+            self.front = frnt
         if bck != "":
-            car.back = bck
+            self.back = bck
         if intr != "":
-            car.interior = intr
-        print(car.front)
-        print(car.back)
-        print(car.interior)
+            self.interior = intr
+        self.save()
+        
+        return
+    
+    def add_new_car(brnd,mdl,yr,ctgr,des,frnt,bck,intr,stock,prc):
+        car = Car()
+        car.brand = brnd
+        car.model = mdl
+        car.year = yr
+        car.category = ctgr
+        car.desintext = des
+        car.instock = stock
+        car.price = prc
+        car.front = frnt
+        car.back = bck
+        car.interior = intr
         car.save()
         
         return

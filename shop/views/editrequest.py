@@ -14,8 +14,8 @@ class UpdateDeleteRequest(View):
         customerid = request.session.get('account')
         # customerinfo = Account.get_account_by_username(customerid)
         # print(str(car_name)+" "+str(customerinfo.username)+" "+str(quantity))
-        if button_action == "update":
+        if button_action == "update" and quantity != 0:
             Request.update_quantity(str(car_name),customerid,quantity)
-        if button_action == "delete":
+        if button_action == "delete" or quantity == 0:
             Request.remove_request(str(car_name),customerid)
         return redirect('view-cart')
