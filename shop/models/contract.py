@@ -8,7 +8,7 @@ from .account import Account
 from .request import Request
 
 class Contract(models.Model): # similar to "order"
-    request = models.CharField(max_length=50) # use Requuest.__str__
+    request = models.CharField(max_length=50) # use Request.__str__
     customer = models.CharField(max_length=50) # use customer username
     manager = models.CharField(max_length=50) # use manager username
     car = models.CharField(max_length=255) # use Car.__str__
@@ -40,24 +40,24 @@ class Contract(models.Model): # similar to "order"
     def is_past_due(self):
         return date.today() <= self.enddate
     
-    def update_customer_username(old_username,new_username):
+    def customer_update(old_username,new_username):
         contracts_to_update = Contract.objects.filter(customer=old_username)
-        for i in range(contracts_to_update.count()):
-            contracts_to_update[i].customer=new_username
+        for contract in contracts_to_update:
+            contract.customer = new_username
         Contract.objects.bulk_update(contracts_to_update,["customer"])
         return
     
-    def update_manager_username(old_username,new_username):
+    def manager_update(old_username,new_username):
         contracts_to_update = Contract.objects.filter(manager=old_username)
-        for i in range(contracts_to_update.count()):
-            contracts_to_update[i].manager=new_username
+        for contract in contracts_to_update:
+            contract.customer = new_username
         Contract.objects.bulk_update(contracts_to_update,["manager"])
         return
     
-    def update_car_name(old_name,new_name):
+    def car_update(old_name,new_name):
         contracts_to_update = Contract.objects.filter(car=old_name)
-        for i in range(contracts_to_update.count()):
-            contracts_to_update[i].car=new_name
+        for contract in contracts_to_update:
+            contract.car = new_name
         Contract.objects.bulk_update(contracts_to_update,["car"])
         return
     

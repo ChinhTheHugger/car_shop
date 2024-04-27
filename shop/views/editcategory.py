@@ -10,11 +10,11 @@ def get_category_info_for_edit(request,category):
     categoryinfo = Category.get_category_info(category)
     for category in categoryinfo:
         values = {
-            'catgory': category.get_name,
+            'category': category.get_name,
             'image': category.get_image
         }
     values_new = {
-            'catgory': "",
+            'category': "",
             'image': ""
         }
     context = {'categoryinfo': categoryinfo, 'account': customerinfo, 'values': values, 'values_new': values_new}

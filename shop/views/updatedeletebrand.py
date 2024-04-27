@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
 from shop.models.brand import Brand
+from shop.models.car import Car
 from shop.models.account import Account
 from django.views import View
 import codecs
@@ -55,6 +56,7 @@ class UpdateDeleteBrand(View):
             if not error_message:
                 original_brand = Brand.get_brand_by_name(brand_original)
                 original_brand.update_brand(brand_new,website_new,desintext_new,new_logo_url)
+                Car.brand_update(brand_original,brand_new)
                 return redirect('edit-brand',brand=brand_new)
             else:
                 values_new = {

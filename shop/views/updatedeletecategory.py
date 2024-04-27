@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
 from shop.models.category import Category
+from shop.models.car import Car
 from shop.models.account import Account
 from django.views import View
 import codecs
@@ -51,6 +52,7 @@ class UpdateDeleteCategory(View):
             if not error_message:
                 original_category = Category.get_category_by_name(category_original)
                 original_category.update_category(category_new,new_logo_url,category_original)
+                Car.category_update(category_original,category_new)
                 return redirect('edit-category',category=category_new)
             else:
                 values_new = {

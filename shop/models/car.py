@@ -122,6 +122,22 @@ class Car(models.Model):
         car.delete()
         return
     
+    def brand_update(old_brand,new_brand):
+        carlist = Car.objects.filter(brand=old_brand)
+        for car in carlist:
+            car.brand = new_brand
+        Car.objects.bulk_update(carlist,['brand'])
+        
+        return
+    
+    def category_update(old_category,new_category):
+        carlist = Car.objects.filter(category=old_category)
+        for car in carlist:
+            car.category = new_category
+        Car.objects.bulk_update(carlist,['category'])
+        
+        return
+    
     def get_brand(self):
         return self.brand
     
