@@ -112,7 +112,7 @@ class Request(models.Model): # similar to "cart"
             carinfo = Car.get_car_info_for_cart(car_kw[0],car_kw[1],car_kw[2])
             item.frontimg = carinfo.get_front_img()
             item.carprice = carinfo.get_price()
-            item.totalprice = item.quantity * carinfo.price
+            item.totalprice = item.quantity * carinfo.get_price()
             item.save()
         return cart_items
     

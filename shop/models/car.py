@@ -51,6 +51,10 @@ class Car(models.Model):
             result = result.filter(Q(brand__icontains=keyword)|Q(model__icontains=keyword)|Q(year__icontains=keyword)|Q(category__icontains=keyword)|Q(desintext__icontains=keyword))
         return result
     
+    def get_car_by_str(string):
+        spl = str(string).split()
+        return Car.objects.get(brand=spl[0],model=spl[1],year=spl[2])
+    
     def get_car_model_distinct():
         return Car.objects.values('model').distinct().order_by('model')
     
