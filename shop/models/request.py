@@ -1,6 +1,7 @@
 from django.db import models
 import datetime
 from datetime import date
+import time
 
 from .car import Car
 from .account import Account
@@ -86,23 +87,70 @@ class Request(models.Model): # similar to "cart"
         return cart_items
     
     def get_all_requests_for_cart_display(): # cart display for manager
-        cart_items =  Request.objects.all().order_by('date')
+        cart_items =  Request.objects.filter(status=False).order_by('date')
         cart_items.annotate(frontimg=Value('', output_field=ImageField(upload_to='uploads/fronts/')))
         cart_items.annotate(carprice=Value('', output_field=IntegerField()))
         cart_items.annotate(totalprice=Value('', output_field=IntegerField()))
         cart_items.annotate(customername=Value('', output_field=CharField()))
+        cart_items.annotate(carbrand=Value('', output_field=CharField()))
+        cart_items.annotate(carmodel=Value('', output_field=CharField()))
+        cart_items.annotate(caryear=Value('', output_field=CharField()))
+        cart_items.annotate(unixtimestamp=Value('', output_field=IntegerField()))
+        for item in cart_items:
+            car_kw = str(item.car).split()
+            carinfo = Car.get_car_info_for_cart(car_kw[0],car_kw[1],car_kw[2])
+            item.carbrand = carinfo.get_brand()
+            item.carmodel = carinfo.get_model()
+            item.caryear = carinfo.get_year()
+            item.frontimg = carinfo.get_front_img()
+            item.carprice = carinfo.get_price()
+            item.totalprice = item.quantity * carinfo.get_price()
+            customerinfo = Account.get_account_by_username(item.customer)
+            item.customername = customerinfo.__str__()
+            item.unixtimestamp = int(time.mktime(item.date.timetuple()))
+            item.save()
+        return cart_items
+    
+    def cart_display(customer_username): # car display for customer
+        cart_items =  Request.objects.filter(customer=customer_username,status=False)
+        cart_items.annotate(frontimg=Value('', output_field=ImageField(upload_to='uploads/fronts/')))
+        cart_items.annotate(carprice=Value('', output_field=IntegerField()))
+        cart_items.annotate(totalprice=Value('', output_field=IntegerField()))
         for item in cart_items:
             car_kw = str(item.car).split()
             carinfo = Car.get_car_info_for_cart(car_kw[0],car_kw[1],car_kw[2])
             item.frontimg = carinfo.get_front_img()
             item.carprice = carinfo.get_price()
-            item.totalprice = item.quantity * carinfo.price
-            customerinfo = Account.get_account_by_username(item.customer)
-            item.customername = customerinfo.__str__()
+            item.totalprice = item.quantity * carinfo.get_price()
             item.save()
         return cart_items
     
-    def cart_display(customer_username): # car display for customer
+    def total_cart_manager(): # cart display for manager
+        cart_items =  Request.objects.all().order_by('date')
+        cart_items.annotate(frontimg=Value('', output_field=ImageField(upload_to='uploads/fronts/')))
+        cart_items.annotate(carprice=Value('', output_field=IntegerField()))
+        cart_items.annotate(totalprice=Value('', output_field=IntegerField()))
+        cart_items.annotate(customername=Value('', output_field=CharField()))
+        cart_items.annotate(carbrand=Value('', output_field=CharField()))
+        cart_items.annotate(carmodel=Value('', output_field=CharField()))
+        cart_items.annotate(caryear=Value('', output_field=CharField()))
+        cart_items.annotate(unixtimestamp=Value('', output_field=IntegerField()))
+        for item in cart_items:
+            car_kw = str(item.car).split()
+            carinfo = Car.get_car_info_for_cart(car_kw[0],car_kw[1],car_kw[2])
+            item.carbrand = carinfo.get_brand()
+            item.carmodel = carinfo.get_model()
+            item.caryear = carinfo.get_year()
+            item.frontimg = carinfo.get_front_img()
+            item.carprice = carinfo.get_price()
+            item.totalprice = item.quantity * carinfo.get_price()
+            customerinfo = Account.get_account_by_username(item.customer)
+            item.customername = customerinfo.__str__()
+            item.unixtimestamp = int(time.mktime(item.date.timetuple()))
+            item.save()
+        return cart_items
+    
+    def total_cart_customer(customer_username): # car display for customer
         cart_items =  Request.objects.filter(customer=customer_username)
         cart_items.annotate(frontimg=Value('', output_field=ImageField(upload_to='uploads/fronts/')))
         cart_items.annotate(carprice=Value('', output_field=IntegerField()))
@@ -115,6 +163,12 @@ class Request(models.Model): # similar to "cart"
             item.totalprice = item.quantity * carinfo.get_price()
             item.save()
         return cart_items
+    
+    def request_custom_id(self):
+        unix_timestamp = datetime.datetime.timestamp(self.date)*1000
+        car_kw = str(self.car).split()
+        carinfo = Car.get_car_info_for_cart(car_kw[0],car_kw[1],car_kw[2])
+        return self.customer + "_" + carinfo.get_brand() + "_" + carinfo.get_model() + "_" + str(carinfo.get_year()) + "_" + str(int(unix_timestamp))
     
     class Meta:
         db_table = 'request'

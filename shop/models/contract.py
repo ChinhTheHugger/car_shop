@@ -8,7 +8,7 @@ from .account import Account
 from .request import Request
 
 class Contract(models.Model): # similar to "order"
-    request = models.CharField(max_length=50) # use Request.__str__
+    request = models.CharField(max_length=50) # use Request custom id
     customer = models.CharField(max_length=50) # use customer username
     manager = models.CharField(max_length=50) # use manager username
     car = models.CharField(max_length=255) # use Car.__str__
