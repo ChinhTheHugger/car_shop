@@ -20,7 +20,7 @@ from .views.newbrand import AddNewBrand
 from .views.editcategory import get_category_info_for_edit
 from .views.updatedeletecategory import UpdateDeleteCategory
 from .views.newcategory import AddNewCategory
-from .views.newcontract import AddNewContract
+from .views.newcontract import get_info_for_contract
 
 urlpatterns = [
     path('', homepage, name='homepage'),
@@ -72,7 +72,7 @@ urlpatterns = [
     path('editrequest', UpdateDeleteRequest.as_view(), name='edit-request'),
     
     # contract
-    path('addcontract/request?=<slug:customerusername>_<slug:brand>_<slug:model>_<slug:year>_<slug:unixtimestamp>', AddNewContract.as_view(), name='add-contract')
+    path('addcontract/request?=<slug:customerusername>_<slug:brand>_<slug:model>_<slug:year>', get_info_for_contract, name='add-contract')
     
     
 ]

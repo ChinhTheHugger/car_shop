@@ -170,5 +170,12 @@ class Request(models.Model): # similar to "cart"
         carinfo = Car.get_car_info_for_cart(car_kw[0],car_kw[1],car_kw[2])
         return self.customer + "_" + carinfo.get_brand() + "_" + carinfo.get_model() + "_" + str(carinfo.get_year()) + "_" + str(int(unix_timestamp))
     
+    def get_request(customer_in,brand_in,model_in,year_in):
+        car_str = brand_in + " " + model_in + " " + str(year_in)
+        return Request.objects.get(customer=customer_in,car=car_str,status=False)
+    
+    def get_quantity(self):
+        return self.quantity
+    
     class Meta:
         db_table = 'request'

@@ -34,6 +34,25 @@ class Contract(models.Model): # similar to "order"
     def get_contract_by_customer(customer_username):
         return Contract.objects.filter(customer=customer_username)
     
+    def set_up_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,residence,idcard,driverlicense,carodometerbefore,carsystemstatusbefore,carfrontbefore,carbackbefore,carinteriorbefore,cost):
+        return Contract(request=request,
+                        customer=customer,
+                        manager=manager,
+                        car=car,
+                        quantity=quantity,
+                        purpose=purpose,
+                        startdate=startdate,
+                        enddate=enddate,
+                        residence=residence,
+                        idcard=idcard,
+                        driverlicense=driverlicense,
+                        carodometerbefore=carodometerbefore,
+                        carsystemstatusbefore=carsystemstatusbefore,
+                        carfrontbefore=carfrontbefore,
+                        carbackbefore=carbackbefore,
+                        carinteriorbefore=carinteriorbefore,
+                        cost=cost)
+    
     def get_active_contract_number(car_name,date):
         return Contract.objects.filter(car=car_name,enddate__gt=date).count()
     
