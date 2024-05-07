@@ -34,6 +34,8 @@ class Contract(models.Model): # similar to "order"
     def get_contract_by_customer(customer_username):
         return Contract.objects.filter(customer=customer_username)
     
+    def get_contract_by_parameters(customer,car_str)
+    
     def set_up_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,residence,idcard,driverlicense,carodometerbefore,carsystemstatusbefore,carfrontbefore,carbackbefore,carinteriorbefore,cost):
         return Contract(request=request,
                         customer=customer,
@@ -52,6 +54,27 @@ class Contract(models.Model): # similar to "order"
                         carbackbefore=carbackbefore,
                         carinteriorbefore=carinteriorbefore,
                         cost=cost)
+        
+    def add_new_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,residence,idcard,driverlicense,carodometerbefore,carsystemstatusbefore,carfrontbefore,carbackbefore,carinteriorbefore,cost):
+        contract = Contract()
+        contract.request = request
+        contract.customer = customer
+        contract.manager = manager
+        contract.car = car
+        contract.quantity = quantity
+        contract.purpose = purpose
+        contract.startdate = startdate
+        contract.enddate = enddate
+        contract.residence = residence
+        contract.idcard = idcard
+        contract.driverlicense = driverlicense
+        contract.carodometerbefore = carodometerbefore
+        contract.carsystemstatusbefore = carsystemstatusbefore
+        contract.carfrontbefore = carfrontbefore
+        contract.carbackbefore = carbackbefore
+        contract.carinteriorbefore = carinteriorbefore
+        contract.cost = cost
+        contract.save()
     
     def get_active_contract_number(car_name,date):
         return Contract.objects.filter(car=car_name,enddate__gt=date).count()

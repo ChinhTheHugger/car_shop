@@ -51,6 +51,24 @@ class SetUpContract(View):
             'carsystemstatusbefore': carsystemstatusbefore,
         }
         
+        if residence != False:
+            save_new_residence =  FileSystemStorage(location='uploads/residences/',base_url='uploads/residences/').save(residence.name,residence)
+            new_residence_url = FileSystemStorage(location='uploads/residences/',base_url='uploads/residences/').url(save_new_residence)
+        else:
+            new_front_url = ""
+        
+        if idcard != False:
+            save_new_idcard =  FileSystemStorage(location='uploads/idcards/',base_url='uploads/idcards/').save(idcard.name,idcard)
+            new_idcard_url = FileSystemStorage(location='uploads/idcards/',base_url='uploads/idcards/').url(save_new_idcard)
+        else:
+            new_back_url = ""
+        
+        if driverlicense != False:
+            save_new_driverlicense =  FileSystemStorage(location='uploads/driverlicenses/',base_url='uploads/driverlicenses/').save(driverlicense.name,driverlicense)
+            new_driverlicense_url = FileSystemStorage(location='uploads/driverlicenses/',base_url='uploads/driverlicenses/').url(save_new_driverlicense)
+        else:
+            new_interior_url = ""
+        
         if carfrontbefore != False:
             save_new_front =  FileSystemStorage(location='uploads/fronts/',base_url='uploads/fronts/').save(carfrontbefore.name,carfrontbefore)
             new_front_url = FileSystemStorage(location='uploads/fronts/',base_url='uploads/fronts/').url(save_new_front)
@@ -71,9 +89,20 @@ class SetUpContract(View):
         
         error_message = None
         
-        contract = Contract.set_up_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,residence,idcard,driverlicense,carodometerbefore,carsystemstatusbefore,carfrontbefore,carbackbefore,carinteriorbefore,cost)
+        contract = Contract.set_up_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,new_residence_url,new_idcard_url,new_driverlicense_url,carodometerbefore,carsystemstatusbefore,new_front_url,new_back_url,new_interior_url,cost)
         
         error_message = self.validateContract(contract)
+        
+        if not error_message:
+            Contract.add_new_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,new_residence_url,new_idcard_url,new_driverlicense_url,carodometerbefore,carsystemstatusbefore,new_front_url,new_back_url,new_interior_url,cost)
+            return redirect('homepage')
+        else:
+            data = {
+                    'error': error_message,
+                    'values': values,
+                    'account': accountinfo
+                }
+            return render(request, 'addcontract.html', data)
         
     
     
