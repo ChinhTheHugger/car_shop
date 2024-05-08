@@ -72,7 +72,7 @@ urlpatterns = [
     path('editrequest', UpdateDeleteRequest.as_view(), name='edit-request'),
     
     # contract
-    path('addcontract/request?=<slug:customerusername>_<slug:brand>_<slug:model>_<slug:year>', get_info_for_contract, name='add-contract')
+    path('addcontract/request?=<slug:customerusername>_<slug:brand>_<slug:model>_<slug:year>_<slug:unixtimestamp>', get_info_for_contract, name='add-contract')
     
     
 ]

@@ -12,12 +12,14 @@ from upload_validator import FileTypeValidator
 from django.core.files.uploadedfile import TemporaryUploadedFile
 import mimetypes
 from datetime import date
+import datetime
+import time
 
-def get_info_for_contract(request,customerusername,brand,model,year):
+def get_info_for_contract(request,customerusername,brand,model,year,unixtimestamp):
     accountusername = request.session.get('account')
     customerinfo = Account.get_account_by_username_for_iterate(accountusername)
     carinfo = Car.get_car(brand,model,year)
-    requestinfo = Request.get_request(customerusername,brand,model,year)
+    requestinfo = Request.get_request(customerusername,brand,model,year,unixtimestamp)
     values = {
         'request': requestinfo.request_custom_id(),
         'customer': customerusername,

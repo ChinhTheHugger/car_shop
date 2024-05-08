@@ -1,6 +1,7 @@
 from django.db import models
 import datetime
 from datetime import date
+import datetime
 from django.core.validators import FileExtensionValidator
 
 from .car import Car
@@ -25,6 +26,7 @@ class Contract(models.Model): # similar to "order"
     carbackbefore = models.ImageField(upload_to='uploads/contracts/backstatusbefore/',validators=[FileExtensionValidator(['apng','png','gif','svg','ico','cur','jpg','jpeg','jfif','pjpeg','pjp','webp'])])
     carinteriorbefore = models.ImageField(upload_to='uploads/contracts/interiorstatusbefore/',validators=[FileExtensionValidator(['apng','png','gif','svg','ico','cur','jpg','jpeg','jfif','pjpeg','pjp','webp'])])
     cost = models.IntegerField(default=0)
+    createdate = models.DateField(default=datetime.datetime.today)
     
     #to save the data
     def register(self):
@@ -34,9 +36,11 @@ class Contract(models.Model): # similar to "order"
     def get_contract_by_customer(customer_username):
         return Contract.objects.filter(customer=customer_username)
     
-    def get_contract_by_parameters(customer,car_str)
+    def get_contract_by_parameters(customer,car_str,unixtimestamp):
+        date = datetime.date.fromtimestamp(unixtimestamp)
+        return Contract.objects.get(customer=customer,car=car_str,createdate=date)
     
-    def set_up_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,residence,idcard,driverlicense,carodometerbefore,carsystemstatusbefore,carfrontbefore,carbackbefore,carinteriorbefore,cost):
+    def set_up_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,residence,idcard,driverlicense,carodometerbefore,carsystemstatusbefore,carfrontbefore,carbackbefore,carinteriorbefore,cost,createdate):
         return Contract(request=request,
                         customer=customer,
                         manager=manager,
@@ -53,7 +57,8 @@ class Contract(models.Model): # similar to "order"
                         carfrontbefore=carfrontbefore,
                         carbackbefore=carbackbefore,
                         carinteriorbefore=carinteriorbefore,
-                        cost=cost)
+                        cost=cost,
+                        createdate=createdate)
         
     def add_new_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,residence,idcard,driverlicense,carodometerbefore,carsystemstatusbefore,carfrontbefore,carbackbefore,carinteriorbefore,cost):
         contract = Contract()
@@ -102,6 +107,48 @@ class Contract(models.Model): # similar to "order"
             contract.car = new_name
         Contract.objects.bulk_update(contracts_to_update,["car"])
         return
+    
+    def get_request(self):
+        return self.request
+    
+    def get_quantity(self):
+        return self.quantity
+    
+    def get_purpose(self):
+        return self.purpose
+    
+    def get_startdate(self):
+        return self.startdate
+    
+    def get_enddate(self):
+        return self.enddate
+    
+    def get_odometer(self):
+        return self.carodometerbefore
+    
+    def get_systemstatus(self):
+        return self.carsystemstatusbefore
+    
+    def get_cost(self):
+        return self.cost
+    
+    def get_residence(self):
+        return self.residence
+    
+    def get_id(self):
+        return self.idcard
+    
+    def get_driverlicense(self):
+        return self.driverlicense
+    
+    def get_front(self):
+        return self.carfrontbefore
+    
+    def get_back(self):
+        return self.carbackbefore
+    
+    def get_interior(self):
+        return self. carinteriorbefore
     
     def __str__(self):
         customer = Account.get_account_by_username(customer)

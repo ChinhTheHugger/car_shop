@@ -11,6 +11,7 @@ from upload_validator import FileTypeValidator
 from django.core.files.uploadedfile import TemporaryUploadedFile
 import mimetypes
 from datetime import date
+import datetime
 
 class SetUpContract(View):
     def post(self, request):
@@ -37,6 +38,7 @@ class SetUpContract(View):
         
         carinfo = Car.get_car_by_str(car)
         cost = carinfo.get_price() + quantity * self.numOfDays(startdate,enddate)
+        createdate = datetime.datetime.today
         
         values = {
             'request': req,
@@ -49,52 +51,52 @@ class SetUpContract(View):
             'enddate': enddate,
             'carodometerbefore': carodometerbefore,
             'carsystemstatusbefore': carsystemstatusbefore,
+            'cost': cost
         }
-        
-        if residence != False:
-            save_new_residence =  FileSystemStorage(location='uploads/residences/',base_url='uploads/residences/').save(residence.name,residence)
-            new_residence_url = FileSystemStorage(location='uploads/residences/',base_url='uploads/residences/').url(save_new_residence)
-        else:
-            new_front_url = ""
-        
-        if idcard != False:
-            save_new_idcard =  FileSystemStorage(location='uploads/idcards/',base_url='uploads/idcards/').save(idcard.name,idcard)
-            new_idcard_url = FileSystemStorage(location='uploads/idcards/',base_url='uploads/idcards/').url(save_new_idcard)
-        else:
-            new_back_url = ""
-        
-        if driverlicense != False:
-            save_new_driverlicense =  FileSystemStorage(location='uploads/driverlicenses/',base_url='uploads/driverlicenses/').save(driverlicense.name,driverlicense)
-            new_driverlicense_url = FileSystemStorage(location='uploads/driverlicenses/',base_url='uploads/driverlicenses/').url(save_new_driverlicense)
-        else:
-            new_interior_url = ""
-        
-        if carfrontbefore != False:
-            save_new_front =  FileSystemStorage(location='uploads/fronts/',base_url='uploads/fronts/').save(carfrontbefore.name,carfrontbefore)
-            new_front_url = FileSystemStorage(location='uploads/fronts/',base_url='uploads/fronts/').url(save_new_front)
-        else:
-            new_front_url = ""
-        
-        if carbackbefore != False:
-            save_new_back =  FileSystemStorage(location='uploads/backs/',base_url='uploads/backs/').save(carbackbefore.name,carbackbefore)
-            new_back_url = FileSystemStorage(location='uploads/backs/',base_url='uploads/backs/').url(save_new_back)
-        else:
-            new_back_url = ""
-        
-        if carinteriorbefore != False:
-            save_new_interior =  FileSystemStorage(location='uploads/interiors/',base_url='uploads/interiors/').save(carinteriorbefore.name,carinteriorbefore)
-            new_interior_url = FileSystemStorage(location='uploads/interiors/',base_url='uploads/interiors/').url(save_new_interior)
-        else:
-            new_interior_url = ""
         
         error_message = None
         
-        contract = Contract.set_up_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,new_residence_url,new_idcard_url,new_driverlicense_url,carodometerbefore,carsystemstatusbefore,new_front_url,new_back_url,new_interior_url,cost)
+        contract = Contract.set_up_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,residence,idcard,driverlicense,carodometerbefore,carsystemstatusbefore,carfrontbefore,carbackbefore,carinteriorbefore,cost,createdate)
         
         error_message = self.validateContract(contract)
         
         if not error_message:
-            Contract.add_new_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,new_residence_url,new_idcard_url,new_driverlicense_url,carodometerbefore,carsystemstatusbefore,new_front_url,new_back_url,new_interior_url,cost)
+            if residence != False:
+                save_new_residence =  FileSystemStorage(location='uploads/residences/',base_url='uploads/residences/').save(residence.name,residence)
+                new_residence_url = FileSystemStorage(location='uploads/residences/',base_url='uploads/residences/').url(save_new_residence)
+            else:
+                new_front_url = ""
+            
+            if idcard != False:
+                save_new_idcard =  FileSystemStorage(location='uploads/idcards/',base_url='uploads/idcards/').save(idcard.name,idcard)
+                new_idcard_url = FileSystemStorage(location='uploads/idcards/',base_url='uploads/idcards/').url(save_new_idcard)
+            else:
+                new_back_url = ""
+            
+            if driverlicense != False:
+                save_new_driverlicense =  FileSystemStorage(location='uploads/driverlicenses/',base_url='uploads/driverlicenses/').save(driverlicense.name,driverlicense)
+                new_driverlicense_url = FileSystemStorage(location='uploads/driverlicenses/',base_url='uploads/driverlicenses/').url(save_new_driverlicense)
+            else:
+                new_interior_url = ""
+            
+            if carfrontbefore != False:
+                save_new_front =  FileSystemStorage(location='uploads/fronts/',base_url='uploads/fronts/').save(carfrontbefore.name,carfrontbefore)
+                new_front_url = FileSystemStorage(location='uploads/fronts/',base_url='uploads/fronts/').url(save_new_front)
+            else:
+                new_front_url = ""
+            
+            if carbackbefore != False:
+                save_new_back =  FileSystemStorage(location='uploads/backs/',base_url='uploads/backs/').save(carbackbefore.name,carbackbefore)
+                new_back_url = FileSystemStorage(location='uploads/backs/',base_url='uploads/backs/').url(save_new_back)
+            else:
+                new_back_url = ""
+            
+            if carinteriorbefore != False:
+                save_new_interior =  FileSystemStorage(location='uploads/interiors/',base_url='uploads/interiors/').save(carinteriorbefore.name,carinteriorbefore)
+                new_interior_url = FileSystemStorage(location='uploads/interiors/',base_url='uploads/interiors/').url(save_new_interior)
+            else:
+                new_interior_url = ""
+            Contract.add_new_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,new_residence_url,new_idcard_url,new_driverlicense_url,carodometerbefore,carsystemstatusbefore,new_front_url,new_back_url,new_interior_url,cost,createdate)
             return redirect('homepage')
         else:
             data = {
