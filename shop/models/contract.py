@@ -14,7 +14,7 @@ class Contract(models.Model): # similar to "order"
     manager = models.CharField(max_length=50) # use manager username
     car = models.CharField(max_length=255) # use Car.__str__
     quantity = models.IntegerField(default=1)
-    purpose = models.CharField(max_length=50)
+    purpose = models.TextField(max_length=50)
     startdate = models.DateField(default=datetime.datetime.today)
     enddate = models.DateField(default=datetime.datetime.today)
     residence = models.ImageField(upload_to='uploads/contracts/residences/',validators=[FileExtensionValidator(['apng','png','gif','svg','ico','cur','jpg','jpeg','jfif','pjpeg','pjp','webp'])])
@@ -80,6 +80,45 @@ class Contract(models.Model): # similar to "order"
         contract.carinteriorbefore = carinteriorbefore
         contract.cost = cost
         contract.save()
+        
+    def update_contract(self,request,customer,manager,car,quantity,purpose,startdate,enddate,residence,idcard,driverlicense,carodometerbefore,carsystemstatusbefore,carfrontbefore,carbackbefore,carinteriorbefore,cost):
+        if request != "":
+            self.request = request
+        if customer != "":
+            self.customer = customer
+        if manager != "":
+            self.manager = manager
+        if car != "":
+            self.car = car
+        if quantity != "":
+            self.quantity = quantity
+        if purpose != "":
+            self.purpose = purpose
+        if startdate != "":
+            self.startdate = startdate
+        if enddate != "":
+            self.enddate = enddate
+        if residence != "":
+            self.residence = residence
+        if id != "":
+            self.idcard = idcard
+        if driverlicense != "":
+            self.driverlicense = driverlicense
+        if carodometerbefore != "":
+            self.carodometerbefore = carodometerbefore
+        if carsystemstatusbefore != "":
+            self.carsystemstatusbefore = carsystemstatusbefore
+        if carfrontbefore != "":
+            self.carfrontbefore = carfrontbefore
+        if carbackbefore != "":
+            self.carbackbefore = carbackbefore
+        if carinteriorbefore != "":
+            self.carinteriorbefore = carinteriorbefore
+        if cost != "":
+            self.cost = cost
+        self.save()
+        
+        return
     
     def get_active_contract_number(car_name,date):
         return Contract.objects.filter(car=car_name,enddate__gt=date).count()
@@ -110,6 +149,15 @@ class Contract(models.Model): # similar to "order"
     
     def get_request(self):
         return self.request
+    
+    def get_customer(self):
+        return self.customer
+    
+    def get_manager(self):
+        return self.manager
+    
+    def get_car(self):
+        return self.car
     
     def get_quantity(self):
         return self.quantity
@@ -149,6 +197,9 @@ class Contract(models.Model): # similar to "order"
     
     def get_interior(self):
         return self. carinteriorbefore
+    
+    def info_string(self):
+        return self.customer + "_" + str(self.car).replace(" ","_") + "_" + str(datetime.datetime.timestamp(self.createdate)*1000)
     
     def __str__(self):
         customer = Account.get_account_by_username(customer)

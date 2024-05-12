@@ -26,6 +26,12 @@ class Account(models.Model):
     def get_account_by_id(acc_id):
         return Account.objects.get(id=acc_id)
     
+    def get_all_customer():
+        return Account.objects.filter(type='customer')
+    
+    def get_all_manager():
+        return Account.objects.filter(type='manager')
+    
     def get_username(self):
         return self.username
     

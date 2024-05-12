@@ -18,8 +18,13 @@ import time
 def get_info_for_contract(request,customerusername,brand,model,year,unixtimestamp):
     accountusername = request.session.get('account')
     customerinfo = Account.get_account_by_username_for_iterate(accountusername)
+    
     carinfo = Car.get_car(brand,model,year)
     requestinfo = Request.get_request(customerusername,brand,model,year,unixtimestamp)
+    
+    customerlist = Account.get_all_customer()
+    managerlist = Account.get_all_manager()
+    
     values = {
         'request': requestinfo.request_custom_id(),
         'customer': customerusername,
@@ -33,5 +38,11 @@ def get_info_for_contract(request,customerusername,brand,model,year,unixtimestam
         'carsystemstatusbefore': '',
         'cost': carinfo.get_price() * requestinfo.get_quantity()
     }
-    return render(request, 'addcontract.html', {'account': customerinfo, 'values': values})
+    context = {
+        'account': customerinfo, 
+        'values': values, 
+        'customerlist': customerlist, 
+        'managerlist': managerlist
+    }
+    return render(request, 'addcontract.html', context)
 

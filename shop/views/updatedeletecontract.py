@@ -13,10 +13,12 @@ import mimetypes
 from datetime import date
 import datetime
 
-class SetUpContract(View):
+class UpdateDeleteCar(View):
     def post(self, request):
         accountusername = request.session.get('account')
         accountinfo = Account.get_account_by_username_for_iterate(accountusername)
+        
+        info_str = request.POST.get('info_str')
         
         req = request.POST.get('request')
         customer = request.POST.get('customer')
@@ -37,7 +39,7 @@ class SetUpContract(View):
         carinteriorbefore = request.FILES.get('carinteriorbefore', False)
         
         carinfo = Car.get_car_by_str(car)
-        cost = carinfo.get_price() * quantity * self.numOfDays(startdate,enddate)
+        cost = carinfo.get_price() + quantity * self.numOfDays(startdate,enddate)
         createdate = datetime.datetime.today
         
         values = {
@@ -54,10 +56,14 @@ class SetUpContract(View):
             'cost': cost
         }
         
+        arr = str(info_str).split('_')
+        car_str = str(arr[1]) + " " + str(arr[2]) + " " + str(arr[3])
+    
+        contract_original = Contract.get_contract_by_parameters(arr[0],car_str,arr[4])
+        
         error_message = None
         
         contract = Contract.set_up_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,residence,idcard,driverlicense,carodometerbefore,carsystemstatusbefore,carfrontbefore,carbackbefore,carinteriorbefore,cost,createdate)
-        
         error_message = self.validateContract(contract)
         
         if not error_message:
@@ -96,15 +102,14 @@ class SetUpContract(View):
                 new_interior_url = FileSystemStorage(location='uploads/interiors/',base_url='uploads/interiors/').url(save_new_interior)
             else:
                 new_interior_url = ""
+                
+            contract_original.update_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,new_residence_url,new_idcard_url,new_driverlicense_url,carodometerbefore,carsystemstatusbefore,new_front_url,new_back_url,new_interior_url,cost,createdate,info_str)
             
-            infostr = str(customer) + "_" + str(car).replace(' ',"_") + "_" + str(datetime.datetime.timestamp(createdate)*1000)
-            Contract.add_new_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,new_residence_url,new_idcard_url,new_driverlicense_url,carodometerbefore,carsystemstatusbefore,new_front_url,new_back_url,new_interior_url,cost,createdate)
-            
-            return redirect('get-contract',info_str=infostr)
+            return redirect('get-contract',info_str=info_str)
         else:
             customerlist = Account.get_all_customer()
             managerlist = Account.get_all_manager()
-    
+            
             data = {
                     'error': error_message,
                     'values': values,
@@ -112,12 +117,16 @@ class SetUpContract(View):
                     'customerlist': customerlist, 
                     'managerlist': managerlist
                 }
-            return render(request, 'addcontract.html', data)
+            return render(request, 'editcontract.html', data)
         
-    
-    
-    def validateContract(self,contract): 
+        
+        
+    def validateContract(self,contract,info_str): 
         error_message = None
+        arr = str(info_str).split('_')
+        car_str = str(arr[1]) + " " + str(arr[2]) + " " + str(arr[3])
+        contract_info = Contract.get_contract_by_parameters(arr[0],car_str,arr[4])
+        
         if contract.carodometerbefor <= 0:
             error_message = "Invalid carodometer value!!"
         if contract.startdate > contract.enddate:
@@ -156,5 +165,3 @@ class SetUpContract(View):
             return (date2-date1).days
         else:
             return (date1-date2).days
-        
-        
