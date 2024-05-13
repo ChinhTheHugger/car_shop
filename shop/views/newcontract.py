@@ -25,6 +25,9 @@ def get_info_for_contract(request,customerusername,brand,model,year,unixtimestam
     customerlist = Account.get_all_customer()
     managerlist = Account.get_all_manager()
     
+    customername = Account.get_account_by_username(customerusername)
+    managername = Account.get_account_by_username(accountusername)
+    
     values = {
         'request': requestinfo.request_custom_id(),
         'customer': customerusername,
@@ -42,7 +45,9 @@ def get_info_for_contract(request,customerusername,brand,model,year,unixtimestam
         'account': customerinfo, 
         'values': values, 
         'customerlist': customerlist, 
-        'managerlist': managerlist
+        'managerlist': managerlist,
+        'customername': customername.__str__(),
+        'managername': managername.__str__()
     }
     return render(request, 'addcontract.html', context)
 

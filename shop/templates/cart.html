@@ -171,7 +171,7 @@
                     <th style="padding: 5px;background-color: #777;color: white;width: 5%">DELETE REQUEST</th>
                 </tr>
                 {% for car in cart_items_manager_search %}
-                <form action="/makecontract" method="POST">
+                <form action="/editrequest" method="POST">
         
                     {% csrf_token %}
         
@@ -181,10 +181,10 @@
                             <img src="{{car.frontimg.url}}" alt="Cinque Terre" style="width: 95%; height: 95">
                         </td>
                         <td style="padding: 5px;text-align: center">
-                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="customer_name" value="{{car.car}}" readonly>
+                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="car_name" value="{{car.car}}" readonly>
                         </td>
                         <td style="padding: 5px;">
-                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="car_name" value="{{car.customername}}" readonly>
+                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="customer_name" value="{{car.customer}}" readonly>
                         </td>
                         <td style="padding: 5px;text-align: center">{{car.date}}</td>
                         <td style="padding: 5px;text-align: center">
@@ -221,7 +221,7 @@
                     <th style="padding: 5px;background-color: #777;color: white;width: 5%">DELETE REQUEST</th>
                 </tr>
                 {% for car in cart_items_manager %}
-                <form action="/makecontract" method="POST">
+                <form action="/editrequest" method="POST">
         
                     {% csrf_token %}
         
@@ -231,12 +231,14 @@
                             <img src="{{car.frontimg.url}}" alt="Cinque Terre" style="width: 95%; height: 95">
                         </td>
                         <td style="padding: 5px;text-align: center">
-                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="customer_name" value="{{car.car}}" readonly>
+                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="car_name" value="{{car.car}}" readonly>
                         </td>
                         <td style="padding: 5px;">
-                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="car_name" value="{{car.customername}}" readonly>
+                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="customer_name" value="{{car.customer}}" readonly>
                         </td>
-                        <td style="padding: 5px;text-align: center">{{car.date}}</td>
+                        <td style="padding: 5px;text-align: center">
+                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="date" value="{{car.unixtimestamp}}" readonly>
+                        </td>
                         <td style="padding: 5px;text-align: center">
                             <img scr="https://static.wikia.nocookie.net/finalfantasy/images/1/1e/Gil_from_Final_Fantasy_XIV_icon.png/revision/latest?cb=20210429070746"> {{car.carprice}} / car / day
                         </td>
@@ -247,9 +249,7 @@
                             <img scr="https://static.wikia.nocookie.net/finalfantasy/images/1/1e/Gil_from_Final_Fantasy_XIV_icon.png/revision/latest?cb=20210429070746"> {{car.totalprice}} / car / day
                         </td>
                         <td style="padding: 5px;text-align: center">
-                            <a href="/addcontract/request?={{car.customer}}_{{car.carbrand}}_{{car.carmodel}}_{{car.caryear}}_{{car.unixtimestamp}}">
                                 <button class="button_style" style="width: 95%; height: 95%; font-size: xx-large" type="submit" name="action_button" value="update">ACCEPT</button>
-                            </a>
                         </td>
                         <td style="padding: 5px;text-align: center">
                             <button class="button_style_delete" style="width: 95%; height: 95%; font-size: xx-large;" name="action_button" value="delete" onclick="myFunction()" id="myBtn">DELETE</button>
