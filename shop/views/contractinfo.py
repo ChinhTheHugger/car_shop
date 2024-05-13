@@ -22,10 +22,12 @@ def get_contract(request,info_str):
     car_str = str(arr[1]) + " " + str(arr[2]) + " " + str(arr[3])
     
     contract = Contract.get_contract_by_parameters(arr[0],car_str,arr[4])
+    customer = Account.get_customer(contract.get_customer())
+    manager = Account.get_manager(contract.get_manager())
     values = {
         'request': contract.get_request(),
-        'customer': contract.get_customer(),
-        'manager': contract.get_manager(),
+        'customer': customer.__str__(),
+        'manager': manager.__str__(),
         'car': contract.get_car(),
         'quantity': contract.get_quantity(),
         'purpose': contract.get_purpose(),

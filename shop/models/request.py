@@ -116,9 +116,15 @@ class Request(models.Model): # similar to "cart"
         cart_items.annotate(frontimg=Value('', output_field=ImageField(upload_to='uploads/fronts/')))
         cart_items.annotate(carprice=Value('', output_field=IntegerField()))
         cart_items.annotate(totalprice=Value('', output_field=IntegerField()))
+        cart_items.annotate(carbrand=Value('', output_field=CharField()))
+        cart_items.annotate(carmodel=Value('', output_field=CharField()))
+        cart_items.annotate(caryear=Value('', output_field=CharField()))
         for item in cart_items:
             car_kw = str(item.car).split()
             carinfo = Car.get_car_info_for_cart(car_kw[0],car_kw[1],car_kw[2])
+            item.carbrand = carinfo.get_brand()
+            item.carmodel = carinfo.get_model()
+            item.caryear = carinfo.get_year()
             item.frontimg = carinfo.get_front_img()
             item.carprice = carinfo.get_price()
             item.totalprice = item.quantity * carinfo.get_price()
@@ -178,6 +184,12 @@ class Request(models.Model): # similar to "cart"
     
     def get_date(self):
         return self.date
+    
+    def current_status(self):
+        if self.status == False:
+            return False
+        
+        return True
     
     class Meta:
         db_table = 'request'

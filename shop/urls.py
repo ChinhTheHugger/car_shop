@@ -24,8 +24,12 @@ from .views.newcontract import get_info_for_contract
 from .views.contractinfo import get_contract
 from .views.setupcontract import SetUpContract
 from .views.editcontract import get_contract_info_for_edit
+from .views.updatedeletecontract import UpdateDeleteContract
+from .middlewares.auth import auth_middleware
+from .views.accountinfo import AccountView
 
 urlpatterns = [
+    # homepage
     path('', homepage, name='homepage'),
     
     path('homepage', homepage, name='homepage'),
@@ -67,6 +71,8 @@ urlpatterns = [
     
     path('logout', logout , name='logout'),
     
+    path('account', auth_middleware(AccountView.as_view()), name='account'),
+    
     # cart
     path('cart', view_cart, name='view-cart'),
     
@@ -82,6 +88,8 @@ urlpatterns = [
     path('newcontractprocessing', SetUpContract.as_view(), name='setup-contract'),
     
     path('editcontract/<slug:info_str>', get_contract_info_for_edit, name='edit-contract'),
+    
+    path('updatedeletecontract', UpdateDeleteContract.as_view(), name='update-delete-contract')
     
     
 ]

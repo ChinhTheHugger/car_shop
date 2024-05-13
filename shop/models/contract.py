@@ -36,8 +36,7 @@ class Contract(models.Model): # similar to "order"
     def get_contract_by_customer(customer_username):
         return Contract.objects.filter(customer=customer_username)
     
-    def get_contract_by_parameters(customer,car_str,unixtimestamp):
-        date = datetime.date.fromtimestamp(unixtimestamp)
+    def get_contract_by_parameters(customer,car_str,date):
         return Contract.objects.get(customer=customer,car=car_str,createdate=date)
     
     def set_up_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,residence,idcard,driverlicense,carodometerbefore,carsystemstatusbefore,carfrontbefore,carbackbefore,carinteriorbefore,cost,createdate):
@@ -100,7 +99,7 @@ class Contract(models.Model): # similar to "order"
             self.enddate = enddate
         if residence != "":
             self.residence = residence
-        if id != "":
+        if idcard != "":
             self.idcard = idcard
         if driverlicense != "":
             self.driverlicense = driverlicense
@@ -120,11 +119,28 @@ class Contract(models.Model): # similar to "order"
         
         return
     
+    def delete_contract(customer,car_str,date):
+        contract = Contract.objects.get(customer=customer,car=car_str,createdate=date)
+        contract.delete()
+        return
+    
     def get_active_contract_number(car_name,date):
         return Contract.objects.filter(car=car_name,enddate__gt=date).count()
     
+    def get_all_contracts():
+        return Contract.objects.all()
+    
     def is_past_due(self):
-        return date.today() <= self.enddate
+        if date.today() <= self.enddate:
+            return True
+        
+        return False
+    
+    def has_started(self):
+        if date.today() >= self.startdate:
+            return True
+        
+        return False
     
     def customer_update(old_username,new_username):
         contracts_to_update = Contract.objects.filter(customer=old_username)
@@ -199,7 +215,7 @@ class Contract(models.Model): # similar to "order"
         return self. carinteriorbefore
     
     def info_string(self):
-        return self.customer + "_" + str(self.car).replace(" ","_") + "_" + str(datetime.datetime.timestamp(self.createdate)*1000)
+        return self.customer + "_" + str(self.car).replace(" ","_") + "_" + str(self.createdate)
     
     def __str__(self):
         customer = Account.get_account_by_username(customer)

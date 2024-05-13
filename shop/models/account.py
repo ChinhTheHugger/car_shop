@@ -40,6 +40,18 @@ class Account(models.Model):
             return Account.objects.get(username=acc_username)
         except:
             return False
+    
+    def get_customer(acc_username):
+        try:
+            return Account.objects.get(username=acc_username,type='customer')
+        except:
+            return False
+        
+    def get_manager(acc_username):
+        try:
+            return Account.objects.get(username=acc_username,type='manager')
+        except:
+            return False
         
     def get_account_by_username_for_iterate(acc_username):
          return Account.objects.filter(username=acc_username)
