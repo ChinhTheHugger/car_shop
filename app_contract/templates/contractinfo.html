@@ -1,0 +1,359 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+<style>
+    /* SECTION: content table */
+
+    table, th, td {
+            border: none;
+            border-collapse: collapse;
+        }
+
+        table.center {
+            margin-left: auto; 
+            margin-right: auto;
+        }
+
+/* END SECTION: content table */
+
+/* SECTION: action button */
+
+.container_button {
+            height: 100px;
+            position: relative;
+            border: none;
+        }
+
+        .center_button {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .button_style {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button_style:hover {
+            color: black;
+            background-color: gold;
+        }
+
+/* END SECTION: action button */
+
+/* Create two unequal columns that floats next to each other */
+.column {
+    float: left;
+    padding: 10px;
+}
+
+.left {
+    width: 80%;
+}
+
+.right {
+    width: 15%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+</style>
+
+<body>
+    {% for acc in account %}
+        {% if acc.check_account_type %}
+        <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> CONTRACT INFO </h2>
+        
+                        <table class="center" style="width: 90%;background-color: white;">
+                            <tr>
+                                <th style="display: none;">Header 1</th>
+                                <th style="display: none;">Header 2</th>
+                                <th style="display: none;">Header 3</th>
+                                <th style="display: none;">Header 4</th>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">REQUEST</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.request}}
+                                    </td>
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">MANAGER</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.manager}}
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">CUSTOMER</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.customer}}
+                                    </td>
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">CAR</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.car}}
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">QUANTITY</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.quantity}}
+                                    </td>
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">COST</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.cost}}
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">START DATE</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.startdate}}
+                                    </td>
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">END DATE</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.enddate}}
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">ODOMETER</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.carodometerbefore}}
+                                    </td>
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">SYSTEM STATUS</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.carsystemstatusbefore}}
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">PURPOSE</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%" colspan="3">
+                                        {{values.purpose}}
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">RESIDENCE</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        <img src="{{values.residence.url}}" alt="Cinque Terre" style="height: 200px">
+                                    </td>
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">CAR FRONT VIEW</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        <img src="{{values.carfrontbefore.url}}" alt="Cinque Terre" style="height: 200px">
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">ID CARD</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        <img src="{{values.idcard.url}}" alt="Cinque Terre" style="height: 200px">
+                                    </td>
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">CAR BACK VIEW</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        <img src="{{values.carbackbefore.url}}" alt="Cinque Terre" style="height: 200px">
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">DRIVER LICENSE</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        <img src="{{values.driverlicense.url}}" alt="Cinque Terre" style="height: 200px">
+                                    </td>
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">CAR INTERIOR VIEW</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        <img src="{{values.carinteriorbefore.url}}" alt="Cinque Terre" style="height: 200px">
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+
+                        </table>
+        {% else %}
+        <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> CONTRACT INFO </h2>
+        <form action="/editcontract/{{info_str}}" method="POST" style="text-align: center;" enctype="multipart/form-data">
+            {% csrf_token %}
+
+                {% if error %}
+                <div class="alert alert-danger" role="alert" style="background-color: red;color: #333;font-size: xx-large;">
+                    {{error}}
+                </div>
+                <p></p>
+                {% endif %}
+                <div class="row">
+                    <div class="column left">
+                        <table class="center" style="width: 90%;background-color: white;">
+                            <tr>
+                                <th style="display: none;">Header 1</th>
+                                <th style="display: none;">Header 2</th>
+                                <th style="display: none;">Header 3</th>
+                                <th style="display: none;">Header 4</th>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">REQUEST</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.request}}
+                                    </td>
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">MANAGER</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.manager}}
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">CUSTOMER</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.customer}}
+                                    </td>
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">CAR</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.car}}
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">QUANTITY</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.quantity}}
+                                    </td>
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">COST</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.cost}}
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">START DATE</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.startdate}}
+                                    </td>
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">END DATE</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.enddate}}
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">ODOMETER</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.carodometerbefore}}
+                                    </td>
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">SYSTEM STATUS</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        {{values.carsystemstatusbefore}}
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">PURPOSE</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%" colspan="3">
+                                        {{values.purpose}}
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">RESIDENCE</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        <img src="{{values.residence.url}}" alt="Cinque Terre" style="height: 200px">
+                                    </td>
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">CAR FRONT VIEW</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        <img src="{{values.carfrontbefore.url}}" alt="Cinque Terre" style="height: 200px">
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">ID CARD</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        <img src="{{values.idcard.url}}" alt="Cinque Terre" style="height: 200px">
+                                    </td>
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">CAR BACK VIEW</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        <img src="{{values.carbackbefore.url}}" alt="Cinque Terre" style="height: 200px">
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">DRIVER LICENSE</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        <img src="{{values.driverlicense.url}}" alt="Cinque Terre" style="height: 200px">
+                                    </td>
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 15%">CAR INTERIOR VIEW</td>
+                                    <td style="padding: 5px;width: 425px; width: 35%">
+                                        <img src="{{values.carinteriorbefore.url}}" alt="Cinque Terre" style="height: 200px">
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+
+                        </table>
+                    </div>
+                    <div class="column right">
+                        <button class="button_style" style=" height: 95%; width: 95%; font-size: xx-large" type="submit" name="action_button" value="update">UPDATE CONTRACT</button>
+                        <button class="button_style_delete" style=" height: 95%; width: 95%; font-size: xx-large" name="action_button" value="delete" onclick="myFunction(event)">DELETE CONTRACT</button>
+                        
+                    </div>
+                </div>
+                <script>
+                    function myFunction(e) {
+                        var txt;
+                        if (!confirm("Do you wish to delete this car?")) {
+                            e.preventDefault();
+                        }
+                    }
+                </script>
+
+        </form>
+        {% endif %}
+    {% endfor %}
+</body>
+{% endblock %}

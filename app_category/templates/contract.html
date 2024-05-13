@@ -1,0 +1,146 @@
+{% extends 'navbar.html' %}
+
+{% block contract %}
+
+<style>
+    /* SECTION: content table */
+
+    table, th, td {
+            border: none;
+            border-collapse: collapse;
+        }
+
+        table.center {
+            margin-left: auto; 
+            margin-right: auto;
+        }
+
+/* END SECTION: content table */
+
+/* SECTION: action button */
+
+.container_button {
+            height: 100px;
+            position: relative;
+            border: none;
+        }
+
+        .center_button {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .button_style {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button_style:hover {
+            color: black;
+            background-color: gold;
+        }
+
+/* END SECTION: action button */
+</style>
+<p></p>
+<h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> CREATE CONTRACT </h2>
+<p></p>
+<form action="/processcontract" method="POST">
+    {% csrf_token %}
+
+        {% if error%}
+        <div class="alert alert-danger" role="alert" style="background-color: red;color: #333;font-size: xx-large;">
+            {{error}}
+        </div>
+        <p></p>
+        {% endif %}
+    <table class="center" style="width: 30%;background-color: white;">
+        <tr>
+            <th style="display: none;">Header 1</th>
+            <th style="display: none;">Header 2</th>
+        </tr>
+        
+        {% for cus in customer %}
+        <tr style="height: 75px;">
+            <div class="form-group">
+                <td style="padding: 5px;background-color: #777;color: white;">CUSTOMER</td>
+                <td style="padding: 5px;padding-left: 30px; width: 425px;text-align: center;">
+                    <input hidden name="customer" value="{{cus.id}}">
+                    {{cus.first_name}}, {{cus.last_name}}
+                </td>
+                
+            </div>
+        </tr>
+        {% endfor %}
+
+        {% for car in car %}
+        <tr style="height: 75px;">
+            <div class="form-group">
+                <td style="padding: 5px;background-color: #777;color: white;">CAR</td>
+                <td style="padding: 5px;padding-left: 30px; width: 425px;text-align: center;">
+                    <input hidden name="car" value="{{car.id}}">
+                    {{car.brand.name}} {{car.model}} {{car.year}}
+                </td>
+                
+            </div>
+        </tr>
+        <tr style="height: 75px;">
+            <div class="form-group">
+                <td style="padding: 5px;background-color: #777;color: white;">QUANTITY</td>
+                <td style="padding: 5px;width: 425px;">
+                    <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="number" step="1" name="quantity"
+         id="" value="1" class="form-control form-control-sm" 
+         placeholder="{{car.instock}}" mim="1" max="{{car.instock}}">
+                </td>
+                
+            </div>
+        </tr>
+        {% endfor %}
+        <tr style="height: 75px;">
+            <div class="form-group">
+                <td style="padding: 5px;background-color: #777;color: white;">START DATE</td>
+                <td style="padding: 5px; width: 425px;text-align: center;" id="date"></td>
+                
+            </div>
+        </tr>
+        <tr style="height: 75px;">
+            <div class="form-group">
+                <td style="padding: 5px;background-color: #777;color: white;">END DATE</td>
+                <td style="padding: 5px;width: 425px;">
+                    <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="date" name="enddate"
+         id="mindate" value="0" class="form-control form-control-sm" 
+         placeholder="" min="">
+                </td>
+                
+            </div>
+        </tr>
+
+    </table>
+    
+    <p></p>
+        <p></p>
+        <div class="container_button">
+            <div class="center_button">
+                <button class="button_style" style="width: 500px; height: 100px; font-size: xx-large" type="submit">CREATE CONTRACT</button>
+            </div>
+        </div>
+
+    <script>
+        const d = new Date();
+        document.getElementById("date").innerHTML = d.toDateString();
+        document.getElementById("mindate").min = new Date().toISOString().split("T")[0];
+        </script>
+</form>
+
+{% endblock %}

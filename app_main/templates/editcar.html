@@ -1,0 +1,281 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+<style>
+    /* SECTION: content table */
+
+    table, th, td {
+            border: none;
+            border-collapse: collapse;
+        }
+
+        table.center {
+            margin-left: auto; 
+            margin-right: auto;
+        }
+
+/* END SECTION: content table */
+
+/* SECTION: action button */
+
+.container_button {
+            position: relative;
+            border: none;
+        }
+
+        .center_button {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .button_style {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button_style_delete {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button_style:hover {
+            color: black;
+            background-color: gold;
+        }
+
+        .button_style_delete:hover {
+            color: black;
+            background-color: red;
+        }
+
+/* END SECTION: action button */
+
+    /* Create two unequal columns that floats next to each other */
+    .column {
+        float: left;
+        padding: 10px;
+    }
+
+    .left {
+        width: 80%;
+    }
+
+    .right {
+        width: 15%;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>
+
+<body>
+    {% for acc in account %}
+        {% if acc.check_account_type %}
+            <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> YOU DON'T HAVE PERMISSION TO ACCESS THIS PAGE </h2>
+        {% else %}
+            <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> EDIT CAR </h2>
+            <form action="/updatedeletecar" method="POST" style="text-align: center;" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% if error %}
+                <div class="alert alert-danger" role="alert" style="background-color: red;color: #333;font-size: xx-large;">
+                    {{error}}
+                </div>
+                <p></p>
+                {% endif %}
+
+                <div class="row">
+                    <div class="column left">
+                        <table class="center" style="width: 100%;background-color: white; table-layout: fixeds">
+                            <tr style="height: 75px; background-color: #4caf50;color: white">
+                                <th style="text-align: center"></th>
+                                <th style="text-align: center">CURRENT</th>
+                                <th style="text-align: center">NEW</th>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 20%">BRAND</td>
+                                    <td style="padding: 5px;width: 40%;">
+                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center; font-size: large" type="text" name="brand-original"
+                            id="" value="{{values.brand}}" class="form-control form-control-sm" 
+                            placeholder="" readonly>
+                                    </td>
+                                    <td style="padding: 5px;width: 40%;">
+                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="brand"
+                            id="" value="{{values_new.brand}}" class="form-control form-control-sm" 
+                            placeholder="">
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 20%">MODEL</td>
+                                    <td style="padding: 5px;width: 40%;">
+                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center; font-size: large" type="text" name="model-original"
+                            id="" value="{{values.model}}" class="form-control form-control-sm" 
+                            placeholder="" readonly>
+                                    </td>
+                                    <td style="padding: 5px;width: 40%;">
+                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="model"
+                            id="" value="{{values_new.model}}" class="form-control form-control-sm" 
+                            placeholder="">
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 20%">YEAR</td>
+                                    <td style="padding: 5px;width: 40%;">
+                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center; font-size: large" type="text" name="year-original"
+                            id="" value="{{values.year}}" class="form-control form-control-sm" 
+                            placeholder="" readonly>
+                                    </td>
+                                    <td style="padding: 5px;width: 40%;">
+                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="number" name="year"
+                            id="" value="{{values_new.year}}" class="form-control form-control-sm" 
+                            placeholder="" min="1886">
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 20%">CATEGORY</td>
+                                    <td style="padding: 5px;width: 40%;">{{values.category}}</td>
+                                    <td style="padding: 5px;width: 40%;">
+                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="category"
+                            id="" value="{{values_new.category}}" class="form-control form-control-sm" 
+                            placeholder="">
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 20%">DESCRIPTION</td>
+                                    <td style="padding: 5px;width: 40%;">
+                                        <textarea style="width: 95%;height: 150px;background-color: white;border: none;text-align: left; overflow: hidden; resize: vertical; font-size: x-large" name="desintext-original"
+                            id="" value="" rows="10" wrap="soft" class="form-control form-control-sm" 
+                            placeholder="{{values.desintext}}" readonly></textarea>
+                                    </td>
+                                    <td style="padding: 5px;width: 40%;">
+                                        <textarea style="width: 95%;height: 150px;background-color: white;border: none;text-align: left; overflow: hidden; resize: vertical; font-size: x-large" name="desintext"
+                            id="" value="{{values_new.desintext}}" rows="10" wrap="soft" class="form-control form-control-sm" 
+                            placeholder=""></textarea>
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 20%">IN STOCK</td>
+                                    <td style="padding: 5px;width: 40%;">{{values.instock}}</td>
+                                    <td style="padding: 5px;width: 40%;">
+                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="instock"
+                            id="" value="{{values_new.instock}}" class="form-control form-control-sm" 
+                            placeholder="" min="1">
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 20%">PRICE</td>
+                                    <td style="padding: 5px;width: 40%;">{{values.price}}</td>
+                                    <td style="padding: 5px;width: 40%;">
+                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="price"
+                            id="" value="{{values_new.price}}" class="form-control form-control-sm" 
+                            placeholder="" min="1">
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 20%">FRONT</td>
+                                    <td style="padding: 5px;width: 40%;">
+                                        <img src="{{values.front.url}}" alt="Cinque Terre" style="height: 200px">
+                                    </td>
+                                    <td style="padding: 5px;width: 40%;">
+                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" accept="images/*" name="front"
+                            id="file-input" class="form-control form-control-sm" 
+                            placeholder="" onchange="readURL(this);">
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 20%">BACK</td>
+                                    <td style="padding: 5px;width: 40%;">
+                                        <img src="{{values.back.url}}" alt="Cinque Terre" style="height: 200px">
+                                    </td>
+                                    <td style="padding: 5px;width: 40%;">
+                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" accept="images/*" name="back"
+                            id="" class="form-control form-control-sm" 
+                            placeholder="" onchange="readURL(this);">
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <div class="form-group">
+                                    <td style="padding: 5px;background-color: #777;color: white; width: 20%">INTERIOR</td>
+                                    <td style="padding: 5px;width: 40%;">
+                                        <img src="{{values.interior.url}}" alt="Cinque Terre" style="height: 200px">
+                                    </td>
+                                    <td style="padding: 5px;width: 40%;">
+                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" accept="images/*" name="interior"
+                            id="" class="form-control form-control-sm" 
+                            placeholder="" onchange="readURL(this);">
+                                    </td>
+                                    
+                                </div>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="column right">
+                        <button class="button_style" style=" height: 95%; width: 95%; font-size: xx-large" type="submit" name="action_button" value="update">UPDATE</button>
+                        <button class="button_style_delete" style=" height: 95%; width: 95%; font-size: xx-large" name="action_button" value="delete" onclick="myFunction(event)">DELETE</button>
+
+                        
+                    </div>
+                </div>
+            </form>
+            <script>
+                function myFunction(e) {
+                    var txt;
+                    if (!confirm("Do you wish to delete this car?")) {
+                        e.preventDefault();
+                    }
+                }
+            </script>
+        {% endif %}
+    {% endfor %}
+</body>
+{% endblock %}

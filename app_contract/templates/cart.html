@@ -1,0 +1,277 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+
+<style>
+    /* SECTION: content table */
+
+    table, th, td {
+            border: none;
+            border-collapse: collapse;
+        }
+
+        table.center {
+            margin-left: auto; 
+            margin-right: auto;
+        }
+
+/* END SECTION: content table */
+
+/* SECTION: action button */
+
+.container_button {
+            position: relative;
+            border: none;
+        }
+
+        .center_button {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .button_style {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button_style_delete {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button_style:hover {
+            color: black;
+            background-color: gold;
+        }
+
+        .button_style_delete:hover {
+            color: black;
+            background-color: red;
+        }
+
+/* END SECTION: action button */
+</style>
+
+<body>
+    <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> CART </h2>
+    {% for acc in account_info %}
+        {% if acc.check_account_type %}
+            <table class="center" style="width: 80%;background-color: white;">
+                <tr style="height: 75px;">
+                    <th style="padding: 5px;background-color: #777;color: white;width: 5%">NUM.</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 20%">IMAGE</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 20%">CAR</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 17%">PRICE</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 11%">QUANTITY</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 17%">TOTAL</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 5%">UPDATE QUANTITY</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 5%">DELETE REQUEST</th>
+                </tr>
+                {% for car in cart_items %}
+                <form action="/editrequest" method="POST">
+        
+                    {% csrf_token %}
+        
+                    <tr style="height: 75px;">
+                        <td style="padding: 5px;text-align: center">{{forloop.counter}}</td>
+                        <td style="padding: 5px;">
+                            <img src="{{car.frontimg.url}}" alt="Cinque Terre" style="width: 95%; height: 95">
+                        </td>
+                        <td style="padding: 5px;">
+                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="car_name" value="{{car.car}}" readonly>
+                        </td>
+                        <td style="padding: 5px;text-align: center">
+                            <img scr="https://static.wikia.nocookie.net/finalfantasy/images/1/1e/Gil_from_Final_Fantasy_XIV_icon.png/revision/latest?cb=20210429070746"> {{car.carprice}} / car / day
+                        </td>
+                        <td style="padding: 5px;text-align: center">
+                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="quantity" value="{{car.quantity}}">
+                        </td>
+                        <td style="padding: 5px;text-align: center">
+                            <img scr="https://static.wikia.nocookie.net/finalfantasy/images/1/1e/Gil_from_Final_Fantasy_XIV_icon.png/revision/latest?cb=20210429070746"> {{car.totalprice}} / car / day
+                        </td>
+                        <td style="padding: 5px;text-align: center">
+                            <button class="button_style" style="width: 95%; height: 95%; font-size: xx-large" type="submit" name="action_button" value="update">UPDATE</button>
+                        </td>
+                        <td style="padding: 5px;text-align: center">
+                            <button class="button_style_delete" style="width: 95%; height: 95%; font-size: xx-large;" name="action_button" value="delete" onclick="myFunction(event)" id="myBtn">DELETE</button>
+                        </td>
+                    </tr>
+                </form>
+                {% endfor %}
+            </table>
+            <script>
+                function myFunction(e) {
+                    var txt;
+                    if (!confirm("Do you wish to delete this request?")) {
+                        e.preventDefault();
+                    }
+                }
+            </script>
+        {% else %}
+            <form action="/cart" method="post">
+                {% csrf_token %}
+                <table class="center" style="width: 60%;background-color: white;">
+                    <tr>
+                        <th style="display: none;">Header 1</th>
+                        <th style="display: none;">Header 2</th>
+                        <th style="display: none;">Header 3</th>
+                    </tr>
+                    <tr style="height: 75px;">
+                        <div class="form-group">
+                            <td style="padding: 20px;background-color: #777;color: white;width: 15%;">CUSTOMER</td>
+                            <td style="padding: 5px;" colspan="3">
+                                <input style="width: 100%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="keyword"
+                    id="" value="" class="form-control form-control-sm" 
+                    placeholder="">
+                            </td>
+                            <td style="padding: 20px;background-color: #777;color: white;;">
+                                <div class="container_button">
+                                    <div class="center_button">
+                                        <button class="button_style" style="width: 98%; height: 97%; font-size: xx-large" type="submit">SEARCH</button>
+                                    </div>
+                                </div>
+                            </td>
+                            
+                        </div>
+                    </tr>
+                </table>
+            </form>
+            <h1></h1>
+            {% if car_items_manager_search %}
+            <table class="center" style="width: 95%;background-color: white;">
+                <tr style="height: 75px;">
+                    <th style="padding: 5px;background-color: #777;color: white;width: 5%">NUM.</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 15%">IMAGE</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 15%">CAR</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 15%">CUSTOMER</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 15%">REQUESTED ON</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 12%">PRICE</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 11%">QUANTITY</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 12%">TOTAL</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 5%">MAKE CONTRACT</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 5%">DELETE REQUEST</th>
+                </tr>
+                {% for car in cart_items_manager_search %}
+                <form action="/editrequest" method="POST">
+        
+                    {% csrf_token %}
+        
+                    <tr style="height: 75px;">
+                        <td style="padding: 5px;text-align: center">{{forloop.counter}}</td>
+                        <td style="padding: 5px;text-align: center">
+                            <img src="{{car.frontimg.url}}" alt="Cinque Terre" style="width: 95%; height: 95">
+                        </td>
+                        <td style="padding: 5px;text-align: center">
+                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="car_name" value="{{car.car}}" readonly>
+                        </td>
+                        <td style="padding: 5px;">
+                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="customer_name" value="{{car.customer}}" readonly>
+                        </td>
+                        <td style="padding: 5px;text-align: center">{{car.date}}</td>
+                        <td style="padding: 5px;text-align: center">
+                            <img scr="https://static.wikia.nocookie.net/finalfantasy/images/1/1e/Gil_from_Final_Fantasy_XIV_icon.png/revision/latest?cb=20210429070746"> {{car.carprice}} / car / day
+                        </td>
+                        <td style="padding: 5px;text-align: center">
+                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="quantity" value="{{car.quantity}}" min="0" required>
+                        </td>
+                        <td style="padding: 5px;text-align: center">
+                            <img scr="https://static.wikia.nocookie.net/finalfantasy/images/1/1e/Gil_from_Final_Fantasy_XIV_icon.png/revision/latest?cb=20210429070746"> {{car.totalprice}} / car / day
+                        </td>
+                        <td style="padding: 5px;text-align: center">
+                            <button class="button_style" style="width: 95%; height: 95%; font-size: xx-large" type="submit" name="action_button" value="update">ACCEPT</button>
+                        </td>
+                        <td style="padding: 5px;text-align: center">
+                            <button class="button_style_delete" style="width: 95%; height: 95%; font-size: xx-large;" name="action_button" value="delete" onclick="myFunction()" id="myBtn">DELETE</button>
+                        </td>
+                    </tr>
+                </form>
+                {% endfor %}
+            </table>
+            {% else %}
+            <table class="center" style="width: 95%;background-color: white;">
+                <tr style="height: 75px;">
+                    <th style="padding: 5px;background-color: #777;color: white;width: 5%">NUM.</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 15%">IMAGE</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 15%">CAR</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 15%">CUSTOMER</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 15%">REQUESTED ON</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 12%">PRICE</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 11%">QUANTITY</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 12%">TOTAL</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 5%">MAKE CONTRACT</th>
+                    <th style="padding: 5px;background-color: #777;color: white;width: 5%">DELETE REQUEST</th>
+                </tr>
+                {% for car in cart_items_manager %}
+                <form action="/editrequest" method="POST">
+        
+                    {% csrf_token %}
+        
+                    <tr style="height: 75px;">
+                        <td style="padding: 5px;text-align: center">{{forloop.counter}}</td>
+                        <td style="padding: 5px;text-align: center">
+                            <img src="{{car.frontimg.url}}" alt="Cinque Terre" style="width: 95%; height: 95">
+                        </td>
+                        <td style="padding: 5px;text-align: center">
+                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="car_name" value="{{car.car}}" readonly>
+                        </td>
+                        <td style="padding: 5px;">
+                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="customer_name" value="{{car.customer}}" readonly>
+                        </td>
+                        <td style="padding: 5px;text-align: center">
+                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="date" value="{{car.date}}" readonly>
+                        </td>
+                        <td style="padding: 5px;text-align: center">
+                            <img scr="https://static.wikia.nocookie.net/finalfantasy/images/1/1e/Gil_from_Final_Fantasy_XIV_icon.png/revision/latest?cb=20210429070746"> {{car.carprice}} / car / day
+                        </td>
+                        <td style="padding: 5px;text-align: center">
+                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="quantity" value="{{car.quantity}}" min="0" required>
+                        </td>
+                        <td style="padding: 5px;text-align: center">
+                            <img scr="https://static.wikia.nocookie.net/finalfantasy/images/1/1e/Gil_from_Final_Fantasy_XIV_icon.png/revision/latest?cb=20210429070746"> {{car.totalprice}} / car / day
+                        </td>
+                        <td style="padding: 5px;text-align: center">
+                                <button class="button_style" style="width: 95%; height: 95%; font-size: xx-large" type="submit" name="action_button" value="update">ACCEPT</button>
+                        </td>
+                        <td style="padding: 5px;text-align: center">
+                            <button class="button_style_delete" style="width: 95%; height: 95%; font-size: xx-large;" name="action_button" value="delete" onclick="myFunction()" id="myBtn">DELETE</button>
+                        </td>
+                    </tr>
+                </form>
+                {% endfor %}
+            </table>
+            {% endif %}
+            <script>
+                function myFunction() {
+                    var txt;
+                    if (confirm("Do you wish to delete this request?")) {
+                        document.getElementById("myBtn").type = "submit"
+                    } else {
+                        document.getElementById("myBtn").type = "button"
+                    }
+                    document.getElementById("demo").innerHTML = txt;
+                }
+            </script>
+        {% endif %}
+    {% endfor %}
+</body>
+    
+{% endblock %}
