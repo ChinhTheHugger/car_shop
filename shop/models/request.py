@@ -165,18 +165,19 @@ class Request(models.Model): # similar to "cart"
         return cart_items
     
     def request_custom_id(self):
-        unix_timestamp = datetime.datetime.timestamp(datetime.datetime(self.date))*1000
         car_kw = str(self.car).split()
         carinfo = Car.get_car_info_for_cart(car_kw[0],car_kw[1],car_kw[2])
-        return self.customer + "_" + carinfo.get_brand() + "_" + carinfo.get_model() + "_" + str(carinfo.get_year()) + "_" + str(int(unix_timestamp))
+        return self.customer + "_" + carinfo.get_brand() + "_" + carinfo.get_model() + "_" + str(carinfo.get_year()) + "_" + str(self.date)
     
-    def get_request(customer_in,brand_in,model_in,year_in,unixtimestamp):
+    def get_request(customer_in,brand_in,model_in,year_in,date):
         car_str = brand_in + " " + model_in + " " + str(year_in)
-        date = datetime.date.fromtimestamp(int(unixtimestamp))
         return Request.objects.get(customer=customer_in,car=car_str,date=date,status=False)
     
     def get_quantity(self):
         return self.quantity
+    
+    def get_date(self):
+        return self.date
     
     class Meta:
         db_table = 'request'
