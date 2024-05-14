@@ -28,6 +28,13 @@ from .views.updatedeletecontract import UpdateDeleteContract
 from .middlewares.auth import auth_middleware
 from .views.accountinfo import AccountView
 
+from .views_api.carlistapi import CarListApiView
+from .views_api.cardetailapi import CarDetailApiView
+from .views_api.brandlistapi import BrandListApiView
+from .views_api.branddetailapi import BrandDetailApiView
+from .views_api.categorylistapi import CategoryListApiView
+from .views_api.categorydetailapi import CategoryDetailApiView
+
 urlpatterns = [
     # homepage
     path('', homepage, name='homepage'),
@@ -89,7 +96,18 @@ urlpatterns = [
     
     path('editcontract/<slug:info_str>', get_contract_info_for_edit, name='edit-contract'),
     
-    path('updatedeletecontract', UpdateDeleteContract.as_view(), name='update-delete-contract')
+    path('updatedeletecontract', UpdateDeleteContract.as_view(), name='update-delete-contract'),
+    
+    # api
+    
+    path('api/car', CarListApiView.as_view()),
+    path('api/car/<slug:brand>_<slug:model>_<slug:year>', CarDetailApiView.as_view()),
+    
+    path('api/brand', BrandListApiView.as_view()),
+    path('api/brand/<slug:brand>', BrandDetailApiView.as_view()),
+    
+    path('api/category', CategoryListApiView.as_view()),
+    path('api/category/<slug:name>', CategoryDetailApiView.as_view()),
     
     
 ]
