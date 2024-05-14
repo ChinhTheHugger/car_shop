@@ -107,7 +107,7 @@ urlpatterns = [
     path('api/brand/<slug:brand>', BrandDetailApiView.as_view()),
     
     path('api/category', CategoryListApiView.as_view()),
-    path('api/category/<slug:name>', CategoryDetailApiView.as_view()),
+    path('api/category/<slug:category>', CategoryDetailApiView.as_view()),
     
     
 ]

@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework import permissions
 from shop.models.car import Car
 from shop.serializers.car import CarSerializer
+import json
 
 
 class CarListApiView(APIView):
@@ -17,6 +18,14 @@ class CarListApiView(APIView):
         '''
         cars = Car.get_all_cars()
         serializer = CarSerializer(cars, many=True)
+        
+        # this is how you extract data from the api response
+        
+        # results = Response(serializer.data, status=status.HTTP_200_OK).data
+        # print(results)
+        # print(results[0])
+        # print(results[0]['brand'])
+        
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # 2. Create
