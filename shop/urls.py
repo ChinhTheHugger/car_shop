@@ -100,14 +100,14 @@ urlpatterns = [
     
     # api
     
-    path('api/car', CarListApiView.as_view()),
-    path('api/car/<slug:brand>_<slug:model>_<slug:year>', CarDetailApiView.as_view()),
+    path('api_test/car', CarListApiView.as_view()),
+    path('api_test/car/<slug:brand>_<slug:model>_<slug:year>', CarDetailApiView.as_view()),
     
-    path('api/brand', BrandListApiView.as_view()),
-    path('api/brand/<slug:brand>', BrandDetailApiView.as_view()),
+    path('api_test/brand', BrandListApiView.as_view()),
+    path('api_test/brand/<slug:brand>', BrandDetailApiView.as_view()),
     
-    path('api/category', CategoryListApiView.as_view()),
-    path('api/category/<slug:category>', CategoryDetailApiView.as_view()),
+    path('api_test/category', CategoryListApiView.as_view()),
+    path('api_test/category/<slug:category>', CategoryDetailApiView.as_view()),
     
     
 ]
