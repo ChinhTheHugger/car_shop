@@ -2,8 +2,8 @@ from django.db import models
 import datetime
 from datetime import date
 
-from .contract import Contract
-from .account import Account
+from shop.models.contract import Contract
+from shop.models.account import Account
 
 class Payment(models.Model):
     contract = models.CharField(max_length=50) # use Contract.__str__

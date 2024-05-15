@@ -4,9 +4,9 @@ from datetime import date
 import datetime
 from django.core.validators import FileExtensionValidator
 
-from .car import Car
-from .account import Account
-from .request import Request
+from shop.models.car import Car
+from shop.models.account import Account
+from shop.models.request import Request
 
 class Contract(models.Model): # similar to "order"
     request = models.CharField(max_length=50) # use Request custom id

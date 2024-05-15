@@ -1,13 +1,13 @@
 from django.contrib import admin
 
-from .models.car import Car
-from .models.brand import Brand
-from .models.category import Category
-from .models.account import Account
-from .models.manager import Manager
-from .models.request import Request
-from .models.contract import Contract
-from .models.payment import Payment
+from shop.models.car import Car
+from shop.models.brand import Brand
+from shop.models.category import Category
+from shop.models.account import Account
+from shop.models.manager import Manager
+from shop.models.request import Request
+from shop.models.contract import Contract
+from shop.models.payment import Payment
 
 # Register your models here.
 
