@@ -34,6 +34,10 @@ from app_main.views.setupcontract import SetUpContract
 from app_main.views.editcontract import get_contract_info_for_edit
 from app_main.views.updatedeletecontract import UpdateDeleteContract
 
+
+
+from app_main.views_api.carlistapi import CarListApiView
+
 urlpatterns = [
     # homepage
     path('', homepage, name='homepage'),
@@ -95,7 +99,11 @@ urlpatterns = [
     
     path('editcontract/<slug:info_str>', get_contract_info_for_edit, name='edit-contract'),
     
-    path('updatedeletecontract', UpdateDeleteContract.as_view(), name='update-delete-contract')
+    path('updatedeletecontract', UpdateDeleteContract.as_view(), name='update-delete-contract'),
+    
+    
+    
+    path('api_test/car', CarListApiView.as_view()),
     
     
 ]
