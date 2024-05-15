@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 
-from shop.models.car import Car
-from shop.models.request import Request
-from shop.models.account import Account
+from app_car.models.car import Car
+from app_request.models.request import Request
+from app_account.models.account import Account
 
 from itertools import chain
 

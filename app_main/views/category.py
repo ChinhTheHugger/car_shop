@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
-from shop.models.car import Car
-from shop.models.category import Category
+from app_car.models.car import Car
+from app_category.models.category import Category
 from django.views import View
 
 def category(request,name):

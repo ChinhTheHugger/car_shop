@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
-from shop.models.car import Car
-from shop.models.brand import Brand
-from shop.models.category import Category
+from app_car.models.car import Car
+from app_brand.models.brand import Brand
+from app_category.models.category import Category
 from django.views import View
 
 def search(request):
