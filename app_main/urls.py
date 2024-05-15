@@ -4,35 +4,35 @@ from django.urls import path,re_path
 from app_main.views.home import homepage
 from app_main.views.search import search
 
-from app_car.views.carinfo import get_car
-from app_car.views.editcar import get_car_info_for_edit
-from app_car.views.updatedeletecar import UpdateDeleteCar
-from app_car.views.newcar import AddNewCar
+from app_main.views.carinfo import get_car
+from app_main.views.editcar import get_car_info_for_edit
+from app_main.views.updatedeletecar import UpdateDeleteCar
+from app_main.views.newcar import AddNewCar
 
-from app_brand.views.brandinfo import get_brand
-from app_brand.views.editbrand import get_brand_info_for_edit
-from app_brand.views.updatedeletebrand import UpdateDeleteBrand
-from app_brand.views.newbrand import AddNewBrand
+from app_main.views.brandinfo import get_brand
+from app_main.views.editbrand import get_brand_info_for_edit
+from app_main.views.updatedeletebrand import UpdateDeleteBrand
+from app_main.views.newbrand import AddNewBrand
 
-from app_category.views.category import category
-from app_category.views.editcategory import get_category_info_for_edit
-from app_category.views.updatedeletecategory import UpdateDeleteCategory
-from app_category.views.newcategory import AddNewCategory
+from app_main.views.category import category
+from app_main.views.editcategory import get_category_info_for_edit
+from app_main.views.updatedeletecategory import UpdateDeleteCategory
+from app_main.views.newcategory import AddNewCategory
 
-from app_account.views.login import Login, logout
-from app_account.views.signup import Signup
-from app_account.middlewares.auth import auth_middleware
-from app_account.views.accountinfo import AccountView
+from app_main.views.login import Login, logout
+from app_main.views.signup import Signup
+from app_main.middlewares.auth import auth_middleware
+from app_main.views.accountinfo import AccountView
 
-from app_request.views.cart import view_cart
-from app_request.views.makerequest import add_to_cart
-from app_request.views.editrequest import UpdateDeleteRequest
+from app_main.views.cart import view_cart
+from app_main.views.makerequest import add_to_cart
+from app_main.views.editrequest import UpdateDeleteRequest
 
-from app_contract.views.newcontract import get_info_for_contract
-from app_contract.views.contractinfo import get_contract
-from app_contract.views.setupcontract import SetUpContract
-from app_contract.views.editcontract import get_contract_info_for_edit
-from app_contract.views.updatedeletecontract import UpdateDeleteContract
+from app_main.views.newcontract import get_info_for_contract
+from app_main.views.contractinfo import get_contract
+from app_main.views.setupcontract import SetUpContract
+from app_main.views.editcontract import get_contract_info_for_edit
+from app_main.views.updatedeletecontract import UpdateDeleteContract
 
 urlpatterns = [
     # homepage
