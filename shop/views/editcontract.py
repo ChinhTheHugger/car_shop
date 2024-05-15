@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
-from shop.models.car import Car
-from shop.models.contract import Contract
-from shop.models.account import Account
+from app_car.models.car import Car
+from app_contract.models.contract import Contract
+from app_account.models.account import Account
 from django.views import View
 
 def get_contract_info_for_edit(request,info_str):

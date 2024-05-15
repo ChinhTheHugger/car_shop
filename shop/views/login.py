@@ -1,6 +1,6 @@
 from django.shortcuts import render , redirect , HttpResponseRedirect
 from django.contrib.auth.hashers import  check_password
-from shop.models.account import Account
+from app_account.models.account import Account
 from django.views import View
 
 

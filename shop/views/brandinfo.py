@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from shop.models.brand import Brand
-from shop.models.car import Car
-from shop.models.account import Account
+from app_brand.models.brand import Brand
+from app_car.models.car import Car
+from app_account.models.account import Account
 
 # Create your views here.
 

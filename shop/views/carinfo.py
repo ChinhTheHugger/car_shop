@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 import datetime
 from datetime import date
-from shop.models.car import Car
-from shop.models.account import Account
-from shop.models.category import Category
-from shop.models.brand import Brand
-from shop.models.contract import Contract
+from app_car.models.car import Car
+from app_account.models.account import Account
+from app_category.models.category import Category
+from app_brand.models.brand import Brand
+from app_contract.models.contract import Contract
 from django.views import View
 
 def get_car(request,brand,model,year):
