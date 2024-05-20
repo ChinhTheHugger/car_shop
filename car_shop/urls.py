@@ -27,9 +27,10 @@ urlpatterns = [
     path('', include('app_main.urls')),
     
     path('api/car/', include('app_car.urls')),
-    # path('api/brand/', include('app_brand.urls')),
-    # path('api/category/', include('app_category.urls')),
-    # path('api/account/', include('app_account.urls')),
-    # path('api/request/', include('app_request.urls')),
-    # path('api/contract/', include('app_contract.urls')),
+    path('api/brand/', include('app_brand.urls')),
+    path('api/category/', include('app_category.urls')),
+    path('api/account/', include('app_account.urls')),
+    path('api/request/', include('app_request.urls')),
+    path('api/contract/', include('app_contract.urls')),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

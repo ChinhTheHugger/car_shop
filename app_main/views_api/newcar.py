@@ -102,3 +102,43 @@ class AddNewCar(View):
                 'error': response.json()
             }
             return render(request, 'addcar.html', data)
+        
+        
+    def validateCar(self,edited_car):
+        error_message = None
+        if (not edited_car.brand):
+            error_message = "Brand name can't be blank!!"
+        if (not edited_car.model):
+            error_message = "Model name can't be blank!!"
+        if (not edited_car.year):
+            error_message = "Manufacture year can't be blank!!"
+        if edited_car.isExist():
+            error_message = "Car already exists!! (matching brand, model and manufacture year)"
+        if (not edited_car.category):
+            error_message = "Category can't be blank!!"
+        if (not edited_car.desintext):
+            error_message = "Car should have a description!!"
+        if (not edited_car.instock):
+            error_message = "Number of cars in stock can't be blank!!"
+        if (not edited_car.price):
+            error_message = "Car's renting price can't be blank!!"
+        if (not edited_car.front):
+            error_message = "Car should have a front view!!"
+        if edited_car.front:
+            type_front, decoding = mimetypes.guess_type(str(edited_car.front))
+            if 'image' not in type_front:
+                error_message = "The input file for front view is invalid!!"
+        if (not edited_car.back):
+            error_message = "Car should have a back view!!"
+        if edited_car.back:
+            type_back, decoding = mimetypes.guess_type(str(edited_car.back))
+            if 'image' not in type_back:
+                error_message = "The input file for back view is invalid!!"
+        if (not edited_car.interior):
+            error_message = "Car should have an interior view!!"
+        if edited_car.interior:
+            type_interior, decoding = mimetypes.guess_type(str(edited_car.interior))
+            if 'image' not in type_interior:
+                error_message = "The input file for interior view is invalid!!"
+        
+        return error_message
