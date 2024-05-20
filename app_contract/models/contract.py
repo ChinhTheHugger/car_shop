@@ -223,3 +223,6 @@ class Contract(models.Model): # similar to "order"
     
     class Meta:
         db_table = 'contract'
+        constraints = [
+            models.UniqueConstraint(fields=['request'], name='unique_request')
+        ]
