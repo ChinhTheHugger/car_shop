@@ -1,38 +1,38 @@
 from django.contrib import admin
 from django.urls import path,re_path
 
-from app_main.views.home import homepage
-from app_main.views.search import search
+from app_main.view_api.home import homepage
+from app_main.view_api.search import search
 
-from app_main.views.carinfo import get_car
-from app_main.views.editcar import get_car_info_for_edit
-from app_main.views.updatedeletecar import UpdateDeleteCar
-from app_main.views.newcar import AddNewCar
+from app_main.view_api.carinfo import get_car
+from app_main.view_api.editcar import get_car_info_for_edit
+from app_main.view_api.updatedeletecar import UpdateDeleteCar
+from app_main.view_api.newcar import AddNewCar
 
-from app_main.views.brandinfo import get_brand
-from app_main.views.editbrand import get_brand_info_for_edit
-from app_main.views.updatedeletebrand import UpdateDeleteBrand
-from app_main.views.newbrand import AddNewBrand
+from app_main.view_api.brandinfo import get_brand
+from app_main.view_api.editbrand import get_brand_info_for_edit
+from app_main.view_api.updatedeletebrand import UpdateDeleteBrand
+from app_main.view_api.newbrand import AddNewBrand
 
-from app_main.views.category import category
-from app_main.views.editcategory import get_category_info_for_edit
-from app_main.views.updatedeletecategory import UpdateDeleteCategory
-from app_main.views.newcategory import AddNewCategory
+from app_main.view_api.category import category
+from app_main.view_api.editcategory import get_category_info_for_edit
+from app_main.view_api.updatedeletecategory import UpdateDeleteCategory
+from app_main.view_api.newcategory import AddNewCategory
 
-from app_main.views.login import Login, logout
-from app_main.views.signup import Signup
+from app_main.view_api.login import Login, logout
+from app_main.view_api.signup import Signup
 from app_main.middlewares.auth import auth_middleware
-from app_main.views.accountinfo import AccountView
+from app_main.view_api.accountinfo import AccountView
 
-from app_main.views.cart import view_cart
-from app_main.views.makerequest import add_to_cart
-from app_main.views.editrequest import UpdateDeleteRequest
+from app_main.view_api.cart import view_cart
+from app_main.view_api.makerequest import add_to_cart
+from app_main.view_api.editrequest import UpdateDeleteRequest
 
-from app_main.views.newcontract import get_info_for_contract
-from app_main.views.contractinfo import get_contract
-from app_main.views.setupcontract import SetUpContract
-from app_main.views.editcontract import get_contract_info_for_edit
-from app_main.views.updatedeletecontract import UpdateDeleteContract
+from app_main.view_api.newcontract import get_info_for_contract
+from app_main.view_api.contractinfo import get_contract
+from app_main.view_api.setupcontract import SetUpContract
+from app_main.view_api.editcontract import get_contract_info_for_edit
+from app_main.view_api.updatedeletecontract import UpdateDeleteContract
 
 
 
