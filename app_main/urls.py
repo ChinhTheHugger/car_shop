@@ -36,7 +36,6 @@ from app_main.view_api.updatedeletecontract import UpdateDeleteContract
 
 
 
-from app_main.views_api.carlistapi import CarListApiView
 
 urlpatterns = [
     # homepage
@@ -101,9 +100,6 @@ urlpatterns = [
     
     path('updatedeletecontract', UpdateDeleteContract.as_view(), name='update-delete-contract'),
     
-    
-    
-    path('api_test/car', CarListApiView.as_view()),
     
     
 ]

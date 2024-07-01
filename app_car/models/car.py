@@ -177,3 +177,6 @@ class Car(models.Model):
     
     class Meta:
         db_table = 'car'
+        constraints = [
+            models.UniqueConstraint(fields=['brand','model','year'], name='unique_brand_model_year')
+        ]

@@ -61,3 +61,6 @@ class Category(models.Model):
     
     class Meta:
         db_table = 'category'
+        constraints = [
+            models.UniqueConstraint(fields=['categoryname'], name='unique_category')
+        ]

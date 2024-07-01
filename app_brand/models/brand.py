@@ -75,3 +75,6 @@ class Brand(models.Model):
     
     class Meta:
         db_table = 'brand'
+        constraints = [
+            models.UniqueConstraint(fields=['brandname'], name='unique_brand')
+        ]

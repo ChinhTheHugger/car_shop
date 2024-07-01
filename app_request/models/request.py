@@ -193,3 +193,6 @@ class Request(models.Model): # similar to "cart"
     
     class Meta:
         db_table = 'request'
+        constraints = [
+            models.UniqueConstraint(fields=['customer','car','date'], name='unique_customer_car_date')
+        ]
