@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
-from app_brand.models.brand import Brand
-from app_account.models.account import Account
+from shop.models.brand import Brand
+from shop.models.account import Account
 from django.views import View
 import requests
 

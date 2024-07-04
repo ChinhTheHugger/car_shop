@@ -3,8 +3,8 @@ import datetime
 from datetime import date
 import time
 
-from app_car.models.car import Car
-from app_account.models.account import Account
+from shop.models.car import Car
+from shop.models.account import Account
 
 from django.db.models import Value, CharField, ImageField, IntegerField
 

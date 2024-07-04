@@ -1,11 +1,11 @@
 from django.contrib import admin
 
-from app_car.models.car import Car
-from app_brand.models.brand import Brand
-from app_category.models.category import Category
-from app_account.models.account import Account
-from app_request.models.request import Request
-from app_contract.models.contract import Contract
+from shop.models.car import Car
+from shop.models.brand import Brand
+from shop.models.category import Category
+from shop.models.account import Account
+from shop.models.request import Request
+from shop.models.contract import Contract
 
 # Register your models here.
 

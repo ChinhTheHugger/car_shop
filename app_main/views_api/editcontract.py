@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
-from app_car.models.car import Car
-from app_contract.models.contract import Contract
-from app_account.models.account import Account
+from shop.models.car import Car
+from shop.models.contract import Contract
+from shop.models.account import Account
 from django.views import View
 import requests
 

@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
-from app_car.models.car import Car
+from shop.models.car import Car
 from shop.serializers.car import CarSerializer
 
 class CarDetailApiView(APIView):

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
-from app_category.models.category import Category
-from app_account.models.account import Account
+from shop.models.category import Category
+from shop.models.account import Account
 from django.views import View
 
 def get_category_info_for_edit(request,category):
