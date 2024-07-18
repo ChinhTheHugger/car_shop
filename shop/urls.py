@@ -26,7 +26,7 @@ from shop.views.setupcontract import SetUpContract
 from shop.views.editcontract import get_contract_info_for_edit
 from shop.views.updatedeletecontract import UpdateDeleteContract
 from .middlewares.auth import auth_middleware
-from shop.views.accountinfo import AccountView
+from shop.views.accountinfo import get_account
 
 from .views_api.carlistapi import CarListApiView
 from .views_api.cardetailapi import CarDetailApiView
@@ -78,7 +78,7 @@ urlpatterns = [
     
     path('logout', logout , name='logout'),
     
-    path('account', auth_middleware(AccountView.as_view()), name='account'),
+    path('account', get_account, name='account'),
     
     # cart
     path('cart', view_cart, name='view-cart'),
@@ -100,14 +100,14 @@ urlpatterns = [
     
     # api
     
-    path('api_test/car', CarListApiView.as_view()),
-    path('api_test/car/<slug:brand>_<slug:model>_<slug:year>', CarDetailApiView.as_view()),
+    # path('api_test/car', CarListApiView.as_view()),
+    # path('api_test/car/<slug:brand>_<slug:model>_<slug:year>', CarDetailApiView.as_view()),
     
-    path('api_test/brand', BrandListApiView.as_view()),
-    path('api_test/brand/<slug:brand>', BrandDetailApiView.as_view()),
+    # path('api_test/brand', BrandListApiView.as_view()),
+    # path('api_test/brand/<slug:brand>', BrandDetailApiView.as_view()),
     
-    path('api_test/category', CategoryListApiView.as_view()),
-    path('api_test/category/<slug:category>', CategoryDetailApiView.as_view()),
+    # path('api_test/category', CategoryListApiView.as_view()),
+    # path('api_test/category/<slug:category>', CategoryDetailApiView.as_view()),
     
     
 ]

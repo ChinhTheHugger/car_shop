@@ -14,28 +14,27 @@ import mimetypes
 from datetime import date
 import datetime
 
-class AccountView(View):
-    def get(self, request):
-        username = request.session.get('account')
-        accountinfo = Account.get_account_by_username(username)
+def get_account(request):
+    username = request.session.get('account')
+    accountinfo = Account.get_account_by_username(username)
         
-        if accountinfo.check_account_type:
-            requests = Request.total_cart_customer(username)
-            contracts = Contract.get_contract_by_customer(username)
-            data = {
-                'account': accountinfo,
-                'request': requests,
-                'contract': contracts
-            }
+    if accountinfo.check_account_type:
+        requests = Request.total_cart_customer(username)
+        contracts = Contract.get_contract_by_customer(username)
+        data = {
+            'account': accountinfo,
+            'request': requests,
+            'contract': contracts
+        }
             
-            return render(request, 'account.html', data)
-        else:
-            requests = Request.total_cart_manager()
-            contracts = Contract.get_all_contracts()
-            data = {
-                'account': accountinfo,
-                'request': requests,
-                'contract': contracts
-            }
+        return render(request, 'account.html', data)
+    else:
+        requests = Request.total_cart_manager()
+        contracts = Contract.get_all_contracts()
+        data = {
+            'account': accountinfo,
+            'request': requests,
+            'contract': contracts
+        }
             
-            return render(request, 'account.html', data)
+        return render(request, 'account.html', data)

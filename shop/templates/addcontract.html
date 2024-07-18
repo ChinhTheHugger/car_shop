@@ -80,7 +80,7 @@
             <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> YOU DON'T HAVE PERMISSION TO ACCESS THIS PAGE </h2>
         {% else %}
         <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> ADD NEW CONTRACT </h2>
-        <form action="/newcontractprocressing" method="POST" style="text-align: center;" enctype="multipart/form-data">
+        <form action="/newcontractprocessing" method="POST" style="text-align: center;" enctype="multipart/form-data">
             {% csrf_token %}
 
                 {% if error %}
