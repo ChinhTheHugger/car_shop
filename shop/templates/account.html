@@ -139,49 +139,51 @@
                             </tr>
                         </thead>
                         {% for con in request %}
-                        <form action="/editrequest" method="POST">
-                
-                            {% csrf_token %}
-                            <tr style="height: 75px;">
-                                <td style="padding: 5px;text-align: center;">{{forloop.counter}}</td>
-                                <td style="padding: 5px;text-align: center;">
-                                    <a href="/carinfo/{{con.carbrand}}_{{con.carmodel}}_{{con.caryear}}">
-                                        <img src="{{con.frontimg.url}}" style="width: 200px;height: 200px;">
-                                    </a>
-                                </td>
-                                <td style="padding: 5px;padding-left: 20px;text-transform: uppercase;">{{con.car}}</td>
-                                <td style="padding: 5px;text-align: center;">
-                                    <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="quantity" value="{{con.quantity}}">
-                                </td>
-                                <td style="padding: 5px;text-align: center;">Gil {{con.totalprice}}</td>
-                                {% if con.current_status %}
-                                    <td style="padding: 5px;background-color: green; color: white;text-align: center;">ACTIVE</td>
-                                    <td style="padding: 5px;text-align: center">
-                                        <button class="button_style" style="width: 95%; height: 95%; font-size: xx-large" type="submit" name="action_button" value="update">UPDATE</button>
-                                    </td>
-                                    <td style="padding: 5px;text-align: center">
-                                        <button class="button_style_delete" style="width: 95%; height: 95%; font-size: xx-large;" name="action_button" value="delete" onclick="myFunction(event)" id="myBtn">DELETE</button>
-                                    </td>
-                                {% else %}
-                                    <td style="padding: 5px;background-color: #333; color: white;text-align: center;">FINISHED</td>
-                                    <td style="padding: 5px;text-align: center">
-                                        <button style="width: 95%; height: 95%; font-size: xx-large;background-color: #333" name="action_button" value="update">UPDATE</button>
-                                    </td>
-                                    <td style="padding: 5px;text-align: center">
-                                        <button style="width: 95%; height: 95%; font-size: xx-large;background-color: #333" name="action_button" value="delete" onclick="myFunction(event)" id="myBtn">DELETE</button>
-                                    </td>
-                                {% endif %}
-                                
-                            </tr>
-                            <script>
-                                function myFunction(e) {
-                                    var txt;
-                                    if (!confirm("Do you wish to delete this request?")) {
-                                        e.preventDefault();
-                                    }
-                                }
-                            </script>
-                        </form>
+                            {% if con.customer == account.username %}
+                                <form action="/editrequest" method="POST">
+                        
+                                    {% csrf_token %}
+                                    <tr style="height: 75px;">
+                                        <td style="padding: 5px;text-align: center;">{{forloop.counter}}</td>
+                                        <td style="padding: 5px;text-align: center;">
+                                            <a href="/carinfo/{{con.carbrand}}_{{con.carmodel}}_{{con.caryear}}">
+                                                <img src="{{con.frontimg.url}}" style="width: 200px;height: 200px;">
+                                            </a>
+                                        </td>
+                                        <td style="padding: 5px;padding-left: 20px;text-transform: uppercase;">{{con.car}}</td>
+                                        <td style="padding: 5px;text-align: center;">
+                                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="quantity" value="{{con.quantity}}">
+                                        </td>
+                                        <td style="padding: 5px;text-align: center;">Gil {{con.totalprice}}</td>
+                                        {% if con.current_status %}
+                                            <td style="padding: 5px;background-color: green; color: white;text-align: center;">ACTIVE</td>
+                                            <td style="padding: 5px;text-align: center">
+                                                <button class="button_style" style="width: 95%; height: 95%; font-size: xx-large" type="submit" name="action_button" value="update">UPDATE</button>
+                                            </td>
+                                            <td style="padding: 5px;text-align: center">
+                                                <button class="button_style_delete" style="width: 95%; height: 95%; font-size: xx-large;" name="action_button" value="delete" onclick="myFunction(event)" id="myBtn">DELETE</button>
+                                            </td>
+                                        {% else %}
+                                            <td style="padding: 5px;background-color: #333; color: white;text-align: center;">FINISHED</td>
+                                            <td style="padding: 5px;text-align: center">
+                                                <button style="width: 95%; height: 95%; font-size: xx-large;background-color: #333" name="action_button" value="update">UPDATE</button>
+                                            </td>
+                                            <td style="padding: 5px;text-align: center">
+                                                <button style="width: 95%; height: 95%; font-size: xx-large;background-color: #333" name="action_button" value="delete" onclick="myFunction(event)" id="myBtn">DELETE</button>
+                                            </td>
+                                        {% endif %}
+                                        
+                                    </tr>
+                                    <script>
+                                        function myFunction(e) {
+                                            var txt;
+                                            if (!confirm("Do you wish to delete this request?")) {
+                                                e.preventDefault();
+                                            }
+                                        }
+                                    </script>
+                                </form>
+                            {% endif %}
                         {% endfor %}
                     </table>
                 </div>
@@ -202,25 +204,27 @@
                             </tr>
                         </thead>
                         {% for con in contract %}
-                        <tr style="height: 75px;">
-                            <td style="padding: 5px;text-align: center;">{{forloop.counter}}</td>
-                            <td style="padding: 5px;padding-left: 20px;text-transform: uppercase;">{{con.car}}</td>
-                            <td style="padding: 5px;text-align: center;">{{con.startdate}}</td>
-                            <td style="padding: 5px;text-align: center;">{{con.enddate}}</td>
-                            <td style="padding: 5px;text-align: center;">Gil {{con.cost}}</td>
-                            {% if con.has_started %}
-                                {% if con.his_past_due %}
-                                    <td style="padding: 5px;background-color: red; color: white;text-align: center;">FINISHED</td>
-                                {% else %}
-                                    <td style="padding: 5px;background-color: green; color: white;text-align: center;">ACTIVE</td>
-                                {% endif %}
-                            {% else %}
-                                <td style="padding: 5px;background-color: #333; color: white;text-align: center;">PENDING</td>
+                            {% if con.customer == account.username %}
+                                <tr style="height: 75px;">
+                                    <td style="padding: 5px;text-align: center;">{{forloop.counter}}</td>
+                                    <td style="padding: 5px;padding-left: 20px;text-transform: uppercase;">{{con.car}}</td>
+                                    <td style="padding: 5px;text-align: center;">{{con.startdate}}</td>
+                                    <td style="padding: 5px;text-align: center;">{{con.enddate}}</td>
+                                    <td style="padding: 5px;text-align: center;">Gil {{con.cost}}</td>
+                                    {% if con.has_started %}
+                                        {% if con.his_past_due %}
+                                            <td style="padding: 5px;background-color: red; color: white;text-align: center;">FINISHED</td>
+                                        {% else %}
+                                            <td style="padding: 5px;background-color: green; color: white;text-align: center;">ACTIVE</td>
+                                        {% endif %}
+                                    {% else %}
+                                        <td style="padding: 5px;background-color: #333; color: white;text-align: center;">PENDING</td>
+                                    {% endif %}
+                                    <td style="padding: 5px;text-align: center;">
+                                        <a href="contractinfo/{{con.info_string}}">VIEW</a>
+                                    </td>
+                                </tr>
                             {% endif %}
-                            <td style="padding: 5px;text-align: center;">
-                                <a href="contractinfo/{{con.info_string}}">VIEW</a>
-                            </td>
-                        </tr>
                         {% endfor %}
                     </table>
                 </div>
@@ -293,7 +297,7 @@
                                         <img src="{{con.frontimg.url}}" style="width: 200px;height: 200px;">
                                     </a>
                                 </td>
-                                <td style="padding: 5px;padding-left: 20px;text-transform: uppercase;">{{con.customername}}</td>
+                                <td style="padding: 5px;padding-left: 20px;text-transform: uppercase;">{{con.customer}}</td>
                                 <td style="padding: 5px;padding-left: 20px;text-transform: uppercase;">{{con.car}}</td>
                                 <td style="padding: 5px;text-align: center;">
                                     <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="quantity" value="{{con.quantity}}">
@@ -375,7 +379,7 @@
             {% endif %}
         
     {% else %}
-        <h1>NO</h1>
+        <h1>YOU NEED TO BE LOGGED IN TO VIEW THIS PAGE</h1>
     {% endif %}
 
 

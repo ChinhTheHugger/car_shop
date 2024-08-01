@@ -25,8 +25,9 @@ class Contract(models.Model): # similar to "order"
     carfrontbefore = models.ImageField(upload_to='uploads/contracts/frontstatusbefore/',validators=[FileExtensionValidator(['apng','png','gif','svg','ico','cur','jpg','jpeg','jfif','pjpeg','pjp','webp'])])
     carbackbefore = models.ImageField(upload_to='uploads/contracts/backstatusbefore/',validators=[FileExtensionValidator(['apng','png','gif','svg','ico','cur','jpg','jpeg','jfif','pjpeg','pjp','webp'])])
     carinteriorbefore = models.ImageField(upload_to='uploads/contracts/interiorstatusbefore/',validators=[FileExtensionValidator(['apng','png','gif','svg','ico','cur','jpg','jpeg','jfif','pjpeg','pjp','webp'])])
-    cost = models.IntegerField(default=0)
+    cost = models.FloatField(default=0)
     createdate = models.DateField(default=datetime.datetime.today)
+    createdate_timestamp = models.CharField(max_length=50,default=str(int(datetime.datetime.now().timestamp()*1000000)))
     
     #to save the data
     def register(self):
@@ -36,8 +37,8 @@ class Contract(models.Model): # similar to "order"
     def get_contract_by_customer(customer_username):
         return Contract.objects.filter(customer=customer_username)
     
-    def get_contract_by_parameters(customer,car_str,date):
-        return Contract.objects.get(customer=customer,car=car_str,createdate=date)
+    def get_contract_by_parameters(customer,car_str,timestamp):
+        return Contract.objects.get(customer=customer,car=car_str,createdate_timestamp=timestamp)
     
     def set_up_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,residence,idcard,driverlicense,carodometerbefore,carsystemstatusbefore,carfrontbefore,carbackbefore,carinteriorbefore,cost,createdate):
         return Contract(request=request,
@@ -57,9 +58,10 @@ class Contract(models.Model): # similar to "order"
                         carbackbefore=carbackbefore,
                         carinteriorbefore=carinteriorbefore,
                         cost=cost,
-                        createdate=createdate)
+                        createdate=createdate,
+                        createdate_timestamp='temp create date timestamp string')
         
-    def add_new_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,residence,idcard,driverlicense,carodometerbefore,carsystemstatusbefore,carfrontbefore,carbackbefore,carinteriorbefore,cost):
+    def add_new_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,residence,idcard,driverlicense,carodometerbefore,carsystemstatusbefore,carfrontbefore,carbackbefore,carinteriorbefore,cost,createdate,createdate_timestamp):
         contract = Contract()
         contract.request = request
         contract.customer = customer
@@ -78,6 +80,8 @@ class Contract(models.Model): # similar to "order"
         contract.carbackbefore = carbackbefore
         contract.carinteriorbefore = carinteriorbefore
         contract.cost = cost
+        contract.createdate = createdate
+        contract.createdate_timestamp = createdate_timestamp
         contract.save()
         
     def update_contract(self,request,customer,manager,car,quantity,purpose,startdate,enddate,residence,idcard,driverlicense,carodometerbefore,carsystemstatusbefore,carfrontbefore,carbackbefore,carinteriorbefore,cost):
@@ -215,7 +219,7 @@ class Contract(models.Model): # similar to "order"
         return self. carinteriorbefore
     
     def info_string(self):
-        return self.customer + "_" + str(self.car).replace(" ","_") + "_" + str(self.createdate)
+        return self.customer + "_" + str(self.car).replace(" ","_") + "_" + str(self.createdate_timestamp)
     
     def __str__(self):
         customer = Account.get_account_by_username(customer)

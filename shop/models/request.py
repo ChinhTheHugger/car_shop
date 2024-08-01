@@ -179,6 +179,11 @@ class Request(models.Model): # similar to "cart"
         car_str = brand_in + " " + model_in + " " + str(year_in)
         return Request.objects.get(customer=customer_in,car=car_str,date=date,status=False)
     
+    def change_contract_status(self):
+        self.status = True
+        self.save()
+        return
+    
     def get_quantity(self):
         return self.quantity
     

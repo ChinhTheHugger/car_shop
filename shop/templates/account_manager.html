@@ -1,0 +1,84 @@
+{% extends 'navbar.html' %}
+{% block content %}
+<style>
+    /* SECTION: search table */
+
+    table, th, td {
+            border: none;
+            border-collapse: collapse;
+        }
+
+        table.center {
+            margin-left: auto; 
+            margin-right: auto;
+        }
+        .tableFixHead {
+            margin-left: auto; 
+            margin-right: auto;
+            overflow-y: auto; /* make the table scrollable if height is more than 200 px  */
+            height: 930px; /* gives an initial height of 200px to the table */
+        }
+        .tableFixHead thead th {
+            position: sticky; /* make the table heads sticky */
+            top: 0px; /* table head will be placed from the top of the table and sticks to it */
+        }
+/* END SECTION: search table */
+
+/* SECTION: action button */
+
+.container_button {
+            position: relative;
+            border: none;
+        }
+
+        .center_button {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .button_style {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button_style_delete {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button_style:hover {
+            color: black;
+            background-color: gold;
+        }
+
+        .button_style_delete:hover {
+            color: black;
+            background-color: red;
+        }
+
+/* END SECTION: action button */
+</style>
+
+<body>
+    
+</body>
+{% endblock %}

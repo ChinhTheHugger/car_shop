@@ -10,7 +10,7 @@ from django.core.files.storage import FileSystemStorage
 from upload_validator import FileTypeValidator
 from django.core.files.uploadedfile import TemporaryUploadedFile
 import mimetypes
-from datetime import date
+from datetime import date, datetime as dt
 import datetime
 
 class UpdateDeleteContract(View):
@@ -38,9 +38,15 @@ class UpdateDeleteContract(View):
         carbackbefore = request.FILES.get('carbackbefore', False)
         carinteriorbefore = request.FILES.get('carinteriorbefore', False)
         
+        def numOfDays(date1, date2):
+            if date2 > date1:   
+                return (date2-date1).days
+            else:
+                return (date1-date2).days
+        
         carinfo = Car.get_car_by_str(car)
-        cost = carinfo.get_price() * quantity * self.numOfDays(startdate,enddate)
-        createdate = datetime.datetime.today
+        cost = int(carinfo.get_price()) * int(quantity) * int(numOfDays(dt.strptime(startdate,'%Y-%m-%d'),dt.strptime(enddate,'%Y-%m-%d')))
+        createdate = dt.now()
         
         values = {
             'request': req,
@@ -106,7 +112,7 @@ class UpdateDeleteContract(View):
                 else:
                     new_interior_url = ""
                     
-                contract_original.update_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,new_residence_url,new_idcard_url,new_driverlicense_url,carodometerbefore,carsystemstatusbefore,new_front_url,new_back_url,new_interior_url,cost,createdate)
+                contract_original.update_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,new_residence_url,new_idcard_url,new_driverlicense_url,carodometerbefore,carsystemstatusbefore,new_front_url,new_back_url,new_interior_url,cost)
                 
                 return redirect('get-contract',info_str=info_str)
             else:

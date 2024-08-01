@@ -13,28 +13,31 @@ from django.core.files.uploadedfile import TemporaryUploadedFile
 import mimetypes
 from datetime import date
 import datetime
-
 def get_account(request):
-    username = request.session.get('account')
-    accountinfo = Account.get_account_by_username(username)
+    if request.session.get('account') != '':
+        # # print(request.session.items())
+        # username = request.session.get('account')
+        # accountinfo = Account.get_account_by_username_for_iterate(username)    
+        # requests = Request.total_cart_manager()
+        # contracts = Contract.get_all_contracts()
         
-    if accountinfo.check_account_type:
-        requests = Request.total_cart_customer(username)
-        contracts = Contract.get_contract_by_customer(username)
-        data = {
-            'account': accountinfo,
-            'request': requests,
-            'contract': contracts
-        }
-            
-        return render(request, 'account.html', data)
+        # for acc in accountinfo:
+        #     data = {
+        #         'accounts': accountinfo,
+        #         'request': requests,
+        #         'contract': contracts,
+        #         'status': acc.check_account_type()
+        #     }
+        username = request.session.get('account')
+        
+        account = Account.get_account_by_username(username)
+        data = {'account': account}
+        
+        return render(request, 'account_test.html', data)
     else:
-        requests = Request.total_cart_manager()
-        contracts = Contract.get_all_contracts()
-        data = {
-            'account': accountinfo,
-            'request': requests,
-            'contract': contracts
-        }
-            
-        return render(request, 'account.html', data)
+        username = request.session.get('account')
+        
+        account = Account.get_account_by_username(username)
+        data = {'account': account}
+        
+        return render(request, 'account_test.html', data)

@@ -3,6 +3,7 @@ from django.contrib.auth.hashers import make_password
 from shop.models.car import Car
 from shop.models.contract import Contract
 from shop.models.account import Account
+from shop.models.request import Request
 from django.views import View
 import codecs
 from django.utils.encoding import force_bytes
@@ -10,7 +11,7 @@ from django.core.files.storage import FileSystemStorage
 from upload_validator import FileTypeValidator
 from django.core.files.uploadedfile import TemporaryUploadedFile
 import mimetypes
-from datetime import date
+from datetime import date, datetime as dt
 import datetime
 
 class SetUpContract(View):
@@ -36,9 +37,15 @@ class SetUpContract(View):
         carbackbefore = request.FILES.get('carbackbefore', False)
         carinteriorbefore = request.FILES.get('carinteriorbefore', False)
         
+        def numOfDays(date1, date2):
+            if date2 > date1:   
+                return (date2-date1).days
+            else:
+                return (date1-date2).days
+        
         carinfo = Car.get_car_by_str(car)
-        cost = carinfo.get_price() * quantity * self.numOfDays(startdate,enddate)
-        createdate = datetime.datetime.today
+        cost = int(carinfo.get_price()) * int(quantity) * int(numOfDays(dt.strptime(startdate,'%Y-%m-%d'),dt.strptime(enddate,'%Y-%m-%d')))
+        createdate = dt.now()
         
         values = {
             'request': req,
@@ -56,7 +63,7 @@ class SetUpContract(View):
         
         error_message = None
         
-        contract = Contract.set_up_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,residence,idcard,driverlicense,carodometerbefore,carsystemstatusbefore,carfrontbefore,carbackbefore,carinteriorbefore,cost,createdate)
+        contract = Contract.set_up_contract(req,customer,manager,car,quantity,purpose,startdate,enddate,residence,idcard,driverlicense,carodometerbefore,carsystemstatusbefore,carfrontbefore,carbackbefore,carinteriorbefore,cost,createdate)
         
         error_message = self.validateContract(contract)
         
@@ -97,8 +104,13 @@ class SetUpContract(View):
             else:
                 new_interior_url = ""
             
-            infostr = str(customer) + "_" + str(car).replace(' ',"_") + "_" + str(datetime.datetime.timestamp(createdate)*1000)
-            Contract.add_new_contract(request,customer,manager,car,quantity,purpose,startdate,enddate,new_residence_url,new_idcard_url,new_driverlicense_url,carodometerbefore,carsystemstatusbefore,new_front_url,new_back_url,new_interior_url,cost,createdate)
+            infostr = str(customer) + "_" + str(car).replace(' ',"_") + "_" + str(int(createdate.timestamp()*1000000))
+            
+            Contract.add_new_contract(req,customer,manager,car,quantity,purpose,startdate,enddate,new_residence_url,new_idcard_url,new_driverlicense_url,carodometerbefore,carsystemstatusbefore,new_front_url,new_back_url,new_interior_url,cost,createdate,str(int(createdate.timestamp()*1000000)))
+            
+            request_arr = str(req).split('_')
+            request_to_update = Request.get_request(request_arr[0],request_arr[1],request_arr[2],request_arr[3],request_arr[4])
+            request_to_update.change_contract_status()
             
             return redirect('get-contract',info_str=infostr)
         else:
@@ -118,11 +130,11 @@ class SetUpContract(View):
     
     def validateContract(self,contract): 
         error_message = None
-        if contract.carodometerbefor <= 0:
+        if float(contract.carodometerbefore) <= 0:
             error_message = "Invalid carodometer value!!"
         if contract.startdate > contract.enddate:
             error_message = "Start date can't be after end date!!"
-        if contract.quantity < 1:
+        if int(contract.quantity) < 1:
             error_message = "Quantity can't be zero or negative!!"
         if contract.residence:
             type_front, decoding = mimetypes.guess_type(str(contract.residence))
@@ -151,10 +163,6 @@ class SetUpContract(View):
         
         return error_message
     
-    def numOfDays(date1, date2):
-        if date2 > date1:   
-            return (date2-date1).days
-        else:
-            return (date1-date2).days
+    
         
         

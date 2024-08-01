@@ -75,208 +75,212 @@
 </style>
 
 <body>
-    {% for acc in account %}
-        {% if acc.check_account_type %}
-            <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> YOU DON'T HAVE PERMISSION TO ACCESS THIS PAGE </h2>
-        {% else %}
-        <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> EDIT CONTRACT </h2>
-        <form action="/updatedeletecontract" method="POST" style="text-align: center;" enctype="multipart/form-data">
-            {% csrf_token %}
+    {% if request.session.account %}
+        {% for acc in account %}
+            {% if acc.check_account_type %}
+                <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> YOU DON'T HAVE PERMISSION TO ACCESS THIS PAGE </h2>
+            {% else %}
+            <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> EDIT CONTRACT </h2>
+            <form action="/updatedeletecontract" method="POST" style="text-align: center;" enctype="multipart/form-data">
+                {% csrf_token %}
 
-                {% if error %}
-                <div class="alert alert-danger" role="alert" style="background-color: red;color: #333;font-size: xx-large;">
-                    {{error}}
-                </div>
-                <p></p>
-                {% endif %}
-                <div class="row">
-                    <div class="column left">
-                        <table class="center" style="width: 90%;background-color: white;">
-                            <tr>
-                                <th style="display: none;">
-                                    <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="info_str"
-                            id="" value="{{info_str}}" class="form-control form-control-sm" 
-                            placeholder="}" colspan="2" readonly>
-                                </th>
-                                <th style="display: none;">Header 2</th>
-                                <th style="display: none;">Header 3</th>
-                                <th style="display: none;">Header 4</th>
-                                <th style="display: none;">Header 5</th>
-                                <th style="display: none;">Header 6</th>
-                            </tr>
-                            <tr style="height: 75px;">
-                                <div class="form-group">
-                                    <td style="padding: 5px;background-color: #777;color: white; width: 10%">CUSTOMER</td>
-                                    <td style="padding: 5px;width: 425px; width: 40%">
-                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="customer"
-                            id="" value="{{values.customer}}" class="form-control form-control-sm" 
-                            placeholder="{{customername}}" colspan="2" readonly>
-                                    </td>
-                                    <td style="padding: 5px;background-color: #777;color: white; width: 10%">MANAGER</td>
-                                    <td style="padding: 5px;width: 425px; width: 40%">
-                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="manager"
-                            id="" value="{{values.manager}}" class="form-control form-control-sm" 
-                            placeholder="{{managername}}" colspan="2" readonly>
-                                    </td>
-                                    
-                                </div>
-                            </tr>
-                            <tr style="height: 75px;">
-                                <div class="form-group">
-                                    <td style="padding: 5px;background-color: #777;color: white; width: 10%">CAR</td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="car"
-                            id="" value="{{values.car}}" colspan="2" class="form-control form-control-sm" 
-                            placeholder="" readonly>
-                                    </td>
-                                    <td style="padding: 5px;background-color: #777;color: white; width: 10%">QUANTITY</td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="quantity"
-                            id="" value="{{values.quantity}}" class="form-control form-control-sm" 
-                            placeholder="" colspan="2">
-                                    </td>
-                                    
-                                </div>
-                            </tr>
-                            <tr style="height: 75px;">
-                                <div class="form-group">
-                                    <td style="padding: 5px;background-color: #777;color: white; width: 10%">START DATE</td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="date" name="startdate"
-                            id="startDate" value="{{values.startdate}}" class="form-control form-control-sm" 
-                            placeholder="" onload="getDate()" colspan="2">
-                                    </td>
-                                    <td style="padding: 5px;background-color: #777;color: white; width: 10%">END DATE</td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="date" name="enddate"
-                            id="endDate" value="{{values.enddate}}" class="form-control form-control-sm" 
-                            placeholder="" onload="getDate()" colspan="2">
-                                    </td>
-                                    
-                                </div>
-                                <script>
-                                        startDate.min = new Date().toISOString().split("T")[0];
-                                        endDate.min = new Date().toISOString().split("T")[0];
-                                </script>
-                            </tr>
-                            <tr style="height: 75px;">
-                                <div class="form-group">
-                                    <td style="padding: 5px;background-color: #777;color: white; width: 10%">ODOMETER</td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="carodometerbefore"
-                            id="" value="{{values.carodometerbefore}}" class="form-control form-control-sm" 
-                            placeholder="" min="" colspan="2">
-                                    </td>
-                                    <td style="padding: 5px;background-color: #777;color: white; width: 10%">SYSTEM STATUS</td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="carsystemstatusbefore"
-                            id="" value="{{values.carsystemstatusbefore}}" class="form-control form-control-sm" 
-                            placeholder="" min="" colspan="2">
-                                    </td>
-                                    
-                                </div>
-                            </tr>
-                            <tr style="height: 75px;">
-                                <div class="form-group">
-                                    <td style="padding: 5px;background-color: #777;color: white; width: 20%">PURPOSE</td>
-                                    <td style="padding: 5px;width: 425px; width: 80%" colspan="5">
-                                        <textarea style="width: 95%;height: 150px;background-color: white;border: none;text-align: left; overflow: hidden; resize: vertical; font-size: x-large" name="purpose"
-                                    id="" value="{{values.purpose}}" rows="10" wrap="soft" class="form-control form-control-sm" 
-                                    placeholder=""></textarea>
-                                    </td>
-                                    
-                                </div>
-                            </tr>
-                            <tr style="height: 75px;">
-                                <div class="form-group">
-                                    <td style="padding: 5px;background-color: #777;color: white; width: 10%">RESIDENCE</td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <img src="{{values.residence.url}}" alt="Cinque Terre" style="height: 200px">
-                                    </td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" accept="images/*" name="residence"
-                                    id="" class="form-control form-control-sm" 
-                                    placeholder="" onchange="readURL(this);">
-                                    </td>
-                                    <td style="padding: 5px;background-color: #777;color: white; width: 10%">CAR FRONT VIEW</td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <img src="{{values.carfrontbefore.url}}" alt="Cinque Terre" style="height: 200px">
-                                    </td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" accept="images/*" name="carfrontbefore"
-                                    id="" class="form-control form-control-sm" 
-                                    placeholder="" onchange="readURL(this);">
-                                    </td>
-                                    
-                                </div>
-                            </tr>
-                            <tr style="height: 75px;">
-                                <div class="form-group">
-                                    <td style="padding: 5px;background-color: #777;color: white; width: 10%">ID CARD</td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <img src="{{values.idcard.url}}" alt="Cinque Terre" style="height: 200px">
-                                    </td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" accept="images/*" name="idcard"
-                                    id="" class="form-control form-control-sm" 
-                                    placeholder="" onchange="readURL(this);">
-                                    </td>
-                                    <td style="padding: 5px;background-color: #777;color: white; width: 10%">CAR BACK VIEW</td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <img src="{{values.carbackbefore.url}}" alt="Cinque Terre" style="height: 200px">
-                                    </td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" accept="images/*" name="carbackbefore"
-                                    id="" class="form-control form-control-sm" 
-                                    placeholder="" onchange="readURL(this);">
-                                    </td>
-                                    
-                                </div>
-                            </tr>
-                            <tr style="height: 75px;">
-                                <div class="form-group">
-                                    <td style="padding: 5px;background-color: #777;color: white; width: 10%">DRIVER LICENSE</td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <img src="{{values.driverlicense.url}}" alt="Cinque Terre" style="height: 200px">
-                                    </td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" accept="images/*" name="driverlicense"
-                                    id="" class="form-control form-control-sm" 
-                                    placeholder="" onchange="readURL(this);">
-                                    </td>
-                                    <td style="padding: 5px;background-color: #777;color: white; width: 10%">CAR INTERIOR VIEW</td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <img src="{{values.carinterior.url}}" alt="Cinque Terre" style="height: 200px">
-                                    </td>
-                                    <td style="padding: 5px;width: 425px; width: 20%">
-                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" accept="images/*" name="carinteriorbefore"
-                                    id="" class="form-control form-control-sm" 
-                                    placeholder="" onchange="readURL(this);">
-                                    </td>
-                                    
-                                </div>
-                            </tr>
-
-                        </table>
+                    {% if error %}
+                    <div class="alert alert-danger" role="alert" style="background-color: red;color: #333;font-size: xx-large;">
+                        {{error}}
                     </div>
-                    <div class="column right">
-                        <button class="button_style" style=" height: 95%; width: 95%; font-size: xx-large" type="submit" name="action_button" value="update">UPDATE CONTRACT</button>
-                        <button class="button_style_delete" style=" height: 95%; width: 95%; font-size: xx-large" name="action_button" value="delete" onclick="myFunction(event)">DELETE CONTRACT</button>
+                    <p></p>
+                    {% endif %}
+                    <div class="row">
+                        <div class="column left">
+                            <table class="center" style="width: 90%;background-color: white;">
+                                <tr>
+                                    <th style="display: none;">
+                                        <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="info_str"
+                                id="" value="{{info_str}}" class="form-control form-control-sm" 
+                                placeholder="}" colspan="2" readonly>
+                                    </th>
+                                    <th style="display: none;">Header 2</th>
+                                    <th style="display: none;">Header 3</th>
+                                    <th style="display: none;">Header 4</th>
+                                    <th style="display: none;">Header 5</th>
+                                    <th style="display: none;">Header 6</th>
+                                </tr>
+                                <tr style="height: 75px;">
+                                    <div class="form-group">
+                                        <td style="padding: 5px;background-color: #777;color: white; width: 10%">CUSTOMER</td>
+                                        <td style="padding: 5px;width: 425px; width: 40%">
+                                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="customer"
+                                id="" value="{{values.customer}}" class="form-control form-control-sm" 
+                                placeholder="{{customername}}" colspan="2" readonly>
+                                        </td>
+                                        <td style="padding: 5px;background-color: #777;color: white; width: 10%">MANAGER</td>
+                                        <td style="padding: 5px;width: 425px; width: 40%">
+                                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="manager"
+                                id="" value="{{values.manager}}" class="form-control form-control-sm" 
+                                placeholder="{{managername}}" colspan="2" readonly>
+                                        </td>
+                                        
+                                    </div>
+                                </tr>
+                                <tr style="height: 75px;">
+                                    <div class="form-group">
+                                        <td style="padding: 5px;background-color: #777;color: white; width: 10%">CAR</td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="car"
+                                id="" value="{{values.car}}" colspan="2" class="form-control form-control-sm" 
+                                placeholder="" readonly>
+                                        </td>
+                                        <td style="padding: 5px;background-color: #777;color: white; width: 10%">QUANTITY</td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="quantity"
+                                id="" value="{{values.quantity}}" class="form-control form-control-sm" 
+                                placeholder="" colspan="2">
+                                        </td>
+                                        
+                                    </div>
+                                </tr>
+                                <tr style="height: 75px;">
+                                    <div class="form-group">
+                                        <td style="padding: 5px;background-color: #777;color: white; width: 10%">START DATE</td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="date" name="startdate"
+                                id="startDate" value="{{values.startdate}}" class="form-control form-control-sm" 
+                                placeholder="" onload="getDate()" colspan="2">
+                                        </td>
+                                        <td style="padding: 5px;background-color: #777;color: white; width: 10%">END DATE</td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="date" name="enddate"
+                                id="endDate" value="{{values.enddate}}" class="form-control form-control-sm" 
+                                placeholder="" onload="getDate()" colspan="2">
+                                        </td>
+                                        
+                                    </div>
+                                    <script>
+                                            startDate.min = new Date().toISOString().split("T")[0];
+                                            endDate.min = new Date().toISOString().split("T")[0];
+                                    </script>
+                                </tr>
+                                <tr style="height: 75px;">
+                                    <div class="form-group">
+                                        <td style="padding: 5px;background-color: #777;color: white; width: 10%">ODOMETER</td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="carodometerbefore"
+                                id="" value="{{values.carodometerbefore}}" class="form-control form-control-sm" 
+                                placeholder="" min="" colspan="2">
+                                        </td>
+                                        <td style="padding: 5px;background-color: #777;color: white; width: 10%">SYSTEM STATUS</td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="carsystemstatusbefore"
+                                id="" value="{{values.carsystemstatusbefore}}" class="form-control form-control-sm" 
+                                placeholder="" min="" colspan="2">
+                                        </td>
+                                        
+                                    </div>
+                                </tr>
+                                <tr style="height: 75px;">
+                                    <div class="form-group">
+                                        <td style="padding: 5px;background-color: #777;color: white; width: 20%">PURPOSE</td>
+                                        <td style="padding: 5px;width: 425px; width: 80%" colspan="5">
+                                            <textarea style="width: 95%;height: 150px;background-color: white;border: none;text-align: left; overflow: hidden; resize: vertical; font-size: x-large" name="purpose"
+                                        id="" value="{{values.purpose}}" rows="10" wrap="soft" class="form-control form-control-sm" 
+                                        placeholder=""></textarea>
+                                        </td>
+                                        
+                                    </div>
+                                </tr>
+                                <tr style="height: 75px;">
+                                    <div class="form-group">
+                                        <td style="padding: 5px;background-color: #777;color: white; width: 10%">RESIDENCE</td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <img src="{{values.residence.url}}" alt="Cinque Terre" style="height: 200px">
+                                        </td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" accept="images/*" name="residence"
+                                        id="" class="form-control form-control-sm" 
+                                        placeholder="" onchange="readURL(this);">
+                                        </td>
+                                        <td style="padding: 5px;background-color: #777;color: white; width: 10%">CAR FRONT VIEW</td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <img src="{{values.carfrontbefore.url}}" alt="Cinque Terre" style="height: 200px">
+                                        </td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" accept="images/*" name="carfrontbefore"
+                                        id="" class="form-control form-control-sm" 
+                                        placeholder="" onchange="readURL(this);">
+                                        </td>
+                                        
+                                    </div>
+                                </tr>
+                                <tr style="height: 75px;">
+                                    <div class="form-group">
+                                        <td style="padding: 5px;background-color: #777;color: white; width: 10%">ID CARD</td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <img src="{{values.idcard.url}}" alt="Cinque Terre" style="height: 200px">
+                                        </td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" accept="images/*" name="idcard"
+                                        id="" class="form-control form-control-sm" 
+                                        placeholder="" onchange="readURL(this);">
+                                        </td>
+                                        <td style="padding: 5px;background-color: #777;color: white; width: 10%">CAR BACK VIEW</td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <img src="{{values.carbackbefore.url}}" alt="Cinque Terre" style="height: 200px">
+                                        </td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" accept="images/*" name="carbackbefore"
+                                        id="" class="form-control form-control-sm" 
+                                        placeholder="" onchange="readURL(this);">
+                                        </td>
+                                        
+                                    </div>
+                                </tr>
+                                <tr style="height: 75px;">
+                                    <div class="form-group">
+                                        <td style="padding: 5px;background-color: #777;color: white; width: 10%">DRIVER LICENSE</td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <img src="{{values.driverlicense.url}}" alt="Cinque Terre" style="height: 200px">
+                                        </td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" accept="images/*" name="driverlicense"
+                                        id="" class="form-control form-control-sm" 
+                                        placeholder="" onchange="readURL(this);">
+                                        </td>
+                                        <td style="padding: 5px;background-color: #777;color: white; width: 10%">CAR INTERIOR VIEW</td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <img src="{{values.carinterior.url}}" alt="Cinque Terre" style="height: 200px">
+                                        </td>
+                                        <td style="padding: 5px;width: 425px; width: 20%">
+                                            <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" accept="images/*" name="carinteriorbefore"
+                                        id="" class="form-control form-control-sm" 
+                                        placeholder="" onchange="readURL(this);">
+                                        </td>
+                                        
+                                    </div>
+                                </tr>
 
-                        
+                            </table>
+                        </div>
+                        <div class="column right">
+                            <button class="button_style" style=" height: 95%; width: 95%; font-size: xx-large" type="submit" name="action_button" value="update">UPDATE CONTRACT</button>
+                            <button class="button_style_delete" style=" height: 95%; width: 95%; font-size: xx-large" name="action_button" value="delete" onclick="myFunction(event)">DELETE CONTRACT</button>
+
+                            
+                        </div>
                     </div>
-                </div>
-                <script>
-                    function myFunction(e) {
-                        var txt;
-                        if (!confirm("Do you wish to delete this car?")) {
-                            e.preventDefault();
+                    <script>
+                        function myFunction(e) {
+                            var txt;
+                            if (!confirm("Do you wish to delete this car?")) {
+                                e.preventDefault();
+                            }
                         }
-                    }
-                </script>
+                    </script>
 
-        </form>
-        {% endif %}
-    {% endfor %}
+            </form>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> YOU NEED TO BE LOGGED IN AS ADMIN TO ACCESS THIS PAGE </h2>
+    {% endif %}
 </body>
 {% endblock %}

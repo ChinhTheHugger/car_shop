@@ -18,7 +18,10 @@ def search(request):
     
     keyword_list = str(keyword_in).split()
     
-    carsearch = Car.get_car_by_parameters(brand_in,model_in,year_in,category_in,keyword_list)
+    if keyword_in is None and model_in is None and brand_in is None and category_in is None and year_in is None:
+        carsearch = Car.get_all_cars()
+    else:
+        carsearch = Car.get_car_by_parameters(brand_in,model_in,year_in,category_in,keyword_list)
 
     context = {'carsearch': carsearch,'brand_opt': brand_opt,'category_opt': category_opt,'car_model_opt': car_model_opt,'car_year_opt': car_year_opt}
     return render(request,'search.html',context)

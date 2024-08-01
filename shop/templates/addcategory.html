@@ -54,55 +54,59 @@
 </style>
 
 <body>
-    {% for acc in account %}
-        {% if acc.check_account_type %}
-            <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> YOU DON'T HAVE PERMISSION TO ACCESS THIS PAGE </h2>
-        {% else %}
-            <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> ADD NEW CATEGORY </h2>
-            <form action="/addcategory" method="POST" style="text-align: center;" enctype="multipart/form-data">
-                {% csrf_token %}
+    {% if request.session.account %}
+        {% for acc in account %}
+            {% if acc.check_account_type %}
+                <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> YOU DON'T HAVE PERMISSION TO ACCESS THIS PAGE </h2>
+            {% else %}
+                <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> ADD NEW CATEGORY </h2>
+                <form action="/addcategory" method="POST" style="text-align: center;" enctype="multipart/form-data">
+                    {% csrf_token %}
 
-                {% if error %}
-                <div class="alert alert-danger" role="alert" style="background-color: red;color: #333;font-size: xx-large;">
-                    {{error}}
-                </div>
-                <p></p>
-                {% endif %}
-                <table class="center" style="width: 30%;background-color: white;">
-                    <tr>
-                        <th style="display: none;">Header 1</th>
-                        <th style="display: none;">Header 2</th>
-                    </tr>
-                    <tr style="height: 75px;">
-                        <div class="form-group">
-                            <td style="padding: 5px;background-color: #777;color: white;">CATEGORY</td>
-                            <td style="padding: 5px;width: 425px;">
-                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="category"
-                     id="" value="{{values.category}}" class="form-control form-control-sm" 
-                     placeholder="" required>
-                            </td>
-                            
-                        </div>
-                    </tr>
-                    <tr style="height: 75px;">
-                        <div class="form-group">
-                            <td style="padding: 5px;background-color: #777;color: white; width: 20%">LOGO</td>
-                            <td style="padding: 5px;width: 40%;">
-                                <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" accept="images/*" name="image"
-                    id="file-input" class="form-control form-control-sm" 
-                    placeholder="" onchange="readURL(this);">
-                            </td>
-                            
-                        </div>
-                    </tr>
-                </table>
-                <div class="container_button">
-                    <div class="center_button">
-                        <button class="button_style" style="width: 500px; height: 100px; font-size: xx-large" type="submit">CREATE NEW CATEGORY</button>
+                    {% if error %}
+                    <div class="alert alert-danger" role="alert" style="background-color: red;color: #333;font-size: xx-large;">
+                        {{error}}
                     </div>
-                </div>
-            </form>
-        {% endif %}
-    {% endfor %}
+                    <p></p>
+                    {% endif %}
+                    <table class="center" style="width: 30%;background-color: white;">
+                        <tr>
+                            <th style="display: none;">Header 1</th>
+                            <th style="display: none;">Header 2</th>
+                        </tr>
+                        <tr style="height: 75px;">
+                            <div class="form-group">
+                                <td style="padding: 5px;background-color: #777;color: white;">CATEGORY</td>
+                                <td style="padding: 5px;width: 425px;">
+                                    <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="text" name="category"
+                        id="" value="{{values.category}}" class="form-control form-control-sm" 
+                        placeholder="" required>
+                                </td>
+                                
+                            </div>
+                        </tr>
+                        <tr style="height: 75px;">
+                            <div class="form-group">
+                                <td style="padding: 5px;background-color: #777;color: white; width: 20%">LOGO</td>
+                                <td style="padding: 5px;width: 40%;">
+                                    <input style="width: 95%;height: 50px;background-color: white;border: none;text-align: center;" type="file" accept="images/*" name="image"
+                        id="file-input" class="form-control form-control-sm" 
+                        placeholder="" onchange="readURL(this);">
+                                </td>
+                                
+                            </div>
+                        </tr>
+                    </table>
+                    <div class="container_button">
+                        <div class="center_button">
+                            <button class="button_style" style="width: 500px; height: 100px; font-size: xx-large" type="submit">CREATE NEW CATEGORY</button>
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> YOU NEED TO BE LOGGED IN AS ADMIN TO ACCESS THIS PAGE </h2>
+    {% endif %}
 </body>
 {% endblock %}

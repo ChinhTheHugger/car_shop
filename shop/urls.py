@@ -28,13 +28,6 @@ from shop.views.updatedeletecontract import UpdateDeleteContract
 from .middlewares.auth import auth_middleware
 from shop.views.accountinfo import get_account
 
-from .views_api.carlistapi import CarListApiView
-from .views_api.cardetailapi import CarDetailApiView
-from .views_api.brandlistapi import BrandListApiView
-from .views_api.branddetailapi import BrandDetailApiView
-from .views_api.categorylistapi import CategoryListApiView
-from .views_api.categorydetailapi import CategoryDetailApiView
-
 urlpatterns = [
     # homepage
     path('', homepage, name='homepage'),

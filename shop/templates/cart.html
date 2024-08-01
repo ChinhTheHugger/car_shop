@@ -72,6 +72,7 @@
 </style>
 
 <body>
+    {% if request.session.account %}
     <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> CART </h2>
     {% for acc in account_info %}
         {% if acc.check_account_type %}
@@ -272,6 +273,9 @@
             </script>
         {% endif %}
     {% endfor %}
+    {% else %}
+    <h2 style="text-align: center; background-color: #333;color: white;font-size: xx-large;"> YOU NEED TO BE LOGGED IN TO ACCESS THIS PAGE </h2>
+    {% endif %}
 </body>
     
 {% endblock %}
