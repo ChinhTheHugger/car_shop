@@ -37,6 +37,9 @@ class Contract(models.Model): # similar to "order"
     def get_contract_by_customer(customer_username):
         return Contract.objects.filter(customer=customer_username)
     
+    def get_contract_by_manager(manager_username):
+        return Contract.objects.filter(manager=manager_username)
+    
     def get_contract_by_parameters(customer,car_str,timestamp):
         return Contract.objects.get(customer=customer,car=car_str,createdate_timestamp=timestamp)
     
@@ -129,10 +132,10 @@ class Contract(models.Model): # similar to "order"
         return
     
     def get_active_contract_number(car_name,date):
-        return Contract.objects.filter(car=car_name,enddate__gt=date).count()
+        return Contract.objects.filter(car=car_name,enddate=date).count()
     
     def get_all_contracts():
-        return Contract.objects.all()
+        return Contract.objects.all().order_by('-startdate')
     
     def is_past_due(self):
         if date.today() <= self.enddate:

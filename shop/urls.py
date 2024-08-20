@@ -71,7 +71,7 @@ urlpatterns = [
     
     path('logout', logout , name='logout'),
     
-    path('account', get_account, name='account'),
+    path('account/<slug:type>', get_account, name='account'),
     
     # cart
     path('cart', view_cart, name='view-cart'),

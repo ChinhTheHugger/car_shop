@@ -67,11 +67,11 @@
       }
       
       .left {
-        width: 25%;
+        width: 20%;
       }
       
       .right {
-        width: 75%;
+        width: 80%;
       }
       
       /* Clear floats after the columns */
@@ -84,7 +84,7 @@
 
     /* SECTION: vertical menu */
     .vertical-menu {
-        width: 90%;
+        width: 100%;
       }
       
       .vertical-menu a {
@@ -106,16 +106,25 @@
     /* END SECTION: vertical menu */
     
         </style>
-
-        <h1 style="text-align: center; background-color: #333;color: white;">CATEGORY</h1>
-
         <div class="row">
             <div class="column left">
                 <div class="vertical-menu">
-                    <a href="/category/all" class="active">CATEGORY</a>
-                    {% for ctgr in category %}
-                    <a href="/category/{{ctgr.categoryname}}">{{ctgr.categoryname}}</a>
-                    {% endfor %}
+                    <a href="/account/info">ACCOUNT INFO</a>
+                    {% if request.session.account %}
+                        {% if account.check_account_type %}
+                        {% else %}
+                            <a href="/account/customers">CUSTOMERS</a>
+                        {% endif %}
+                    {% endif %}
+                    <a href="/account/requests">REQUESTS</a>
+                    <a href="/account/contracts">CONTRACTS</a>
+                    <a href="/account/payments">PAYMENTS</a>
+                    {% if request.session.account %}
+                        {% if account.check_account_type %}
+                        {% else %}
+                            <a href="/account/stats">STATISTICS</a>
+                        {% endif %}
+                    {% endif %}
                   </div>
             </div>
 
@@ -125,20 +134,9 @@
                 } 
             </script>  {% endcomment %} -->
 
-            <div class="column right">
-                <h1 style="text-align: center; background-color: #333;color: white;">{{name}}</h1>
-                {% for c in car %}
-                <div class="responsive">
-                    <div class="gallery">
-                        <a href="/carinfo/{{c.brand}}_{{c.model}}_{{c.year}}">
-                            <img src="{{c.front.url}}" alt="Cinque Terre" style="width: 100%;height: 400px;">
-                        </a>
-                        <div class="desc"  style="background-color: #555; color: white;">{{c.brand}} {{c.model}} {{c.year}}</div>
-                    </div>
-                    <p></p>
-                </div>
-                {% endfor %}
-                
+            <div class="column right" style="width=100%">
+                {% block content_sub %}
+                {% endblock %}
             </div>
         </div>
 {% endblock %}
